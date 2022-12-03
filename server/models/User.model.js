@@ -1,7 +1,7 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 
-// TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
+
   {
     email: {
       type: String,
@@ -10,13 +10,67 @@ const userSchema = new Schema(
       lowercase: true,
       trim: true
     },
+
+    username: {
+      type: String,
+      required: [true, 'Username is required.']
+    },
+
+    firstname: {
+      type: String,
+      required: [true, 'First Name is required.']
+    },
+
+    lastname: {
+      type: String,
+      required: [true, 'First Name is required.']
+    },
+
+    age: {
+      type: Number,
+      required: true,
+      min: [18, "You can't be less than 18 to register."]
+    },
+
+    gender: {
+      type: String,
+      required: [true, 'You have to specify your gender'],
+      enum: ['MALE', 'FEMALE', 'UNDEFINED']
+    },
+
+    role: {
+      type: String,
+      enum: ['USER', 'ADMIN', 'DRIVER']
+    },
+
     password: {
       type: String,
       required: [true, 'Password is required.']
-    }
+
+    },
+
+    trips: [{
+      type: Types.ObjectId,
+      ref: 'Trip'
+    }],
+
+    comments: [{
+      type: Types.ObjectId,
+      ref: 'Comment'
+    }],
+
+    friends: [{
+      type: Types.ObjectId,
+      ref: 'User'
+    }],
+
+    car: [{
+      type: Types.ObjectId,
+      ref: 'Car'
+    }]
+
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`    
     timestamps: true
   }
 );

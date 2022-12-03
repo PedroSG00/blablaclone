@@ -9,7 +9,7 @@
 - Trazado de la ruta origen/paradas/destino
 - User puede comentar en perfil de otro user.
 - Darle la opción al conductor durante el formulario de creación de viaje que los pasajeros se unan automáticamente o de que el lo verifique.
- 
+
 
 # API SERVER ENDPOINTS
 
@@ -60,6 +60,52 @@
 | /user-list | User list page | ADMIN | 
 | /user-list/:user_id | User details page | ADMIN | 
 | /user-list/:user_id/edit | User edit form page | ADMIN | 
+
+# CLIENT PAGES
+
+| PAGE | DESCRIPTION |
+| --- | --- |
+| HOME | Home page |
+| SEARCH | Search page |
+| TRIP | Trip page |
+| PLACES | Places page |
+| PROFILE | Profile page |
+| CHATS | Chat page |
+| ADMIN HOME | Admin Home page |
+| ADMIN HOME | Admin user-list page |
+
+# CLIENT COMPONENTS
+
+| COMPONENTS |
+| --- | 
+| NavBar |
+| --- | 
+| Sign-Up Form | 
+| Log-In Form |
+| Edit Profile Form |
+| --- |
+| User List |
+| User Card |
+| --- |
+| Create Trip Form | 
+| Trip List |
+| Trip |
+| Trip-Card |
+| --- |
+| Create Vehicle Form |
+| --- |
+| Comments list |
+| Comment |
+| --- |
+| Toast |
+
+# CONTEXT
+| CONTEXT |
+| --- |
+| Toast |
+| Session user |
+
+
 
 
 # BONUS
