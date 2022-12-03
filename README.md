@@ -36,6 +36,7 @@
 # CLIENT ENDPOINTS
 
 | PATH | DESCRIPTION | PROTECTED |
+| --- | --- | --- |
 | / | Index page |  |
 | /auth/sign-up | Sign-Up page |  |
 | /auth/log-in| Log-in page |  |
