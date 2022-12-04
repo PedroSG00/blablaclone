@@ -21,13 +21,21 @@ const tripSchema = new Schema(
 
         },
 
-        address: [{
+        origin_address: {
             type: String
-        }],
+        },
+
+        destination_address: {
+            type: String
+        },
 
         owner: {
             type: Types.ObjectId,
             ref: 'User'
+        },
+
+        price: {
+            type: Number
         },
 
         passengers: [{

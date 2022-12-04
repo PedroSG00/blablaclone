@@ -48,6 +48,9 @@ const userSchema = new Schema(
       required: [true, 'Password is required.']
 
     },
+    rating: {
+      type: Number
+    },
 
     trips: [{
       type: Types.ObjectId,
