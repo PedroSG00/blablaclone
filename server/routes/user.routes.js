@@ -37,4 +37,16 @@ router.post('/:user_id/edit', (req, res, next) => {
 
 })
 
+
+router.post("/:user_id/delete", (req, res, next) => {
+
+    const { user_id } = req.params
+
+    User
+        .findByIdAndDelete(user_id)
+        .then(deletedUser => res.json(deletedUser))
+        .catch(err => next(err))
+
+})
+
 module.exports = router
