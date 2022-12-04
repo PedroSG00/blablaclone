@@ -50,6 +50,10 @@ const userSchema = new Schema(
 
     },
 
+    imageUrl: {
+      type: String,
+    },
+
     trips: [{
       type: Types.ObjectId,
       ref: 'Trip'

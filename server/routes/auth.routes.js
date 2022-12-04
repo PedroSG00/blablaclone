@@ -12,7 +12,7 @@ const { isAuthenticated } = require('../middleware/jwt-middleware')
 
 router.post('/sign-up', (req, res, next) => {
 
-    const { email, password, username } = req.body
+    const { email, password, username, firstname, lastname, age, gender, imageUrl } = req.body
 
     if (password.length < 2) {
         res.status(400).json({ message: 'Password must have at least 3 characters' })
@@ -31,13 +31,12 @@ router.post('/sign-up', (req, res, next) => {
             const salt = bcrypt.genSaltSync(saltRounds)
             const hashedPassword = bcrypt.hashSync(password, salt)
 
-            return User.create({ email, password: hashedPassword, username })
+            return User.create({ email, password: hashedPassword, username, firstname, lastname, age, gender, imageUrl })
         })
         .then((createdUser) => {
-            const { email, username, _id } = createdUser
-            const user = { email, username, _id }
+            const { email, username, _id, firstname, lastname, age, gender, imageUrl } = createdUser
 
-            res.status(201).json({ user })
+            res.status(201).json({ email, username, _id, firstname, lastname, age, gender, imageUrl })
         })
         .catch(err => {
             console.log(err)
@@ -70,9 +69,9 @@ router.post('/log-in', (req, res, next) => {
 
             if (bcrypt.compareSync(password, foundUser.password)) {
 
-                const { _id, email, username } = foundUser;
+                const { _id, email, username, firstname, lastname, age, gender, imageUrl } = foundUser;
 
-                const payload = { _id, email, username }
+                const payload = { _id, email, username, firstname, lastname, age, gender, imageUrl }
 
                 const authToken = jwt.sign(
                     payload,
