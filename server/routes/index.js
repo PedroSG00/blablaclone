@@ -4,10 +4,7 @@ module.exports = app => {
     app.use('/', indexRouter)
 
     const authRouter = require('./auth.routes')
-    app.use('/auth', authRouter)
-
-    const tripRouter = require("./trip.routes")
-    app.use('/trip', tripRouter)
+    app.use('/api/auth', authRouter)
 
 
 

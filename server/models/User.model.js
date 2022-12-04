@@ -40,7 +40,8 @@ const userSchema = new Schema(
 
     role: {
       type: String,
-      enum: ['USER', 'ADMIN', 'DRIVER']
+      enum: ['USER', 'ADMIN', 'DRIVER'],
+      default: 'USER'
     },
 
     password: {
@@ -50,6 +51,10 @@ const userSchema = new Schema(
     },
     rating: {
       type: Number
+    },
+
+    imageUrl: {
+      type: String,
     },
 
     trips: [{
