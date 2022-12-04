@@ -18,6 +18,7 @@ router.get('/:user_id', (req, res, next) => {
 
     User
         .findById(user_id)
+        .populate('comments')
         .then(userDetails => res.json(userDetails))
         .catch(error => next(error))
 

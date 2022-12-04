@@ -4,8 +4,7 @@ const commentSchema = new Schema(
 
     {
         author: {
-            type: Types.ObjectId,
-            ref: 'User'
+            type: String,
         },
 
         text: {
