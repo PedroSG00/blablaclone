@@ -45,10 +45,6 @@ router.post('/sign-up', (req, res, next) => {
 })
 
 
-
-
-
-
 router.post('/log-in', (req, res, next) => {
 
     const { email, password } = req.body;
@@ -93,11 +89,8 @@ router.post('/log-in', (req, res, next) => {
 });
 
 
-
-
-router.get('/verify', isAuthenticated, (req, res) => {
+router.get('/verify', isAuthenticated, (req, res, next) => {
     res.status(200).json(req.payload)
 })
-
 
 module.exports = router

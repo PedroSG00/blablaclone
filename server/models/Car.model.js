@@ -10,10 +10,13 @@ const carSchema = new Schema(
         make: {
             type: String
         },
+        year: {
+            type: String
+        },
 
         seats: {
             type: Number,
-            require: [true, 'You have to specify number of sits'],
+            // require: [true, 'You have to specify number of sits'],
             min: 2
         },
         color: {
@@ -23,7 +26,7 @@ const carSchema = new Schema(
         energeticClassification: {
             type: String,
             enum: ['B', 'C', 'ECO', '0'],
-            required: [true, 'You have to specify your energetic clasification']
+            // required: [true, 'You have to specify your energetic clasification']
         }
 
     },

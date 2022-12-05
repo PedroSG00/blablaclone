@@ -24,7 +24,7 @@ router.get('/:user_id', isAuthenticated, (req, res, next) => {
     User
         .findById(user_id)
         .populate('comments')
-        // .populate('car')
+        .populate('cars')
         .then(userDetails => res.json(userDetails))
         .catch(error => next(error))
 
