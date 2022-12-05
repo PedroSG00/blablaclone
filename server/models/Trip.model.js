@@ -3,13 +3,11 @@ const { Schema, model, Types } = require("mongoose");
 const tripSchema = new Schema(
 
     {
-
         from: {
             type: {
                 type: String,
             },
             coordinates: [Number],
-            required: [true, 'Origin is required']
         },
 
         to: {
@@ -17,23 +15,17 @@ const tripSchema = new Schema(
                 type: String,
             },
             coordinates: [Number],
-            required: [true, 'Destination is required']
-
         },
 
         origin_address: {
-            type: String
+            type: String,
+            required: [true, "Origin address is required to create a trip"]
         },
 
         destination_address: {
-            type: String
+            type: String,
+            required: [true, "Destination address is required to create a trip"]
         },
-
-        owner: {
-            type: Types.ObjectId,
-            ref: 'User'
-        },
-
         price: {
             type: Number
         },
