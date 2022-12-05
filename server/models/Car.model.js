@@ -3,17 +3,24 @@ const { Schema, model, Types } = require("mongoose");
 const carSchema = new Schema(
     {
 
-        sits: {
+        model: {
+            type: String,
+        },
+
+        make: {
+            type: String
+        },
+
+        seats: {
             type: Number,
             require: [true, 'You have to specify number of sits'],
             min: 2
         },
-
-        fuelConsumption: {
-            type: Number
+        color: {
+            type: String
         },
 
-        energeticClasification: {
+        energeticClassification: {
             type: String,
             enum: ['B', 'C', 'ECO', '0'],
             required: [true, 'You have to specify your energetic clasification']

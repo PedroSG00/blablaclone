@@ -3,15 +3,24 @@ const router = express.Router();
 const User = require('../models/User.model')
 const Comment = require('../models/Comment.model')
 
-router.post('/:user_id', (req, res, next) => {
+const jwt = require('jsonwebtoken')
+
+const { isAuthenticated } = require('../middleware/jwt-middleware')
+
+
+
+router.post('/:user_id', isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
-    const { author, text } = req.body
+    const { owner, text } = req.body
+    const { _id } = req.payload
+
+    console.log(req.payload)
 
     Comment
-        .create({ author, text })
+        .create({ owner: _id, text })
         .then((newComment) => {
-            return User.findByIdAndUpdate(user_id, { $push: { comments: newComment._id } })
+            return User.findByIdAndUpdate(user_id, { $push: { comments: newComment._id } }, { new: true })
         })
         .then(userComments => res.json(userComments))
         .catch(err => next(err))

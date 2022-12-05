@@ -9,7 +9,6 @@ const tripSchema = new Schema(
                 type: String,
             },
             coordinates: [Number],
-            required: [true, 'Origin is required']
         },
 
         to: {
@@ -17,16 +16,18 @@ const tripSchema = new Schema(
                 type: String,
             },
             coordinates: [Number],
-            required: [true, 'Destination is required']
 
         },
 
         origin_address: {
-            type: String
+            type: String,
+            required: [true, 'Origin is required']
+
         },
 
         destination_address: {
-            type: String
+            type: String,
+            required: [true, 'Destination is required']
         },
 
         owner: {
@@ -53,7 +54,12 @@ const tripSchema = new Schema(
                 type: String,
             },
             coordinates: [Number],
-        }]
+        }],
+
+        owner: {
+            type: Types.ObjectId,
+            ref: 'User'
+        }
 
     },
     {
@@ -64,3 +70,15 @@ const tripSchema = new Schema(
 const Trip = model("Trip", tripSchema);
 
 module.exports = Trip;
+
+
+
+// origin: {
+//     address: String,
+//         location: {
+//         type: {
+//             type: String,
+//                 },
+//         coordinates: [Number],
+//             required: [true, 'Origin is required']
+//     }

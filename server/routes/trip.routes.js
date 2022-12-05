@@ -1,5 +1,5 @@
 const router = require("express").Router()
-const Trip = require("./../models/Trip.model")
+const Trip = require('../models/Trip.model')
 
 router.get("/list", (req, res, next) => {
 
@@ -24,7 +24,7 @@ router.post("/create", (req, res, next) => {
 
     Trip
         .create(req.body)
-        .then(res => res.json())
+        .then(trip => res.json(trip))
         .catch(err => next(err))
 
 })
@@ -49,3 +49,5 @@ router.post(":/id/delete", (req, res, next) => {
         .catch(err => next(err))
 
 })
+
+module.exports = router
