@@ -53,7 +53,12 @@ const tripSchema = new Schema(
                 type: String,
             },
             coordinates: [Number],
-        }]
+        }],
+
+        owner: {
+            type: Types.ObjectId,
+            ref: 'User'
+        }
 
     },
     {
@@ -64,3 +69,15 @@ const tripSchema = new Schema(
 const Trip = model("Trip", tripSchema);
 
 module.exports = Trip;
+
+
+
+// origin: {
+//     address: String,
+//         location: {
+//         type: {
+//             type: String,
+//                 },
+//         coordinates: [Number],
+//             required: [true, 'Origin is required']
+//     }

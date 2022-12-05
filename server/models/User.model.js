@@ -49,33 +49,15 @@ const userSchema = new Schema(
       required: [true, 'Password is required.']
 
     },
-    rating: {
-      type: Number
-    },
 
     imageUrl: {
       type: String,
     },
 
-    trips: [{
-      type: Types.ObjectId,
-      ref: 'Trip'
-    }],
-
-    comments: [{
-      type: Types.ObjectId,
-      ref: 'Comment'
-    }],
-
     friends: [{
       type: Types.ObjectId,
       ref: 'User'
     }],
-
-    car: [{
-      type: Types.ObjectId,
-      ref: 'Car'
-    }]
 
   },
 

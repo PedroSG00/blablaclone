@@ -3,9 +3,14 @@ const { Schema, model, Types } = require("mongoose");
 const carSchema = new Schema(
     {
 
+        owner: {
+            type: Types.ObjectId,
+            ref: 'User'
+        },
+
         sits: {
             type: Number,
-            require: [true, 'You have to specify number of sits'],
+            required: [true, 'You have to specify number of sits'],
             min: 2
         },
 

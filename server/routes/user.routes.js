@@ -16,9 +16,11 @@ router.get('/:user_id', (req, res, next) => {
 
     const { user_id } = req.params
 
+
     User
         .findById(user_id)
         .populate('comments')
+        // .populate('car')
         .then(userDetails => res.json(userDetails))
         .catch(error => next(error))
 

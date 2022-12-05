@@ -12,5 +12,8 @@ module.exports = app => {
     const commentRouter = require('./comment.routes')
     app.use('/api/user', commentRouter)
 
+    const carRouter = require('./comment.routes')
+    app.use('/api/car', commentRouter) //????????????
+
 
 }
