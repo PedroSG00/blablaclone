@@ -5,7 +5,7 @@ const carSchema = new Schema(
 
         sits: {
             type: Number,
-            require: [true, 'You have to specify number of sits'],
+            required: [true, 'You have to specify number of sits'],
             min: 2
         },
 

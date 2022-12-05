@@ -22,10 +22,7 @@ router.get("/:id", (req, res, next) => {
 
 router.post("/create", (req, res, next) => {
 
-    Trip
-        .create(req.body)
-        .then(res => res.json())
-        .catch(err => next(err))
+    console.log(req.payload)
 
 })
 
