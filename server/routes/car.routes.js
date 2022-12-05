@@ -32,15 +32,6 @@ router.get("/", (req, res, next) => {
 
 })
 
-router.get("/model", (req, res, next) => {
-
-    Car
-        .find({ make, model })
-        .select({ year: 1 })
-        .then(cars => res.json(cars))
-        .catch(err => next(err))
-
-})
 
 router.post("/create", isAuthenticated, (req, res, next) => {
 

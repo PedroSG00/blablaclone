@@ -11,13 +11,13 @@ const { isAuthenticated } = require('../middleware/jwt-middleware')
 router.post('/:user_id/add-comment', isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
-    const { owner, text } = req.body
-    const { _id } = req.payload
+    const { text } = req.body
+    const { _id: owner } = req.payload
 
     console.log(req.payload)
 
     Comment
-        .create({ owner: _id, text })
+        .create({ owner, text })
         .then((newComment) => {
             return User.findByIdAndUpdate(user_id, { $push: { comments: newComment._id } }, { new: true })
         })
