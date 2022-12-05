@@ -9,7 +9,7 @@ const { isAuthenticated } = require('../middleware/jwt-middleware')
 
 
 
-router.post('/:user_id', isAuthenticated, (req, res, next) => {
+router.post('/:user_id/add-comment', isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
     const { owner, text } = req.body
