@@ -33,11 +33,11 @@ class CarsService {
     }
 
     updateCar(car_id) {
-        this.api.post(`/${car_id}/edit`)
+        this.api.put(`/${car_id}/edit`)
     }
 
     deleteCar(car_id) {
-        this.api.post(`/${car_id}/delete`)
+        this.api.delete(`/${car_id}/delete`)
     }
 
 

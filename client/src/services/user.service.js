@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-class CommentsService {
+class UserService {
 
     constructor() {
 
@@ -20,16 +20,25 @@ class CommentsService {
         })
     }
 
-    createComment(user_id, commentData) {
-        this.api.post(`${user_id}/add-comment`, commentData)
+    gerUsers() {
+        this.api.get('/list')
     }
 
-    deleteComment(user_id, comment_id) {
-        this.api.delete(`/${user_id}/${comment_id}`)
+    getUserDetails(user_id) {
+        this.api.get(`/${user_id}`)
     }
+
+    editUser(user_id, userData) {
+        this.api.put(`/${user_id}/edit`, userData)
+    }
+
+    deleteUser(user_id) {
+        this.api.delete(`/${user_id}/delete`)
+    }
+
 
 }
 
-const commentsService = new CommentsService()
+const userService = new UserService()
 
-export default commentsService
+export default userService
