@@ -8,7 +8,6 @@ const jwt = require('jsonwebtoken')
 const { isAuthenticated } = require('../middleware/jwt-middleware')
 
 
-
 router.post('/:user_id/add-comment', isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
@@ -40,9 +39,6 @@ router.post('/:user_id/:comment_id/delete-comment', (req, res, next) => {
         .catch(err => next(err))
 
 })
-
-
-
 
 
 module.exports = router;
