@@ -7,7 +7,7 @@ router.get("/list", (req, res, next) => {
     Trip
         .find()
         .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1 })
-        .then(res => res.json())
+        .then(foundTrip => res.json(foundTrip))
         .catch(err => next(err))
 })
 
@@ -17,7 +17,7 @@ router.get("/:id", (req, res, next) => {
 
     Trip
         .findById(id)
-        .then(res => res.json())
+        .then(trip => res.json(trip))
         .catch(err => next(err))
 })
 
@@ -44,18 +44,29 @@ router.post("/create", isAuthenticated, (req, res, next) => {
 
 })
 
-router.post("/:tripID/join", (req, res, next) => {
+router.post("/:tripID/join", isAuthenticated, (req, res, next) => {
 
-    const { tripID } = req.body
+    const { tripID } = req.params
 
-    const { _id: participant } = req.payload
+    const { _id: passenger } = req.payload
 
     Trip
-        .findByIdAndUpdate(tripID, { $addToSet: { participants: participant } }, { new: true })
-        .then(editTrip => res.json(editTrip))
+        .findByIdAndUpdate(tripID, { $addToSet: { passengers: passenger } })
+        .then(editTrip => console.log(editTrip))
         .catch(err => next(err))
 
-    console.log(req.payload)
+})
+
+router.post("/:tripID/leave", isAuthenticated, (req, res, next) => {
+
+    const { tripID } = req.params
+
+    const { _id: passenger } = req.payload
+
+    Trip
+        .findByIdAndUpdate(tripID, { $pull: { passengers: passenger } })
+        .then(editTrip => console.log(editTrip))
+        .catch(err => next(err))
 
 })
 
