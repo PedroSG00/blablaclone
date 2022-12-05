@@ -1,8 +1,12 @@
 const router = require("express").Router()
 const User = require("../models/User.model")
 
+const jwt = require('jsonwebtoken')
 
-router.get('/list', (req, res, next) => {
+const { isAuthenticated } = require('../middleware/jwt-middleware')
+
+
+router.get('/list', isAuthenticated, (req, res, next) => {
 
     User
         .find({ role: 'USER' })
@@ -12,7 +16,7 @@ router.get('/list', (req, res, next) => {
 
 });
 
-router.get('/:user_id', (req, res, next) => {
+router.get('/:user_id', isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
 
@@ -27,7 +31,7 @@ router.get('/:user_id', (req, res, next) => {
 })
 
 
-router.post('/:user_id/edit', (req, res, next) => {
+router.post('/:user_id/edit', isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
     const { email, username, _id, firstname, lastname, age, gender, imageUrl } = req.body
@@ -40,7 +44,7 @@ router.post('/:user_id/edit', (req, res, next) => {
 })
 
 
-router.post("/:user_id/delete", (req, res, next) => {
+router.post("/:user_id/delete", isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
 

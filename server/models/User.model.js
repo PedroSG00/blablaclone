@@ -54,10 +54,25 @@ const userSchema = new Schema(
       type: String,
     },
 
+    trips: [{
+      type: Types.ObjectId,
+      ref: 'Trip'
+    }],
+
+    comments: [{
+      type: Types.ObjectId,
+      ref: 'Comment'
+    }],
+
     friends: [{
       type: Types.ObjectId,
       ref: 'User'
     }],
+
+    cars: [{
+      type: Types.ObjectId,
+      ref: 'Car'
+    }]
 
   },
 

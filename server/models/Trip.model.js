@@ -9,7 +9,6 @@ const tripSchema = new Schema(
                 type: String,
             },
             coordinates: [Number],
-            required: [true, 'Origin is required']
         },
 
         to: {
@@ -17,16 +16,18 @@ const tripSchema = new Schema(
                 type: String,
             },
             coordinates: [Number],
-            required: [true, 'Destination is required']
 
         },
 
         origin_address: {
-            type: String
+            type: String,
+            required: [true, 'Origin is required']
+
         },
 
         destination_address: {
-            type: String
+            type: String,
+            required: [true, 'Destination is required']
         },
 
         owner: {

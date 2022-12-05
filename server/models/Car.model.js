@@ -3,22 +3,24 @@ const { Schema, model, Types } = require("mongoose");
 const carSchema = new Schema(
     {
 
-        owner: {
-            type: Types.ObjectId,
-            ref: 'User'
+        model: {
+            type: String,
         },
 
-        sits: {
+        make: {
+            type: String
+        },
+
+        seats: {
             type: Number,
-            required: [true, 'You have to specify number of sits'],
+            require: [true, 'You have to specify number of sits'],
             min: 2
         },
-
-        fuelConsumption: {
-            type: Number
+        color: {
+            type: String
         },
 
-        energeticClasification: {
+        energeticClassification: {
             type: String,
             enum: ['B', 'C', 'ECO', '0'],
             required: [true, 'You have to specify your energetic clasification']
