@@ -9,6 +9,9 @@ module.exports = app => {
     const userRouter = require('./user.routes')
     app.use('/api/user', userRouter)
 
+    const tripRouter = require('./trip.routes')
+    app.use('/api/trip', tripRouter)
+
     const commentRouter = require('./comment.routes')
     app.use('/api/user', commentRouter)
 

@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const Trip = require('../models/Trip.model')
+const { isAuthenticated } = require("./../middleware/jwt-middleware")
 
 router.get("/list", (req, res, next) => {
 
@@ -20,12 +21,41 @@ router.get("/:id", (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.post("/create", (req, res, next) => {
+router.post("/create", isAuthenticated, (req, res, next) => {
+
+    const { from_lat, from_lng, to_lat, to_lng, origin_address, destination_address, date } = req.body
+    const { _id: owner } = req.payload
 
     Trip
-        .create(req.body)
-        .then(trip => res.json(trip))
+        .create({
+            from: {
+                type: 'Point',
+                coordinates: [from_lng, from_lat]
+            },
+            to: {
+                type: 'Point',
+                coordinates: [to_lng, to_lat]
+            },
+            origin_address,
+            destination_address,
+            date,
+            owner
+        })
+
+})
+
+router.post("/:tripID/join", (req, res, next) => {
+
+    const { tripID } = req.body
+
+    const { _id: participant } = req.payload
+
+    Trip
+        .findByIdAndUpdate(tripID, { $addToSet: { participants: participant } }, { new: true })
+        .then(editTrip => res.json(editTrip))
         .catch(err => next(err))
+
+    console.log(req.payload)
 
 })
 
@@ -52,5 +82,3 @@ router.post(":/id/delete", (req, res, next) => {
 
 module.exports = router
 
-
-module.exports = router
