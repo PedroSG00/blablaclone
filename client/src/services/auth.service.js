@@ -21,11 +21,11 @@ class AuthService {
     }
 
     signup(userData) {
-        return this.api.post('/signup', userData)
+        return this.api.post('/sign-up', userData)
     }
 
     login(userData) {
-        return this.api.post('/login', userData)
+        return this.api.post('/log-in', userData)
     }
 
     verify = token => {
