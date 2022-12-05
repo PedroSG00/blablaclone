@@ -3,7 +3,7 @@ const { Schema, model, Types } = require("mongoose");
 const commentSchema = new Schema(
 
     {
-        author: {
+        owner: {
             type: Types.ObjectId,
             ref: 'User'
         },

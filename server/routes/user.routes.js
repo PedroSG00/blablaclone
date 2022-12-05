@@ -16,8 +16,11 @@ router.get('/:user_id', (req, res, next) => {
 
     const { user_id } = req.params
 
+
     User
         .findById(user_id)
+        .populate('comments')
+        // .populate('car')
         .then(userDetails => res.json(userDetails))
         .catch(error => next(error))
 
@@ -33,6 +36,18 @@ router.post('/:user_id/edit', (req, res, next) => {
         .findByIdAndUpdate(user_id, { email, username, _id, firstname, lastname, age, gender, imageUrl }, { new: true })
         .then(userDetails => res.json(userDetails))
         .catch(error => next(error))
+
+})
+
+
+router.post("/:user_id/delete", (req, res, next) => {
+
+    const { user_id } = req.params
+
+    User
+        .findByIdAndDelete(user_id)
+        .then(deletedUser => res.json(deletedUser))
+        .catch(err => next(err))
 
 })
 

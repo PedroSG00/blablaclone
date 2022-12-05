@@ -6,6 +6,14 @@ module.exports = app => {
     const authRouter = require('./auth.routes')
     app.use('/api/auth', authRouter)
 
-    const tripRouter = require("./trip.routes")
-    app.use("/api/trip", tripRouter)
+    const userRouter = require('./user.routes')
+    app.use('/api/user', userRouter)
+
+    const commentRouter = require('./comment.routes')
+    app.use('/api/user', commentRouter)
+
+    const carRouter = require('./comment.routes')
+    app.use('/api/car', commentRouter) //????????????
+
+
 }
