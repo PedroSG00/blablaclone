@@ -5,19 +5,19 @@ import LoginForm from "../LogInForm/LogInForm"
 
 
 const Modal = () => {
-    const [showModal, setShowModal] = useState(true)
 
     const closeModal = () => setShowModal(false)
 
     return (
-        <Modal show={showModal} onHide={closeModal}>
-            <Modal.Header closeButton>
-                <Modal.Title>Hola</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <LoginForm />
-            </Modal.Body>
-        </Modal>
+        <></>
+        // <Modal show={showModal} onHide={closeModal}>
+        //     <Modal.Header closeButton>
+        //         <Modal.Title>Hola</Modal.Title>
+        //     </Modal.Header>
+        //     <Modal.Body>
+        //         <LoginForm />
+        //     </Modal.Body>
+        // </Modal>
     )
 }
 

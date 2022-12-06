@@ -6,7 +6,7 @@ import { MessageContext } from "../../context/userMessage.context"
 import authService from "../../services/auth.service"
 
 
-const LoginForm = () => {
+const LoginForm = ({ closeModal }) => {
 
     const [signupData, setSignupData] = useState({
         email: '',
@@ -57,7 +57,7 @@ const LoginForm = () => {
             </Form.Group>
 
             <div className="d-grid">
-                <Button variant="dark" type="submit">Log In</Button>
+                <Button variant="dark" type="submit" onClick={closeModal}>Log In</Button>
             </div>
 
         </Form>

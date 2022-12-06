@@ -1,5 +1,5 @@
 import './Navigation.css'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Nav, Container, Navbar, Modal } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { NavDropdown } from 'react-bootstrap'
@@ -7,10 +7,33 @@ import { MagnifyingGlass, PlusCircle, UserCircle } from "phosphor-react"
 import logo from "./../../assets/logo.png"
 import { AuthContext } from '../../context/auth.context'
 import LoginForm from '../LogInForm/LogInForm'
+import SignupForm from '../SignUpForm/SignUpForm'
 
 const Navigation = () => {
 
     const { user, logoutUser } = useContext(AuthContext)
+    const closeModal = () => setShowModal(false)
+
+
+    const [showModal, setShowModal] = useState(false)
+    const [value, setValue] = useState('')
+
+    const handleValue = e => {
+        if (e.target.value === 'log-in') {
+            setShowModal(true)
+            setValue('log-in')
+        } else {
+            setShowModal(true)
+            setValue('sign-up')
+        }
+    }
+
+    const fireFinalActions = () => {
+        closeModal()
+    }
+
+
+
 
 
 
@@ -18,7 +41,9 @@ const Navigation = () => {
         <>
             <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                 <Container>
-                    <Navbar.Brand href="#home"><img src={logo} className="app-logo"></img></Navbar.Brand>
+                    <Link to='/'>
+                        <Navbar.Brand href="#home"><img src={logo} className="app-logo"></img></Navbar.Brand>
+                    </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className='ms-auto'>
@@ -30,19 +55,20 @@ const Navigation = () => {
 
                                 {user ?
                                     <>
-                                        <NavDropdown.Item href="#action/3.1" className='text-color'>View profile</NavDropdown.Item>
-                                        <NavDropdown.Item href="#action/3.2" className='text-color' onClick={logoutUser}>
-                                            Log Out
-                                        </NavDropdown.Item>
+                                        <Link to='/user/profile'>
+                                            <NavDropdown.Item as='div' className='text-color'>View profile</NavDropdown.Item>
+                                        </Link>
+                                        <Link to='/'>
+                                            <NavDropdown.Item as='div' className='text-color' onClick={logoutUser}>
+                                                Log Out
+                                            </NavDropdown.Item>
+                                        </Link>
+
                                     </>
                                     :
                                     <>
-                                        <Link to='/sign-up'>
-                                            <NavDropdown.Item as='button' value='sign-up' className='text-color bg-transparent text-decoration-none'>Sign Up</NavDropdown.Item>
-                                        </Link>
-                                        <Link to='/log-in'>
-                                            <NavDropdown.Item as='button' value='log-in' className='text-color bg-transparent text-decoration-none'>Log in</NavDropdown.Item>
-                                        </Link>
+                                        <NavDropdown.Item as='button' value='sign-up' onClick={handleValue} className='text-color bg-transparent text-decoration-none'>Sign Up</NavDropdown.Item>
+                                        <NavDropdown.Item as='button' value='log-in' onClick={handleValue} className='text-color bg-transparent text-decoration-none'>Log in</NavDropdown.Item>
                                     </>
                                 }
                             </NavDropdown>
@@ -51,7 +77,16 @@ const Navigation = () => {
                 </Container>
             </Navbar>
 
-            <Modal />
+            <Modal show={showModal} onHide={closeModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>{value === 'log-in' ? 'Log in' : 'Sign up'}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {value === 'log-in' ? <LoginForm closeModal={closeModal} /> : <SignupForm fireFinalActions={fireFinalActions} />}
+                </Modal.Body>
+            </Modal>
+
+
         </>
 
     )

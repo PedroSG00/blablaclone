@@ -18,5 +18,8 @@ module.exports = app => {
     const carRouter = require('./car.routes')
     app.use('/api/car', carRouter)
 
+    const uploadRouter = require('./upload.routes')
+    app.use('/api/upload', uploadRouter)
+
 
 }

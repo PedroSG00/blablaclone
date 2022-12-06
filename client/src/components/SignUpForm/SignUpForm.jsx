@@ -1,28 +1,56 @@
 import { useState, useContext } from "react"
 import { Form, Button } from "react-bootstrap"
 import authService from "../../services/auth.service"
+import uploadServices from "../../services/upload.service"
 
 import { useNavigate } from 'react-router-dom'
-
 import { MessageContext } from '../../context/userMessage.context'
 
 
-const SignupForm = () => {
+const SignupForm = ({ fireFinalActions }) => {
 
     const [signupData, setSignupData] = useState({
         username: '',
         email: '',
-        password: ''
+        password: '',
+        gender: '',
+        firstname: '',
+        lastname: '',
+        imageUrl: '',
+        age: 0,
     })
+
+    const [loadingImage, setLoadingImage] = useState(false)
+
 
     const handleInputChange = e => {
         const { value, name } = e.target
         setSignupData({ ...signupData, [name]: value })
     }
 
+    const handleFileUpload = e => {
+
+        setLoadingImage(true)
+
+        const formData = new FormData()
+        formData.append('imageData', e.target.files[0])
+
+        uploadServices
+            .uploadimage(formData)
+            .then(res => {
+                setSignupData({ ...signupData, imageUrl: res.data.cloudinary_url })
+                setLoadingImage(false)
+                fireFinalActions()
+            })
+            .catch(err => console.log(err))
+    }
+
     const { setShowToast, setToastMessage } = useContext(MessageContext)
 
     const navigate = useNavigate()
+
+
+
 
     const handleSubmit = e => {
 
@@ -32,12 +60,11 @@ const SignupForm = () => {
             .signup(signupData)
             .then(() => {
                 setShowToast(true)
-                setToastMessage('Usuario creado correctamente')
+                setToastMessage('User created correctly')
                 navigate('/')
             })
             .catch(err => console.log(err))
     }
-
 
 
     const { username, password, email, firstname, lastname, age } = signupData
@@ -76,13 +103,22 @@ const SignupForm = () => {
                 <Form.Control type="number" value={age} onChange={handleInputChange} name="age" />
             </Form.Group>
 
+            <Form.Select className="mb-3 mt-3" name="gender" onChange={handleInputChange}>
+                <option>Gender</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="UNDEFINED">Other</option>
+            </Form.Select>
+
+            <Form.Group className="mb-3" controlId="imageUrl">
+                <Form.Label>Profile image</Form.Label>
+                <Form.Control type="file" onChange={handleFileUpload} />
+            </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={password} onChange={handleInputChange} name="password" />
             </Form.Group>
-
-
 
             <div className="d-grid">
                 <Button type="submit">Register</Button>
