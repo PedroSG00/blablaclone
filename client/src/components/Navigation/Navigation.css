@@ -6,6 +6,7 @@
 
 .text-color {
     color: #d5bf1c !important;
+<<<<<<< HEAD
     font-weight: 700 !important;
 
 }
@@ -20,4 +21,6 @@
     margin-left: 10px !important;
     line-height: 28px !important;
     vertical-align: middle !important;
+=======
+>>>>>>> f85fad0603a264453fe910bca88f36a4fde0a7e9
 }

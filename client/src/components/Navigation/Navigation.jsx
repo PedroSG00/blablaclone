@@ -22,12 +22,12 @@ const Navigation = () => {
                         <Nav.Link href="#deets" className="text-color"><PlusCircle size={28} /><span className="nav-title">Add Trip</span></Nav.Link>
                         <NavDropdown title={<div style={{ display: "inline-block" }}><UserCircle size={28} /></div>} id="collasible-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1" className='text-color'>View profile</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
+                            <NavDropdown.Item href="#action/3.2" className='text-color'>
                                 Another action
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3" className='text-color'>Something</NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
+                            <NavDropdown.Item href="#action/3.4" className='text-color'>
                                 Separated link
                             </NavDropdown.Item>
                         </NavDropdown>
