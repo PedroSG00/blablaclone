@@ -5,8 +5,14 @@ import { Link } from 'react-router-dom'
 import { NavDropdown } from 'react-bootstrap'
 import { MagnifyingGlass, PlusCircle, UserCircle } from "phosphor-react"
 import logo from "./../../assets/logo.png"
+import { AuthContext } from '../../context/auth.context'
+import { ShowModalContext } from '../../context/showModal.context'
 
 const Navigation = () => {
+
+    const { user, logoutUser } = useContext(AuthContext)
+
+    const { display } = useContext(ShowModalContext)
 
 
     return (
@@ -21,15 +27,20 @@ const Navigation = () => {
                         <Nav.Link href="#pricing" className='text-color'><MagnifyingGlass size={28} /><span className="nav-title">Search Trips</span></Nav.Link>
                         <Nav.Link href="#deets" className="text-color"><PlusCircle size={28} /><span className="nav-title">Add Trip</span></Nav.Link>
                         <NavDropdown title={<div style={{ display: "inline-block" }}><UserCircle size={28} /></div>} id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1" className='text-color'>View profile</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2" className='text-color'>
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3" className='text-color'>Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4" className='text-color'>
-                                Separated link
-                            </NavDropdown.Item>
+
+                            {user ?
+                                <>
+                                    <NavDropdown.Item href="#action/3.1" className='text-color'>View profile</NavDropdown.Item>
+                                    <NavDropdown.Item href="#action/3.2" className='text-color'>
+                                        Log Out
+                                    </NavDropdown.Item>
+                                </>
+                                :
+                                <>
+                                    <NavDropdown.Item as='button' value='sign-up' onClick={display} className='text-color'>Sign Up</NavDropdown.Item>
+                                    <NavDropdown.Item as='button' value='log-in' onClick={display} className='text-color'>Log in</NavDropdown.Item>
+                                </>
+                            }
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
