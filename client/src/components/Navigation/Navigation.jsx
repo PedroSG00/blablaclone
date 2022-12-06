@@ -1,3 +1,4 @@
+import './Navigation.css'
 import { useContext } from 'react'
 import { Nav, Container, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -9,16 +10,16 @@ const Navigation = () => {
     return (
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
-                <Navbar.Brand href="#home">Rambler</Navbar.Brand>
+                <Navbar.Brand href="#home" className='text-color'>Rambler</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#pricing">Search</Nav.Link>
+                        <Nav.Link href="#pricing" className='text-color'>Search</Nav.Link>
                         <Nav.Link href="#deets">Add trip</Nav.Link>
                         <NavDropdown title="Profile" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">View profile</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.1" className='text-color'>View profile</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">
                                 Another action
                             </NavDropdown.Item>
