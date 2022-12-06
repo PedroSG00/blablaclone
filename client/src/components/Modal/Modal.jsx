@@ -1,18 +1,21 @@
 import { useState, useContext } from "react"
-// import { MessageContext } from "../../contexts/userMessage.context"
+import { MessageContext } from "../../context/userMessage.context"
+import LoginForm from "../LogInForm/LogInForm"
 
 
 
 const Modal = () => {
-    const [showModal, setShowModal] = useState(false)
+    const [showModal, setShowModal] = useState(true)
+
+    const closeModal = () => setShowModal(false)
 
     return (
-        <Modal show={openModal} onHide={closeModal}>
+        <Modal show={showModal} onHide={closeModal}>
             <Modal.Header closeButton>
-                <Modal.Title>Holi</Modal.Title>
+                <Modal.Title>Hola</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                Holaaaa
+                <LoginForm />
             </Modal.Body>
         </Modal>
     )
