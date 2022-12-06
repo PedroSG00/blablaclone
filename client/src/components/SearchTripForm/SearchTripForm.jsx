@@ -10,10 +10,12 @@ function SearchTripForm() {
                     <Form>
                         <InputGroup>
                             <Form.Control type='text' placeholder='Origin' ></Form.Control>
-                            <Form.Control type='text' placeholder='Destination'></Form.Control>
-                            <Form.Control type='date' placeholder='Date' required  ></Form.Control>
+                            <Form.Control type='text' placeholder='Destination' ></Form.Control>
+                            <Form.Control type='text' placeholder='Date'></Form.Control>
                             <Form.Control type='text' ></Form.Control>
-                            <Button>Search</Button>
+                            <Button>
+                                Search
+                            </Button>
                         </InputGroup>
                     </Form>
                 </Col>
