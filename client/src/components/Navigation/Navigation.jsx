@@ -38,10 +38,10 @@ const Navigation = () => {
                                     :
                                     <>
                                         <Link to='/sign-up'>
-                                            <NavDropdown.Item as='button' value='sign-up' className='text-color bg-transparent'>Sign Up</NavDropdown.Item>
+                                            <NavDropdown.Item as='button' value='sign-up' className='text-color bg-transparent text-decoration-none'>Sign Up</NavDropdown.Item>
                                         </Link>
                                         <Link to='/log-in'>
-                                            <NavDropdown.Item as='button' value='log-in' className='text-color bg-transparent'>Log in</NavDropdown.Item>
+                                            <NavDropdown.Item as='button' value='log-in' className='text-color bg-transparent text-decoration-none'>Log in</NavDropdown.Item>
                                         </Link>
                                     </>
                                 }
