@@ -4,16 +4,16 @@ import { Col, Form, Row, Container, InputGroup, Button } from 'react-bootstrap';
 function SearchTripForm() {
 
     return (
-        <Container>
+        <Container fluid className="search-bar">
             <Row className='justify-content-center'>
                 <Col md={6}>
                     <Form>
                         <InputGroup>
-                            <Form.Control type='text' placeholder='Origin' ></Form.Control>
+                            <Form.Control type='text' placeholder='Origin' className='input-group-start'></Form.Control>
                             <Form.Control type='text' placeholder='Destination' ></Form.Control>
                             <Form.Control type='text' placeholder='Date'></Form.Control>
                             <Form.Control type='text' ></Form.Control>
-                            <Button>
+                            <Button className='input-group-end'>
                                 Search
                             </Button>
                         </InputGroup>

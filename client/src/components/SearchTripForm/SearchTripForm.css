@@ -26,3 +26,13 @@ input[type="date"]:focus::before,
 input[type="date"]:valid::before {
     content: "" !important;
 }
+
+.input-group-start {
+    border-top-left-radius: 100px !important;
+    border-bottom-left-radius: 100px !important;
+}
+
+.input-group-end {
+    border-top-right-radius: 100px !important;
+    border-bottom-right-radius: 100px !important;
+}
