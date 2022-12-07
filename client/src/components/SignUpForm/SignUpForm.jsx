@@ -40,7 +40,6 @@ const SignupForm = ({ fireFinalActions }) => {
             .then(res => {
                 setSignupData({ ...signupData, imageUrl: res.data.cloudinary_url })
                 setLoadingImage(false)
-                fireFinalActions()
             })
             .catch(err => console.log(err))
     }
@@ -62,6 +61,8 @@ const SignupForm = ({ fireFinalActions }) => {
                 setShowToast(true)
                 setToastMessage('User created correctly')
                 navigate('/')
+                fireFinalActions()
+
             })
             .catch(err => console.log(err))
     }
@@ -121,9 +122,8 @@ const SignupForm = ({ fireFinalActions }) => {
             </Form.Group>
 
             <div className="d-grid">
-                <Button type="submit">Register</Button>
+                <Button type="submit" disabled={loadingImage}>{loadingImage ? 'Uploading image' : 'Register'}</Button>
             </div>
-
         </Form>
     )
 }
