@@ -42,7 +42,7 @@ const Navigation = () => {
             <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                 <Container>
                     <Link to='/'>
-                        <Navbar.Brand href="#home"><img src={logo} className="app-logo"></img></Navbar.Brand>
+                        <Navbar.Brand><img src={logo} className="app-logo"></img></Navbar.Brand>
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
