@@ -65,7 +65,6 @@ const LoginForm = ({ closeModal }) => {
                 <Button variant="dark" type="submit">Log In</Button>
             </div>
 
-            {errors?.length ? <ErrorMessage>{errors.map(elm => console.log(elm))}</ErrorMessage> : undefined}
 
         </Form>
     )
