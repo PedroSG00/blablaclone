@@ -2,6 +2,7 @@ import { useState, useContext } from "react"
 import { Form, Button } from "react-bootstrap"
 import { useNavigate } from "react-router-dom"
 import { AuthContext } from "../../context/auth.context"
+import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import { MessageContext } from "../../context/userMessage.context"
 import authService from "../../services/auth.service"
 
@@ -12,6 +13,9 @@ const LoginForm = ({ closeModal }) => {
         email: '',
         password: ''
     })
+
+    const [errors, setErrors] = useState([])
+
 
     const handleInputChange = e => {
         const { value, name } = e.target
@@ -36,8 +40,9 @@ const LoginForm = ({ closeModal }) => {
                 setShowToast(true)
                 setToastMessage('User logged')
                 navigate('/')
+                closeModal()
             })
-            .catch(err => console.log(err))
+            .catch(err => setErrors(err))
     }
 
     const { password, email } = signupData
@@ -57,8 +62,10 @@ const LoginForm = ({ closeModal }) => {
             </Form.Group>
 
             <div className="d-grid">
-                <Button variant="dark" type="submit" onClick={closeModal}>Log In</Button>
+                <Button variant="dark" type="submit">Log In</Button>
             </div>
+
+            {errors?.length ? <ErrorMessage>{errors.map(elm => console.log(elm))}</ErrorMessage> : undefined}
 
         </Form>
     )

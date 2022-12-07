@@ -18,6 +18,7 @@ const Navigation = () => {
     const [showModal, setShowModal] = useState(false)
     const [value, setValue] = useState('')
 
+
     const handleValue = e => {
         if (e.target.value === 'log-in') {
             setShowModal(true)
@@ -42,7 +43,7 @@ const Navigation = () => {
             <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
                 <Container>
                     <Link to='/'>
-                        <Navbar.Brand><img src={logo} className="app-logo"></img></Navbar.Brand>
+                        <Navbar.Brand as='div'><img src={logo} className="app-logo"></img></Navbar.Brand>
                     </Link>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
