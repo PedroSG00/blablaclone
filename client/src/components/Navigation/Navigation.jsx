@@ -50,7 +50,9 @@ const Navigation = () => {
                         <Nav className='ms-auto'>
                         </Nav>
                         <Nav>
-                            <Nav.Link href="#pricing" className='text-color'><MagnifyingGlass size={28} /><span className="nav-title">Search Trips</span></Nav.Link>
+                            <Link to='/trip/list'>
+                                <Nav.Link as='div' className='text-color'><MagnifyingGlass size={28} /><span className="nav-title">Search Trips</span></Nav.Link>
+                            </Link>
                             <Link to='/trip/add'>
                                 <Nav.Link className="text-color" as='div'><PlusCircle size={28} /><span className="nav-title">Add Trip</span></Nav.Link>
                             </Link>

@@ -1,3 +1,5 @@
+import axios from "axios";
+
 class TripService {
     constructor() {
         this.api = axios.create({
@@ -30,6 +32,10 @@ class TripService {
     deleteTrip = (tripID) => this.api.delete(`/${tripID}/delete`)
 }
 
+
+const tripService = new TripService()
+
+export default tripService
 
 
 

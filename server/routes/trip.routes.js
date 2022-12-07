@@ -6,7 +6,8 @@ router.get("/list", (req, res, next) => {
 
     Trip
         .find()
-        .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1 })
+        .populate('owner')
+        .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1 })
         .then(foundTrip => res.json(foundTrip))
         .catch(err => next(err))
 })
