@@ -1,5 +1,12 @@
 import { useMemo, useEffect, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
+import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete"
+
+const PlacesAutocomplete = ({ setSelected }) => {
+
+    const { ready, value, setValue, suggestions: { status, data }, clearSuggestions } = usePlacesAutocomplete()
+
+}
 
 const MapComponent = () => {
 
@@ -142,7 +149,8 @@ const MapComponent = () => {
     ]
 
     const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8"
+        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8",
+        libraries: ["places"]
     })
 
     if (!isLoaded) return <div>Loading</div>
