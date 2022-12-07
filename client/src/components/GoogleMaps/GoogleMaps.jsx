@@ -1,14 +1,11 @@
 import { useMemo, useEffect, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
-import usePlacesAutocomplete, { getGeocode, getLatLng } from "use-places-autocomplete"
 
-const PlacesAutocomplete = ({ setSelected }) => {
 
-    const { ready, value, setValue, suggestions: { status, data }, clearSuggestions } = usePlacesAutocomplete()
+const MapComponent = ({ originMarker, destinationMarker }) => {
 
-}
 
-const MapComponent = () => {
+
 
     const mapStyles = [
         {

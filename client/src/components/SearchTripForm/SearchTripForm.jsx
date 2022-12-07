@@ -1,5 +1,6 @@
 import './SearchTripForm.css'
 import { Col, Form, Row, Container, InputGroup, Button } from 'react-bootstrap';
+import { Autocomplete } from '@react-google-maps/api';
 
 function SearchTripForm() {
 
