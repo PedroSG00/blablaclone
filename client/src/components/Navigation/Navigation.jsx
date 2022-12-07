@@ -51,7 +51,9 @@ const Navigation = () => {
                         </Nav>
                         <Nav>
                             <Nav.Link href="#pricing" className='text-color'><MagnifyingGlass size={28} /><span className="nav-title">Search Trips</span></Nav.Link>
-                            <Nav.Link href="#deets" className="text-color"><PlusCircle size={28} /><span className="nav-title">Add Trip</span></Nav.Link>
+                            <Link to='/trip/add'>
+                                <Nav.Link className="text-color"><PlusCircle size={28} /><span className="nav-title">Add Trip</span></Nav.Link>
+                            </Link>
                             <NavDropdown title={<div style={{ display: "inline-block" }}><UserCircle size={28} /></div>} id="collasible-nav-dropdown">
 
                                 {user ?
