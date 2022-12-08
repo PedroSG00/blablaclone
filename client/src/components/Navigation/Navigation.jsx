@@ -50,7 +50,7 @@ const Navigation = () => {
                         <Nav className='ms-auto'>
                         </Nav>
                         <Nav>
-                            <Link to='/trip/list'>
+                            <Link to='/trips/list'>
                                 <Nav.Link as='div' className='text-color'><MagnifyingGlass size={28} /><span className="nav-title">Search Trips</span></Nav.Link>
                             </Link>
                             <Link to='/trip/add'>

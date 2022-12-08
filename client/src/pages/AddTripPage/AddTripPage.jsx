@@ -11,6 +11,8 @@ const AddTrip = () => {
     const [destinationMarker, setDestinationMarker] = useState({})
     console.log(" Origen ->", originMarker)
     console.log(" Destino ->", destinationMarker)
+
+
     return (
         <Container className="AddTrip ">
             <Row className="justify-content-around h-100">

@@ -12,6 +12,16 @@ router.get("/list", (req, res, next) => {
         .catch(err => next(err))
 })
 
+router.get("/mytrips", isAuthenticated, (req, res, next) => {
+
+    Trip
+        .find({ owner: req.payload._id })
+        .populate('owner')
+        .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1 })
+        .then(ownTripList => res.json(ownTripList))
+        .catch(err => next(err))
+})
+
 router.get("/:id", (req, res, next) => {
 
     const { id } = req.params
@@ -55,7 +65,7 @@ router.post("/:tripID/join", isAuthenticated, (req, res, next) => {
 
     Trip
         .findByIdAndUpdate(tripID, { $addToSet: { passengers: passenger } })
-        .then(editTrip => console.log(editTrip))
+        .then(trip => res.status(200).json(trip))
         .catch(err => next(err))
 
 })
@@ -68,7 +78,7 @@ router.post("/:tripID/leave", isAuthenticated, (req, res, next) => {
 
     Trip
         .findByIdAndUpdate(tripID, { $pull: { passengers: passenger } })
-        .then(editTrip => console.log(editTrip))
+        .then(trip => res.status(202).json(trip))
         .catch(err => next(err))
 
 })
@@ -92,6 +102,24 @@ router.post(":/id/delete", (req, res, next) => {
         .then(res => res.json())
         .catch(err => next(err))
 
+})
+
+router.get('/trip/search', (req, res, next) => {
+    Trip
+        .find({
+            $near: {
+                $maxDistance: 20000,
+                $geometry: {
+                    type: "Point",
+                    coordinates: [lng, lat]
+                }
+            }
+        })
+        .then(filtered => {
+            console.log(filtered)
+            res.json(filtered)
+        })
+        .catch(err => next(err))
 })
 
 module.exports = router

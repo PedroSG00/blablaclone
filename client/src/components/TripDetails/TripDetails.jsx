@@ -1,19 +1,48 @@
 import './TripDetails.css'
-import { useState, useEffect } from 'react'
-import { Container, Row, Col, Card, Button, ListGroup } from 'react-bootstrap'
+import { useState, useEffect, useParams, useContext } from 'react'
+import { Card, Button, ListGroup } from 'react-bootstrap'
 import Loader from '../Loader/Loader'
 import tripService from '../../services/trip.service'
-import { Next } from 'react-bootstrap/esm/PageItem'
+import { useLocation } from 'react-router-dom'
+import { AuthContext } from '../../context/auth.context'
 
 
-const TripDetails = ({ tripDetails, }) => {
+
+const TripDetails = () => {
+
+    const { user } = useContext(AuthContext)
 
     const [trip, setTrip] = useState([])
+    const [newPassenger, setNewPassenger] = useState([])
+    const [tripDetails, setTripDetails] = useState([])
+
+    const location = useLocation()
+
+    useEffect(() => {
+        const starts = location.pathname.lastIndexOf('/') + 1
+        const currentTrip = location.pathname.substring(starts)
+        currentTrip != 'all' && loadTripDetails(currentTrip)
+    }, [location])
+
+
+    const loadTripDetails = (tripIdToLoad) => {
+        tripService
+            .getTripDetails(tripIdToLoad)
+            .then(({ data }) => setTripDetails(data))
+            .catch(err => console.log(err))
+    }
 
     const joinTrip = () => {
         tripService
             .joinTrip(trip_id)
-            .then(res => console.log(res))
+            .then(res => loadTripDetails(trip_id))
+            .catch(err => console.log(err))
+    }
+
+    const leaveTrip = () => {
+        tripService
+            .leaveTrip(trip_id)
+            .then(res => loadTripDetails(trip_id))
             .catch(err => console.log(err))
     }
 
@@ -21,16 +50,16 @@ const TripDetails = ({ tripDetails, }) => {
         setTrip(tripDetails)
     }
 
-    useEffect(() => {
-        handleTrip()
-    }, [])
-
     const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id } = trip
 
-    const { newPassengers, setNewPassengers } = useState([])
+    const handlePassengers = () => {
+        setNewPassenger(passengers)
+    }
 
-
-
+    useEffect(() => {
+        handleTrip()
+        handlePassengers()
+    }, [tripDetails])
 
     return (
         <div className='TripDetails'>
@@ -46,7 +75,16 @@ const TripDetails = ({ tripDetails, }) => {
                                     <ListGroup.Item>{`Passengers: ${passengers.map(elm => ` ${elm.username}`)}.`}</ListGroup.Item>
                                     <ListGroup.Item>{<> {!stops.length === 0 ? `Stops: ${stops}` : "There aren't stops on this trip"}</>}</ListGroup.Item>
                                 </ListGroup>
-                                <Button onClick={joinTrip}>Join Trip</Button>
+
+
+                                {owner._id !== user._id &&
+                                    <>
+                                        <Button onClick={joinTrip} className='me-2'>Join Trip</Button>
+                                        <Button onClick={leaveTrip} className='me-2'>Leave Trip</Button>
+                                    </>
+                                }
+
+
                             </Card.Body>
                         </Card>
 

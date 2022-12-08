@@ -1,17 +1,16 @@
 import './TripList.css'
-import { useState, useEffect } from 'react'
 import TripCard from '../../components/TripCard/TripCard'
-import { Container, Row, Col } from 'react-bootstrap'
-
-const TripList = ({ tripList }) => {
 
 
-
+const TripList = ({ trips }) => {
 
 
     return (
         <div className='TripList'>
-            {tripList.map(elm => < TripCard key={elm._id} tripData={elm} />)}
+
+            {
+                trips.map(elm => <TripCard key={elm._id} {...elm} />)
+            }
         </div >
     )
 }
