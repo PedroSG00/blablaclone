@@ -18,6 +18,8 @@ router.get("/:id", (req, res, next) => {
 
     Trip
         .findById(id)
+        .populate('owner')
+        .populate('passengers')
         .then(trip => res.json(trip))
         .catch(err => next(err))
 })

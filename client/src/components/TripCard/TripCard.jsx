@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Button, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom'
 import Loader from '../Loader/Loader';
 const TripCard = ({ tripData }) => {
 
     const [trip, setTrip] = useState([])
+
+
+
 
     const handleTrip = () => {
         setTrip(tripData)
@@ -13,21 +17,23 @@ const TripCard = ({ tripData }) => {
         handleTrip()
     }, [])
 
-    const { origin_address, destination_address, owner } = trip
+    const { origin_address, destination_address, owner, _id } = trip
 
     return (
         <>
             {
                 trip && owner
                     ?
-                    <Card>
+                    <Card className='m-3'>
                         <Card.Img variant="top" src={owner.imageUrl} />
                         <Card.Body>
                             <Card.Title>{`From: ${origin_address} to: ${destination_address}`}</Card.Title>
                             <Card.Text>
                                 Driver: {owner.username}
                             </Card.Text>
-                            <Button>Show Details</Button>
+                            <Link to={`/${_id}`}>
+                                <Button >Show Details</Button>
+                            </Link>
                         </Card.Body>
                     </Card>
                     :
