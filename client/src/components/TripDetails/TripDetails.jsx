@@ -50,7 +50,7 @@ const TripDetails = () => {
         setTrip(tripDetails)
     }
 
-    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id } = trip
+    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, seats } = trip
 
     const handlePassengers = () => {
         setNewPassenger(passengers)
@@ -77,11 +77,11 @@ const TripDetails = () => {
                                 </ListGroup>
 
 
-                                {owner._id !== user._id &&
+                                {user && (owner._id !== user._id &&
                                     <>
                                         <Button onClick={joinTrip} className='me-2'>Join Trip</Button>
                                         <Button onClick={leaveTrip} className='me-2'>Leave Trip</Button>
-                                    </>
+                                    </>)
                                 }
 
 

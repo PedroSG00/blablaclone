@@ -22,10 +22,10 @@ const TripCard = ({ origin_address, destination_address, owner, _id }) => {
                 </Card.Text>
                 <Link to={`/trips/${_id}`}>
                     <Button className='me-2'>Show Details</Button>
-                    {owner._id === user._id && <>
+                    {user && (owner._id === user._id && <>
                         <Button value='edit' className='me-2'>Edit Trip</Button>
                         <Button value='delete' className='me-2'>Delete trip</Button>
-                    </>}
+                    </>)}
                 </Link>
             </Card.Body>
         </Card>

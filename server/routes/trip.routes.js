@@ -7,7 +7,7 @@ router.get("/list", (req, res, next) => {
     Trip
         .find()
         .populate('owner')
-        .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1 })
+        .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1, passengers: 1, seats: 1 })
         .then(foundTrip => res.json(foundTrip))
         .catch(err => next(err))
 })
@@ -17,7 +17,7 @@ router.get("/mytrips", isAuthenticated, (req, res, next) => {
     Trip
         .find({ owner: req.payload._id })
         .populate('owner')
-        .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1 })
+        .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1, seats: 1, passengers: 1 })
         .then(ownTripList => res.json(ownTripList))
         .catch(err => next(err))
 })
@@ -36,7 +36,7 @@ router.get("/:id", (req, res, next) => {
 
 router.post("/create", isAuthenticated, (req, res, next) => {
 
-    const { from_lat, from_lng, to_lat, to_lng, origin_address, destination_address, date } = req.body
+    const { from_lat, from_lng, to_lat, to_lng, origin_address, destination_address, date, seats } = req.body
     const { _id: owner } = req.payload
 
     Trip

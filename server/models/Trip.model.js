@@ -35,6 +35,12 @@ const tripSchema = new Schema(
             ref: 'User'
         }],
 
+        seats: {
+            type: Number,
+            min: 1,
+            required: [true, 'You have to specify how many seats are aviable.']
+        },
+
         date: [{
             type: Date,
             required: [true, 'You have to specify date for the trip']

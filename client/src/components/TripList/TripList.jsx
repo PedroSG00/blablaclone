@@ -9,7 +9,11 @@ const TripList = ({ trips }) => {
         <div className='TripList'>
 
             {
-                trips.map(elm => <TripCard key={elm._id} {...elm} />)
+                trips.map(elm => {
+                    console.log(elm)
+                    return (elm.passengers?.length < elm.seats && <TripCard key={elm._id} {...elm} />)
+                }
+                )
             }
         </div >
     )
