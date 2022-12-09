@@ -21,6 +21,8 @@ class TripService {
 
     getTripDetails = (tripID) => this.api.get(`/${tripID}`)
 
+    getOwnTrips = () => this.api.get(`/mytrips`)
+
     createTrip = () => this.api.post("/create")
 
     joinTrip = (tripID) => this.api.post(`/${tripID}/join`)
@@ -30,6 +32,8 @@ class TripService {
     editTrip = (tripID) => this.api.put(`/${tripID}/edit`)
 
     deleteTrip = (tripID) => this.api.delete(`/${tripID}/delete`)
+
+    searchTrip = (lat, lng) => this.api.post(`/search`)
 }
 
 

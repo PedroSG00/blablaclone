@@ -1,39 +1,35 @@
-import { useState, useEffect } from 'react';
-import { Button, Card } from 'react-bootstrap';
-import Loader from '../Loader/Loader';
-const TripCard = ({ tripData }) => {
+import { useContext, useState } from 'react';
+import { Button, Card } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { AuthContext } from '../../context/auth.context';
+import tripService from '../../services/trip.service';
 
-    const [trip, setTrip] = useState([])
+const TripCard = ({ origin_address, destination_address, owner, _id }) => {
 
-    const handleTrip = () => {
-        setTrip(tripData)
-    }
+    const { user } = useContext(AuthContext)
 
-    useEffect(() => {
-        handleTrip()
-    }, [])
+    const [buttonValue, setButtonValue] = useState([])
 
-    const { origin_address, destination_address, owner } = trip
+
 
     return (
-        <>
-            {
-                trip && owner
-                    ?
-                    <Card>
-                        <Card.Img variant="top" src={owner.imageUrl} />
-                        <Card.Body>
-                            <Card.Title>{`From: ${origin_address} to: ${destination_address}`}</Card.Title>
-                            <Card.Text>
-                                Driver: {owner.username}
-                            </Card.Text>
-                            <Button>Show Details</Button>
-                        </Card.Body>
-                    </Card>
-                    :
-                    <Loader />
-            }
-        </>
+        <Card className='m-3'>
+            <Card.Img variant="top" src={owner.imageUrl} />
+            <Card.Body>
+                <Card.Title>{`From: ${origin_address} to: ${destination_address}`}</Card.Title>
+                <Card.Text>
+                    Driver: {owner.username}
+                </Card.Text>
+                <Link to={`/trips/${_id}`}>
+                    <Button className='me-2'>Show Details</Button>
+                    {user && (owner._id === user._id && <>
+                        <Button value='edit' className='me-2'>Edit Trip</Button>
+                        <Button value='delete' className='me-2'>Delete trip</Button>
+                    </>)}
+                </Link>
+            </Card.Body>
+        </Card>
+
     );
 }
 

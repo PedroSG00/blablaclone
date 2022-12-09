@@ -1,8 +1,9 @@
 import './SearchTripForm.css'
 import { Col, Form, Row, Container, InputGroup, Button } from 'react-bootstrap';
-import { useLoadScript, Autocomplete } from '@react-google-maps/api'
+import { useLoadScript } from '@react-google-maps/api'
 import DatePicker from "react-widgets/DatePicker";
 import Loader from '../Loader/Loader';
+import PlacesAutocomplete from '../Autocomplete/Autocomplete';
 
 function SearchTripForm() {
 
@@ -19,10 +20,10 @@ function SearchTripForm() {
                     <Col md={6}>
                         <Form>
                             <InputGroup>
-                                <Form.Control type='text' placeholder='Origin' className='input-group-start'></Form.Control>
-                                <Form.Control type='text' placeholder='Destination' ></Form.Control>
+                                <PlacesAutocomplete placeholder={'Origin'}></PlacesAutocomplete>
+                                <PlacesAutocomplete placeholder={'Destination'}></PlacesAutocomplete>
                                 <DatePicker placeholder="m/dd/yy" />
-                                <Form.Control type='text'></Form.Control>
+                                <PlacesAutocomplete placeholder={'Destination'}></PlacesAutocomplete>
                                 <Button className='input-group-end'>
                                     Search
                                 </Button>

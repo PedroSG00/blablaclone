@@ -1,11 +1,21 @@
 import "./Autocomplete.css"
+import tripService from "../../services/trip.service";
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-const PlacesAutocomplete = ({ setOriginMarker, setDestinationMarker, placeholder, isOrigin }) => {
+const PlacesAutocomplete = ({ setOriginMarker, setDestinationMarker, placeholder, isOrigin, searchOrigin, searchDestination, setTrips }) => {
+
+
+    const search = (lat, lng) => {
+        tripService
+            .searchTrip(lng, lat)
+            .then(data => console.log(data))
+    }
+
+
 
     const {
         ready,
@@ -25,6 +35,7 @@ const PlacesAutocomplete = ({ setOriginMarker, setDestinationMarker, placeholder
 
     const handleInput = (e) => {
         // Update the keyword of the input element
+        console.log(e.target.value)
         setValue(e.target.value);
     };
 
@@ -37,9 +48,13 @@ const PlacesAutocomplete = ({ setOriginMarker, setDestinationMarker, placeholder
                 clearSuggestions();
 
                 // Get latitude and longitude via utility functions
+
                 getGeocode({ address: description }).then((results) => {
+
                     const { lat, lng } = getLatLng(results[0]);
-                    isOrigin ? setOriginMarker({ lat, lng }) : setDestinationMarker({ lat, lng });
+                    // isOrigin ? setOriginMarker({ lat, lng }) : setDestinationMarker({ lat, lng });
+                    console.log(lat, lng)
+                    searchOrigin || searchDestination && console.log(search(lng, lat))
                 });
             };
 
