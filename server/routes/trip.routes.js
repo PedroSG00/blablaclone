@@ -97,7 +97,7 @@ router.put("/:id/edit", (req, res, next) => {
     const { id } = req.params
 
     Trip
-        .findByIdAndUpdate(id, req.body)
+        .findByIdAndUpdate(id, req.body, { new: true })
         .then(data => res.status(200).json(data))
         .catch(err => next(err))
 })

@@ -13,9 +13,7 @@ const ProfilePage = () => {
     const loadOwnTrips = () => {
         tripService
             .getOwnTrips()
-            .then(({ data }) => {
-                setTrips(data)
-            })
+            .then(({ data }) => setTrips(data))
             .catch(err => console.log(err))
     }
 
@@ -32,7 +30,7 @@ const ProfilePage = () => {
                     </Col>
                     <Col md={5}>
                         <h2>My trips:</h2>
-                        {trips ? <TripList trips={trips} /> : <Loader />}
+                        {<TripList trips={trips} loadTrips={() => { }} loadOwnTrips={loadOwnTrips} />}
                     </Col>
                 </Row>
             </Container>
