@@ -85,6 +85,8 @@ const TripDetails = () => {
                                 }
 
 
+
+
                             </Card.Body>
                         </Card>
 

@@ -8,9 +8,19 @@ const TripCard = ({ origin_address, destination_address, owner, _id }) => {
 
     const { user } = useContext(AuthContext)
 
-    const [buttonValue, setButtonValue] = useState([])
+    // const [buttonValue, setButtonValue] = useState([])
 
+    const deleteTrip = () => {
+        tripService
+            .deleteTrip(_id)
+            .then(data => console.log(data))
+    }
 
+    const editTrip = () => {
+        tripService
+            .editTrip(_id)
+            .then(() => console.log('PASO'))
+    }
 
     return (
         <Card className='m-3'>
@@ -22,11 +32,11 @@ const TripCard = ({ origin_address, destination_address, owner, _id }) => {
                 </Card.Text>
                 <Link to={`/trips/${_id}`}>
                     <Button className='me-2'>Show Details</Button>
-                    {user && (owner._id === user._id && <>
-                        <Button value='edit' className='me-2'>Edit Trip</Button>
-                        <Button value='delete' className='me-2'>Delete trip</Button>
-                    </>)}
                 </Link>
+                {user && (owner._id === user._id && <>
+                    <Button onClick={editTrip} className='me-2'>Edit Trip</Button>
+                    <Button onClick={deleteTrip} className='me-2'>Delete trip</Button>
+                </>)}
             </Card.Body>
         </Card>
 

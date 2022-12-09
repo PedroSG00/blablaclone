@@ -51,6 +51,7 @@ router.post("/create", isAuthenticated, (req, res, next) => {
             },
             origin_address,
             destination_address,
+            seats,
             date,
             owner
         })
@@ -83,23 +84,23 @@ router.post("/:tripID/leave", isAuthenticated, (req, res, next) => {
 
 })
 
-router.post("/:id/edit", (req, res, next) => {
+router.put("/:id/edit", (req, res, next) => {
 
     const { id } = req.params
 
     Trip
         .findByIdAndUpdate(id, req.body)
-        .then(res => res.json())
+        .then(data => res.status(200).json(data))
         .catch(err => next(err))
 })
 
-router.post(":/id/delete", (req, res, next) => {
+router.delete("/:id/delete", (req, res, next) => {
 
     const { id } = req.params
 
     Trip
         .findByIdAndDelete(id)
-        .then(res => res.json())
+        .then(data => res.status(200).json(data))
         .catch(err => next(err))
 
 })
