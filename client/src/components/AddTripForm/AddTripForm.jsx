@@ -1,15 +1,13 @@
 import "./AddTripForm.css"
-import { useState, useContext } from "react"
+import { useState } from "react"
 import { Form, Button } from "react-bootstrap"
-import authService from "../../services/auth.service"
-import uploadServices from "../../services/upload.service"
-import { useNavigate } from 'react-router-dom'
-import { MessageContext } from '../../context/userMessage.context'
 import Loader from "../Loader/Loader"
 import { useLoadScript } from "@react-google-maps/api"
 import PlacesAutocomplete from "../Autocomplete/Autocomplete"
+import tripService from "../../services/trip.service"
 
-const AddTripForm = ({ setOriginMarker, setDestinationMarker }) => {
+
+const AddTripForm = ({ setOrigin, setDestination }) => {
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8",
@@ -18,31 +16,60 @@ const AddTripForm = ({ setOriginMarker, setDestinationMarker }) => {
 
     const [newTripData, setNewTripData] = useState({
 
+        from: {},
+        to: {},
+        origin_address: '',
+        destination_address: '',
+        date: '',
+        seats: 0
+
     })
 
-    const [origin, setOrigin] = useState()
+    const { date, seats } = newTripData
 
-    const [destination, setDestination] = useState()
+
+    const handleInput = e => {
+        const { name, value } = e.target
+        setNewTripData({ ...newTripData, [name]: value })
+        console.log("newTrip", newTripData)
+
+    }
+
+    const updateAddress = (kind, value, { lat, lng }) => {
+        if (kind === "origin_address") {
+            setNewTripData({ ...newTripData, origin_address: value, from: { lat, lng } })
+        } else {
+            setNewTripData({ ...newTripData, destination_address: value, to: { lat, lng } })
+        }
+    }
+
+    const handleForm = e => {
+
+        e.preventDefault()
+        tripService
+            .createTrip(newTripData)
+            .then(({ data }) => console.log(data))
+    }
 
     return (
 
         isLoaded ?
-            <Form className="form-wrapper">
+            <Form className="form-wrapper" onSubmit={handleForm}>
                 <Form.Group className="mb-3">
                     <Form.Label>Origin</Form.Label>
-                    <PlacesAutocomplete placeholder={"Where is your departure at?"} setOriginMarker={setOriginMarker} isOrigin={true} name={"origin"} />
+                    <PlacesAutocomplete placeholder={"Where is your departure at?"} kind={"origin_address"} setOrigin={setOrigin} updateAddress={updateAddress} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="XXXXX">
+                <Form.Group className="mb-3">
                     <Form.Label>Destination</Form.Label>
-                    <PlacesAutocomplete placeholder={"Where is your destination at?"} setDestinationMarker={setDestinationMarker} isOrigin={false} name={"destination"} />
+                    <PlacesAutocomplete placeholder={"Where is your destination at?"} kind={"destination_address"} name="destination_address" setDestination={setDestination} updateAddress={updateAddress} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="XXXXX">
+                <Form.Group className="mb-3">
                     <Form.Label>Date</Form.Label>
-                    <Form.Control type="XXXXX" name="XXXXX" />
+                    <Form.Control type="date" name="date" value={date} onChange={handleInput} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="XXXXX">
-                    <Form.Label>Passengers</Form.Label>
-                    <Form.Control type="XXXXX" name="XXXXX" />
+                <Form.Group className="mb-3">
+                    <Form.Label>Number of available seats</Form.Label>
+                    <Form.Control type="number" name="seats" value={seats} onChange={handleInput} />
                 </Form.Group>
 
                 <div className="d-grid">

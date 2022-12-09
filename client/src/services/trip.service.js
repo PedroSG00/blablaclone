@@ -23,7 +23,7 @@ class TripService {
 
     getOwnTrips = () => this.api.get(`/mytrips`)
 
-    createTrip = () => this.api.post("/create")
+    createTrip = (tripData) => this.api.post("/create", tripData)
 
     joinTrip = (tripID) => this.api.post(`/${tripID}/join`)
 
