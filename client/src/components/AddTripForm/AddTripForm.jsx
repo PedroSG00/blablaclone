@@ -16,17 +16,25 @@ const AddTripForm = ({ setOriginMarker, setDestinationMarker }) => {
         libraries: ["places"]
     })
 
+    const [newTripData, setNewTripData] = useState({
+
+    })
+
+    const [origin, setOrigin] = useState()
+
+    const [destination, setDestination] = useState()
+
     return (
 
         isLoaded ?
             <Form className="form-wrapper">
-                <Form.Group className="mb-3" controlId="XXXXX">
+                <Form.Group className="mb-3">
                     <Form.Label>Origin</Form.Label>
-                    <PlacesAutocomplete placeholder={"Where is your departure at?"} setOriginMarker={setOriginMarker} isOrigin={true} />
+                    <PlacesAutocomplete placeholder={"Where is your departure at?"} setOriginMarker={setOriginMarker} isOrigin={true} name={"origin"} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="XXXXX">
                     <Form.Label>Destination</Form.Label>
-                    <PlacesAutocomplete placeholder={"Where is your destination at?"} setDestinationMarker={setDestinationMarker} isOrigin={false} />
+                    <PlacesAutocomplete placeholder={"Where is your destination at?"} setDestinationMarker={setDestinationMarker} isOrigin={false} name={"destination"} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="XXXXX">
                     <Form.Label>Date</Form.Label>

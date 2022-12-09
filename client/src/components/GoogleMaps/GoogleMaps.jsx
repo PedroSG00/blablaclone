@@ -1,11 +1,9 @@
 import { useMemo, useEffect, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
+import Loader from "../Loader/Loader";
 
 
-const MapComponent = ({ originMarker, destinationMarker }) => {
-
-
-
+const MapComponent = ({ originMarker, destinationMarker, center }) => {
 
     const mapStyles = [
         {
@@ -145,15 +143,22 @@ const MapComponent = ({ originMarker, destinationMarker }) => {
         }
     ]
 
+    const mapOptions = {
+        styles: mapStyles,
+        fullscreenControl: false,
+        mapTypeControl: false,
+        streetViewControl: false
+    }
+
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8",
         libraries: ["places"]
     })
 
-    if (!isLoaded) return <div>Loading</div>
+    if (!isLoaded) return <Loader />
 
     return (
-        <GoogleMap zoom={13} options={{ styles: mapStyles }} center={{ lat: 40.39264225582, lng: -3.6970498288358873 }} mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "10px" }} />
+        <GoogleMap zoom={15} options={mapOptions} center={center} mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "10px" }} />
     )
 
 }
