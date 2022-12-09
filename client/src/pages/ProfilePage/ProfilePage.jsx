@@ -10,7 +10,6 @@ const ProfilePage = () => {
 
     const [trips, setTrips] = useState([])
 
-
     const loadOwnTrips = () => {
         tripService
             .getOwnTrips()
@@ -23,9 +22,6 @@ const ProfilePage = () => {
     useEffect(() => {
         loadOwnTrips()
     }, [])
-
-
-
 
     return (
         <div className='ProfilePage'>

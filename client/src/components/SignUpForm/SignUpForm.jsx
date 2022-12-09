@@ -58,8 +58,6 @@ const SignupForm = ({ fireFinalActions }) => {
         authService
             .signup(signupData)
             .then(() => {
-                setShowToast(true)
-                setToastMessage('User created correctly')
                 navigate('/')
                 fireFinalActions()
 

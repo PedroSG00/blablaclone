@@ -27,21 +27,24 @@ const SearchTripPage = () => {
 
     return (
 
-        <Container>
-            <Row className='justify-content-center h-100'>
-                <Col md={5}>
-                    <div className='d-flex m-3'>
-                        <PlacesAutocomplete placeholder={'Origin'} searchOrigin={true} setTrips={setTrips} ></PlacesAutocomplete>
-                        <PlacesAutocomplete placeholder={'Destination'} searchDestination={true} setTrips={setTrips}></PlacesAutocomplete>
-                    </div>
+        <div className='SearchTripPage'>
+            <Container>
+                <Row className='justify-content-center h-100'>
+                    <Col md={5}>
+                        <div className='d-flex m-3'>
+                            <PlacesAutocomplete placeholder={'Origin'} searchOrigin={true} setTrips={setTrips} ></PlacesAutocomplete>
+                            <PlacesAutocomplete placeholder={'Destination'} searchDestination={true} setTrips={setTrips}></PlacesAutocomplete>
+                        </div>
 
-                    {trips ? <TripList trips={trips} /> : <Loader />}
-                </Col>
-                <Col md={5}>
-                    <TripDetails />
-                </Col>
-            </Row>
-        </Container>
+                        {trips ? <TripList trips={trips} /> : <Loader />}
+                    </Col>
+                    <Col md={5}>
+                        <TripDetails />
+                    </Col>
+                </Row>
+            </Container>
+        </div>
+
     )
 }
 

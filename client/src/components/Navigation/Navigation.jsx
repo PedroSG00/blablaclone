@@ -6,14 +6,17 @@ import { NavDropdown } from 'react-bootstrap'
 import { MagnifyingGlass, PlusCircle, UserCircle } from "phosphor-react"
 import logo from "./../../assets/logo.png"
 import { AuthContext } from '../../context/auth.context'
+import { MessageContext } from '../../context/userMessage.context'
 import LoginForm from '../LogInForm/LogInForm'
 import SignupForm from '../SignUpForm/SignUpForm'
 
 const Navigation = () => {
 
     const { user, logoutUser } = useContext(AuthContext)
+
     const closeModal = () => setShowModal(false)
 
+    const { setShowToast, setToastMessage } = useContext(MessageContext)
 
     const [showModal, setShowModal] = useState(false)
     const [value, setValue] = useState('')
@@ -29,7 +32,15 @@ const Navigation = () => {
         }
     }
 
+    const logOut = () => {
+        logoutUser()
+        setShowToast(true)
+        setToastMessage('User logged out')
+    }
+
     const fireFinalActions = () => {
+        setShowToast(true)
+        setToastMessage('User created correctly')
         closeModal()
     }
 
@@ -64,7 +75,7 @@ const Navigation = () => {
                                             <NavDropdown.Item as='div' className='text-color'>View profile</NavDropdown.Item>
                                         </Link>
                                         <Link to='/'>
-                                            <NavDropdown.Item as='div' className='text-color' onClick={logoutUser}>
+                                            <NavDropdown.Item as='div' className='text-color' onClick={logOut}>
                                                 Log Out
                                             </NavDropdown.Item>
                                         </Link>

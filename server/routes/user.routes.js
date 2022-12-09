@@ -31,7 +31,7 @@ router.get('/:user_id', isAuthenticated, (req, res, next) => {
 })
 
 
-router.post('/:user_id/edit', isAuthenticated, (req, res, next) => {
+router.put('/:user_id/edit', isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
     const { email, username, _id, firstname, lastname, age, gender, imageUrl } = req.body
@@ -44,7 +44,7 @@ router.post('/:user_id/edit', isAuthenticated, (req, res, next) => {
 })
 
 
-router.post("/:user_id/delete", isAuthenticated, (req, res, next) => {
+router.delete("/:user_id/delete", isAuthenticated, (req, res, next) => {
 
     const { user_id } = req.params
 

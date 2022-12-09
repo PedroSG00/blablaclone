@@ -29,7 +29,7 @@ class TripService {
 
     leaveTrip = (tripID) => this.api.post(`/${tripID}/leave`)
 
-    editTrip = (tripID) => this.api.put(`/${tripID}/edit`)
+    editTrip = (tripID, tripData) => this.api.put(`/${tripID}/edit`)
 
     deleteTrip = (tripID) => this.api.delete(`/${tripID}/delete`)
 

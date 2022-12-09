@@ -25,7 +25,7 @@ router.post('/:user_id/add-comment', isAuthenticated, (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.post('/:user_id/:comment_id/delete-comment', (req, res, next) => {
+router.delete('/:user_id/:comment_id/delete-comment', (req, res, next) => {
 
     const { user_id, comment_id } = req.params
     console.log(comment_id)

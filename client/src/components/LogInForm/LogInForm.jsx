@@ -38,7 +38,7 @@ const LoginForm = ({ closeModal }) => {
                 storeToken(tokenFromServer)
                 authenticateUser()
                 setShowToast(true)
-                setToastMessage('User logged')
+                setToastMessage('User logged in')
                 navigate('/')
                 closeModal()
             })
