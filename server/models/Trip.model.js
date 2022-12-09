@@ -38,7 +38,7 @@ const tripSchema = new Schema(
         seats: {
             type: Number,
             min: 1,
-            required: [true, 'You have to specify how many seats are aviable.']
+            required: [true, 'You have to specify how many seats are available.']
         },
 
         date: [{
