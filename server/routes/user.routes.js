@@ -4,7 +4,7 @@ const { userList, userDetails, editUser, deleteUser } = require('../controllers/
 
 router.get('/list', isAuthenticated, userList)
 
-router.get('/:user_id', isAuthenticated, userDetails)
+router.get('/user-details', isAuthenticated, userDetails)
 
 router.put('/:user_id/edit', isAuthenticated, editUser)
 

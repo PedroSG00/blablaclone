@@ -24,6 +24,10 @@ class CarsService {
         return this.api.get('/list')
     }
 
+    getMyCars() {
+        return this.api.get('./my-cars')
+    }
+
     getFilteredCars(make, model, year) {
         return this.api.get(`/?make=${make}&model=${model}&year=${year}`)
     }

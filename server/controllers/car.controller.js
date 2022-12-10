@@ -9,6 +9,14 @@ const getCars = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const myCars = (req, res, next) => {
+    Car
+        .find({ owner: req.payload._id })
+        .select({ model: 1, make: 1, year: 1, seats: 1, color: 1, energeticClassification: 1 })
+        .then(ownCarList => res.json(ownCarList))
+        .catch(err => next(err))
+}
+
 const carsQuery = (req, res, next) => {
 
     const { make, model, year } = req.query
@@ -78,6 +86,7 @@ const deleteCar = (req, res, next) => {
 
 module.exports = {
     getCars,
+    myCars,
     carsQuery,
     createCar,
     editCar,

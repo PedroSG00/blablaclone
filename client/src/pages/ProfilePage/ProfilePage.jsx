@@ -1,10 +1,11 @@
 import './ProfilePage.css'
 import ProfileCard from '../../components/ProfileCard/ProfileCard'
-import { Row, Col, Container } from 'react-bootstrap'
+import { Row, Col, Container, Button } from 'react-bootstrap'
 import tripService from '../../services/trip.service'
 import { useState, useEffect } from 'react'
 import TripList from '../../components/TripList/TripList'
 import Loader from '../../components/Loader/Loader'
+import CarList from '../../components/CarList/CarList'
 
 const ProfilePage = () => {
 
@@ -17,6 +18,7 @@ const ProfilePage = () => {
             .catch(err => console.log(err))
     }
 
+
     useEffect(() => {
         loadOwnTrips()
     }, [])
@@ -24,13 +26,22 @@ const ProfilePage = () => {
     return (
         <div className='ProfilePage'>
             <Container className='mt-5'>
-                <Row className='align-items-center justify-content-between'>
-                    <Col md={5} className='m-2'>
+                <Row className='justify-content-center'>
+                    <Col md={6} className='m-2'>
                         <ProfileCard />
                     </Col>
-                    <Col md={5}>
-                        <h2>My trips:</h2>
+                </Row>
+                <hr />
+                <Row className='justify-content-around'>
+                    <Col md={6}>
+                        <h2 className='text-center'>My trips</h2>
+                        <hr />
                         {<TripList trips={trips} loadTrips={() => { }} loadOwnTrips={loadOwnTrips} />}
+                    </Col>
+                    <Col md={6}>
+                        <h2 className='text-center'>My cars</h2>
+                        <hr />
+                        <CarList />
                     </Col>
                 </Row>
             </Container>

@@ -12,13 +12,13 @@ const userList = (req, res, next) => {
 
 const userDetails = (req, res, next) => {
 
-    const { user_id } = req.params
+    const { _id: user_id } = req.payload
 
     User
         .findById(user_id)
         .populate('comments')
         .populate('cars')
-        .then(userDetails => res.json(userDetails))
+        .then(userDetails => res.status(200).json(userDetails))
         .catch(error => next(error))
 
 }

@@ -6,7 +6,7 @@ const TripList = ({ trips, loadTrips, loadOwnTrips }) => {
 
 
     return (
-        <div className='TripList'>
+        <div className='TripList justify-content-center'>
 
             {
                 trips.map(elm => {
