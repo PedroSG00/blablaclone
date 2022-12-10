@@ -1,58 +1,13 @@
 const router = require("express").Router()
-const User = require("../models/User.model")
-
-const jwt = require('jsonwebtoken')
-
 const { isAuthenticated } = require('../middleware/jwt-middleware')
+const { userList, userDetails, editUser, deleteUser } = require('../controllers/user.controller')
 
+router.get('/list', isAuthenticated, userList)
 
-router.get('/list', isAuthenticated, (req, res, next) => {
+router.get('/:user_id', isAuthenticated, userDetails)
 
-    User
-        .find({ role: 'USER' })
-        .select({ email: 1, imageUrl: 1 })
-        .then(users => res.json(users))
-        .catch(error => next(error))
+router.put('/:user_id/edit', isAuthenticated, editUser)
 
-});
-
-router.get('/:user_id', isAuthenticated, (req, res, next) => {
-
-    const { user_id } = req.params
-
-
-    User
-        .findById(user_id)
-        .populate('comments')
-        .populate('cars')
-        .then(userDetails => res.json(userDetails))
-        .catch(error => next(error))
-
-})
-
-
-router.put('/:user_id/edit', isAuthenticated, (req, res, next) => {
-
-    const { user_id } = req.params
-    const { email, username, _id, firstname, lastname, age, gender, imageUrl } = req.body
-
-    User
-        .findByIdAndUpdate(user_id, { email, username, _id, firstname, lastname, age, gender, imageUrl }, { new: true })
-        .then(userDetails => res.json(userDetails))
-        .catch(error => next(error))
-
-})
-
-
-router.delete("/:user_id/delete", isAuthenticated, (req, res, next) => {
-
-    const { user_id } = req.params
-
-    User
-        .findByIdAndDelete(user_id)
-        .then(deletedUser => res.json(deletedUser))
-        .catch(err => next(err))
-
-})
+router.delete("/:user_id/delete", isAuthenticated, deleteUser)
 
 module.exports = router

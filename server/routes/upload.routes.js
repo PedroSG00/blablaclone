@@ -1,16 +1,8 @@
 const router = require("express").Router()
-
 const uploader = require('../config/cloudinary.config')
+const { loadImage } = require('../controllers/upload.controller')
 
-router.post('/image', uploader.single('imageData'), (req, res) => {
-
-    if (!req.file) {
-        res.status(500).json({ errorMessage: 'Error loading file' })
-        return
-    }
-
-    res.json({ cloudinary_url: req.file.path })
-})
+router.post('/image', uploader.single('imageData'), loadImage)
 
 
 module.exports = router
