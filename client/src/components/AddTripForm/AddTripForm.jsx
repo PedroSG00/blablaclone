@@ -4,15 +4,19 @@ import { Form, Button } from "react-bootstrap"
 import Loader from "../Loader/Loader"
 import { useLoadScript } from "@react-google-maps/api"
 import PlacesAutocomplete from "../Autocomplete/Autocomplete"
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import tripService from "../../services/trip.service"
 import { MessageContext } from "../../context/userMessage.context"
 import { useNavigate } from "react-router-dom"
+
 
 
 const AddTripForm = ({ setOrigin, setDestination }) => {
 
     const { setShowToast, setToastMessage } = useContext(MessageContext)
     const navigate = useNavigate()
+
+    const [errors, setErrors] = useState([])
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8",
@@ -58,6 +62,7 @@ const AddTripForm = ({ setOrigin, setDestination }) => {
                 setToastMessage('Created new trip')
                 navigate(`/user/profile`)
             })
+            .catch(err => setErrors(err.response.data.errorMessages))
     }
 
     return (
@@ -81,9 +86,12 @@ const AddTripForm = ({ setOrigin, setDestination }) => {
                     <Form.Control type="number" name="seats" value={seats} onChange={handleInput} />
                 </Form.Group>
 
+                {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
+
                 <div className="d-grid">
                     <Button type="submit">Add Trip</Button>
                 </div>
+
             </Form>
             : <Loader />
 

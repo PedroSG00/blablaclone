@@ -36,8 +36,6 @@ router.get("/:id", (req, res, next) => {
 
 router.post("/create", isAuthenticated, (req, res, next) => {
 
-    console.log(req.body)
-
     const { from, to, origin_address, destination_address, date, seats } = req.body
     const { _id: owner } = req.payload
 
@@ -62,7 +60,7 @@ router.post("/create", isAuthenticated, (req, res, next) => {
             seats
         })
         .then(response => res.json(response))
-        .catch(err => res.status(500).json(err))
+        .catch(err => next(err))
 
 })
 

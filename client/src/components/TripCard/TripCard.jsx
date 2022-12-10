@@ -56,7 +56,7 @@ const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, lo
                     <Link to={`/trips/${trip_id}`}>
                         <Button className='me-2'>Show Details</Button>
                     </Link>
-                    {user && ((owner._id === user._id && location.pathname !== '/trips/list') && <>
+                    {user && ((owner._id === user._id && location.pathname !== '/trips/list' && location.pathname !== `/trips/${trip_id}`) && <>
                         <Button value='edit' onClick={handleValue} className='me-2'>Edit Trip</Button>
                         <Button value='delete' onClick={handleValue} className='me-2'>Delete trip</Button>
                     </>)}
