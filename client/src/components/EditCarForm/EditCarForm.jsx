@@ -1,9 +1,11 @@
-import './CreateCarForm.css'
+import './EditCarForm.css'
 import Select from 'react-select'
 import carsService from '../../services/cars.service'
 import { Form, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
-const CreateCarForm = () => {
+const EditCarForm = ({ car_id }) => {
+
+    console.log(car_id)
 
     const [cars, setCars] = useState([])
     const [make, setMake] = useState()
@@ -72,21 +74,22 @@ const CreateCarForm = () => {
     const handleInput = e => {
         const { name, value } = e.target
         setNewCarData({ ...newCarData, [name]: value, make: make, model: model, year: year })
-        console.log("create", newCarData)
+        // console.log("create", newCarData)
 
     }
 
-    console.log(newCarData)
+    // console.log(newCarData)
 
-    const createNewCar = () => {
-        carsService
-            .createCar(newCarData)
+    const editCar = () => {
+
     }
 
     const handleForm = e => {
-
         e.preventDefault()
-        createNewCar()
+
+        carsService
+            .updateCar(car_id, newCarData)
+            .then(({ data }) => console.log('--------------', data.cars))
     }
 
     useEffect(() => {
@@ -103,7 +106,7 @@ const CreateCarForm = () => {
 
         &&
         <>
-            <h2>Create car</h2>
+            <h2>Edit car</h2>
             <Form onSubmit={handleForm}>
                 <Form.Group className="mb-3" controlId="carMake">
                     <Form.Label>Make</Form.Label>
@@ -170,4 +173,4 @@ const CreateCarForm = () => {
     )
 }
 
-export default CreateCarForm
+export default EditCarForm

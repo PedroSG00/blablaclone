@@ -112,7 +112,7 @@ const EditTripForm = ({ trip_id, loadTrips, closeModal, loadOwnTrips }) => {
                 </Form.Group>
 
                 <div className="d-grid">
-                    <Button type="submit">Add Trip</Button>
+                    <Button type="submit">Edit Trip</Button>
                 </div>
             </Form>
             : <Loader />

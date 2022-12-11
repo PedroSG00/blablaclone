@@ -59,7 +59,7 @@ const editCar = (req, res, next) => {
     const { make, model, year, color, seats, energeticClassification } = req.body
 
     Car
-        .findByIdAndUpdate(car_id, { make, model, year, color, seats, energeticClassification })
+        .findByIdAndUpdate(car_id, { make, model, year, color, seats, energeticClassification }, { new: true })
         .then((updatedCar) => {
             return User.findByIdAndUpdate(user_id, { cars: updatedCar._id })
         })

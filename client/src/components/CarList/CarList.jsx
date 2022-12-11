@@ -10,7 +10,6 @@ const CarList = () => {
 
     const { user } = useContext(AuthContext)
     const { _id: user_id } = user
-    console.log(user_id)
 
     const [userCars, setUserCars] = useState([])
 
