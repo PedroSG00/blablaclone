@@ -1,6 +1,7 @@
 import './CreateCarForm.css'
 import Select from 'react-select'
 import carsService from '../../services/cars.service'
+import { Form } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 const CreateCarForm = () => {
 
@@ -12,6 +13,15 @@ const CreateCarForm = () => {
 
     const [filteredModel, setFilteredModel] = useState([])
     const [filteredYear, setFilteredYear] = useState([])
+
+    const [newCarData, setNewCarData] = useState({
+        model: '',
+        make: '',
+        year: '',
+        seats: 2,
+        color: '',
+        energeticClassification: 'B'
+    })
 
 
     const getCars = () => {
@@ -33,7 +43,6 @@ const CreateCarForm = () => {
     const uniqueCarsModel = [... new Set(carsModel)]
 
     const uniqueCarsYear = [... new Set(carsYear)]
-
 
 
     const handleMakeValue = e => setMake(e.value)
@@ -58,6 +67,15 @@ const CreateCarForm = () => {
             .catch(err => console.log(err))
     }
 
+
+
+    const handleInput = () => {
+
+
+    }
+
+
+
     useEffect(() => {
         getCars()
         filterCarsMake()
@@ -67,21 +85,55 @@ const CreateCarForm = () => {
 
 
     return (
+
         uniqueCarsMake
+
         &&
         <>
-            <Select
-                options={uniqueCarsMake.map(elm => ({ label: elm, value: elm }))}
-                onChange={handleMakeValue}
-            />
-            <Select
-                options={uniqueCarsModel.map(elm => ({ label: elm, value: elm }))}
-                onChange={handleModelValue}
-            />
-            <Select
-                options={uniqueCarsYear.map(elm => ({ label: elm, value: elm }))}
-                onChange={handleYearValue}
-            />
+            <h2>Create car</h2>
+            <Form onSubmit={handleInput}>
+                <Form.Group className="mb-3" controlId="carMake">
+                    <Form.Label>Make</Form.Label>
+                    <Select
+                        options={uniqueCarsMake.map(elm => ({ label: elm, value: elm }))}
+                        onChange={handleMakeValue}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="carModel">
+                    <Form.Label>Model</Form.Label>
+                    <Select
+                        options={uniqueCarsModel.map(elm => ({ label: elm, value: elm }))}
+                        onChange={handleModelValue}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="carYear">
+                    <Form.Label>Year</Form.Label>
+                    <Select
+                        options={uniqueCarsYear.map(elm => ({ label: elm, value: elm }))}
+                        onChange={handleYearValue}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="Seats">
+                    <Form.Label>Seats</Form.Label>
+                    <Form.Control type="number" />
+                </Form.Group>
+
+                <>
+                    <Form.Label htmlFor="color">Color</Form.Label>
+                    <Form.Control
+                        type="color"
+                        id="color"
+                        defaultValue="#563d7c"
+                        title="Choose your color"
+                    />
+                </>
+
+
+            </Form>
+
         </>
     )
 }
