@@ -4,6 +4,8 @@ import usePlacesAutocomplete, {
     getLatLng,
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
+import { MapContext } from "../../context/map.context";
+import { useContext } from "react";
 
 const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers }) => {
 
@@ -18,13 +20,15 @@ const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers })
         },
         debounce: 300,
     });
+
+    const { setLocation, map, location } = useContext(MapContext)
+
     const ref = useOnclickOutside(() => {
         clearSuggestions();
     });
 
     const handleInput = (e) => {
         setValue(e.target.value);
-        console.log(e.target.value)
     };
 
     const handleSelect =
@@ -38,6 +42,11 @@ const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers })
                     const { lat, lng } = getLatLng(results[0]);
                     updateAddress(kind, description, { lat, lng })
                     handleMarkers(kind, { lat, lng })
+                    if (kind === "origin_address" && map) {
+                        setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) })
+                        console.log("Ubicacion seteada en autocomplete", location)
+                    }
+
                 });
             };
 

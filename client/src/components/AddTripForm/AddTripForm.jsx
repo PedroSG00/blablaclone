@@ -9,20 +9,17 @@ import tripService from "../../services/trip.service"
 import routeService from "../../services/route.service"
 import { MessageContext } from "../../context/userMessage.context"
 import { useNavigate } from "react-router-dom"
+import { MapContext } from "../../context/map.context";
 
 
 
 const AddTripForm = ({ handleMarkers }) => {
 
     const { setShowToast, setToastMessage } = useContext(MessageContext)
+    const { isLoaded } = useContext(MapContext)
     const navigate = useNavigate()
 
     const [errors, setErrors] = useState([])
-
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8",
-        libraries: ["places"]
-    })
 
     const [newTripData, setNewTripData] = useState({
 

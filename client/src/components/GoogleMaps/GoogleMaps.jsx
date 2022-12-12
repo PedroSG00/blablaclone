@@ -5,30 +5,36 @@ import { MapContext } from "../../context/map.context";
 
 const MapComponent = ({ markers }) => {
 
-    const [location, setLocation] = useState({})
+
     const [route, setRoute] = useState(null)
-    const { isLoaded, map, setMap } = useContext(MapContext)
-    const onLoad = useCallback((map) => setMap(map), [])
+    const { isLoaded, map, setMap, location, setLocation } = useContext(MapContext)
+    const onLoad = useCallback((map) => {
+        setMap(map)
+        map.setCenter(location)
+    }, [])
 
     useEffect(() => {
+        console.log(location)
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords
-            setLocation({ lat: latitude, lng: longitude })
+            if (!markers.origin_address && !markers.destination_address && map) {
+                setLocation({ lat: latitude, lng: longitude })
+                console.log("markers", markers)
+                console.log(location)
+            } else {
+                console.log("Estoy entrando en esta puta")
+                setLocation(markers.origin_address)
+            }
         })
     }, [map])
 
     useEffect(() => {
-
-        if (markers.origin_address && !markers.destination_address) {
-            setLocation(markers.origin_address)
-        } else {
-            if (map) {
-                const bounds = new window.google.maps.LatLngBounds()
-                bounds.extend(markers.origin_address)
-                bounds.extend(markers.destination_address)
-                map.fitBounds(bounds)
-                calculateRoute(markers)
-            }
+        if (map && markers.origin_address && markers.destination_address) {
+            const bounds = new window.google.maps.LatLngBounds()
+            bounds.extend(markers.origin_address)
+            bounds.extend(markers.destination_address)
+            map.fitBounds(bounds)
+            calculateRoute(markers)
         }
     }, [markers])
 
@@ -189,10 +195,12 @@ const MapComponent = ({ markers }) => {
 
     if (!isLoaded) return <Loader />
 
+
+
     return (
         <GoogleMap zoom={14} options={mapOptions} onLoad={onLoad} center={location} mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "10px" }} >
             <>
-                if (markers) {
+                if (markers!=={ }) {
                     Object.values(markers).map((position, index) => {
                         return (
                             <Marker key={index} position={position}></Marker>
