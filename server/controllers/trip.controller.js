@@ -111,6 +111,9 @@ const deleteTrip = (req, res, next) => {
 }
 
 const searchTrip = (req, res, next) => {
+
+    console.log(req.body)
+
     Trip
         .find({
             $near: {
