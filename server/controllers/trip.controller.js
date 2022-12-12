@@ -27,7 +27,12 @@ const tripDetails = (req, res, next) => {
 
     Trip
         .findById(id)
-        .populate('owner')
+        .populate({
+            path: 'owner',
+            populate: {
+                path: 'cars'
+            }
+        })
         .populate('passengers')
         .then(trip => res.json(trip))
         .catch(err => next(err))
@@ -56,7 +61,8 @@ const createTrips = (req, res, next) => {
             seats,
             date,
             owner,
-            seats
+            seats,
+            cars
         })
         .then(response => res.json(response))
         .catch(err => next(err))

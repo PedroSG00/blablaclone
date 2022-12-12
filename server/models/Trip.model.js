@@ -53,6 +53,11 @@ const tripSchema = new Schema(
             coordinates: [Number],
         }],
 
+        cars: {
+            type: Types.ObjectId,
+            ref: 'User'
+        },
+
         owner: {
             type: Types.ObjectId,
             ref: 'User'
