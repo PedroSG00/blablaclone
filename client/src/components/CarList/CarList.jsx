@@ -52,11 +52,11 @@ const CarList = () => {
 
 
     return (
-        <div className='CarList justify-content-center'>
+        <div className='CarList d-flex flex-column justify-content-center'>
 
             {
                 <>
-                    <Button value='create' className='createCarButton' onClick={handleValue}>Create Car</Button>
+                    <Button value='create' className='d-grid' onClick={handleValue}>Add Car</Button>
                     {
                         userCars.map(elm => <CarCard key={elm._id} {...elm} loadUserCars={loadUserCars} />)
                     }

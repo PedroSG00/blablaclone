@@ -42,7 +42,7 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
                     <Card.Text>
                     </Card.Text>
                     <Card.Text>
-                        Color: <Button style={{ backgroundColor: `${color}` }}></Button>
+                        Color: <Button as='div' style={{ backgroundColor: `${color}` }}></Button>
                     </Card.Text>
                     <Card.Text>
                         Seats: {seats}
@@ -53,7 +53,6 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
                     <Card.Text>
                         Energetic Classification: {energeticClassification}
                     </Card.Text>
-                    <Button value='edit' onClick={handleValue} className='me-2'>Edit car</Button>
                     <Button value='delete' onClick={handleValue} className='me-2'>Delete car</Button>
                 </Card.Body>
             </Card>
