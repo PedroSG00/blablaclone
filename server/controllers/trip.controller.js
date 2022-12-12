@@ -27,7 +27,12 @@ const tripDetails = (req, res, next) => {
 
     Trip
         .findById(id)
-        .populate('owner')
+        .populate({
+            path: 'owner',
+            populate: {
+                path: 'cars'
+            }
+        })
         .populate('passengers')
         .then(trip => res.json(trip))
         .catch(err => next(err))
@@ -56,7 +61,8 @@ const createTrips = (req, res, next) => {
             seats,
             date,
             owner,
-            seats
+            seats,
+            cars
         })
         .then(response => res.json(response))
         .catch(err => next(err))
@@ -112,24 +118,50 @@ const deleteTrip = (req, res, next) => {
 
 const searchTrip = (req, res, next) => {
 
-    console.log(req.body)
+    const { origin_lng, origin_lat, destination_lng, destination_lat } = req.body
 
-    Trip
-        .find({
-            $near: {
-                $maxDistance: 20000,
-                $geometry: {
-                    type: "Point",
-                    coordinates: [lng, lat]
+    const promises = [
+        Trip.find({
+            from: {
+                $near: {
+                    $maxDistance: 2000,
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [origin_lng, origin_lat]
+                    }
                 }
             }
         })
-        .then(filtered => {
-            console.log(filtered)
-            res.json(filtered)
+            .select({ createdAt: 0, updatedAt: 0, __v: 0 })
+        ,
+        Trip.find({
+            to: {
+                $near: {
+                    $maxDistance: 2000,
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [destination_lng, destination_lat]
+                    }
+                }
+            }
+        })
+            .select({ createdAt: 0, updatedAt: 0, __v: 0 })
+    ]
+
+
+    Promise
+        .all(promises)
+        .then((results) => {
+            const from = results[0]
+            const to = results[1].map(el => el._id.toString())
+
+            const both = from.filter(trip => to.includes(trip._id.toString()))
+
+            res.json(both)
         })
         .catch(err => next(err))
 }
+
 
 module.exports = {
     tripList,

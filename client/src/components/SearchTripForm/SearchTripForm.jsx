@@ -1,30 +1,46 @@
 import './SearchTripForm.css'
 import { Col, Form, Row, Container, InputGroup, Button } from 'react-bootstrap';
 import { useLoadScript } from '@react-google-maps/api'
-import DatePicker from "react-widgets/DatePicker";
+import { useContext, useState } from 'react';
 import Loader from '../Loader/Loader';
 import PlacesAutocomplete from '../Autocomplete/Autocomplete';
+import { useNavigate } from 'react-router-dom';
+import { MapContext } from '../../context/map.context';
 
 function SearchTripForm() {
 
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8",
-        libraries: ["places"]
-    })
+    const { isLoaded } = useContext(MapContext)
+
+    const navigate = useNavigate()
+
+    const [markers, setMarkers] = useState({})
+
+    const handleMarkers = (kind, { lat, lng }) => {
+
+        if (kind === "origin_address") {
+            setMarkers({ ...markers, origin_address: { lat, lng } })
+        } else {
+            setMarkers({ ...markers, lng_destination: { lat, lng } })
+        }
+    }
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        navigate(`/trip/search/?lat_origin=${markers.origin_address.lat}&lng_origin=${markers.origin_address.lng}&lat_destination=${markers.lng_destination.lat}&lng_destination=${markers.lng_destination.lng}`)
+    }
 
 
     return (
         <>{isLoaded ?
             <Container fluid className="search-bar">
                 <Row className='justify-content-center'>
-                    <Col md={6}>
-                        <Form>
+                    <Col md={{ span: 6, offset: 2 }}>
+                        <Form onSubmit={handleSubmit}>
                             <InputGroup>
-                                <PlacesAutocomplete placeholder={'Origin'}></PlacesAutocomplete>
-                                <PlacesAutocomplete placeholder={'Destination'}></PlacesAutocomplete>
-                                <DatePicker placeholder="m/dd/yy" />
-                                <PlacesAutocomplete placeholder={'Destination'}></PlacesAutocomplete>
-                                <Button className='input-group-end'>
+                                <PlacesAutocomplete placeholder={'Origin'} kind='origin_address' handleMarkers={handleMarkers}></PlacesAutocomplete>
+                                <PlacesAutocomplete placeholder={'Destination'} kind='destination_address' handleMarkers={handleMarkers}></PlacesAutocomplete>
+                                <Button className='input-group-end' type='submit'>
                                     Search
                                 </Button>
                             </InputGroup>
@@ -33,7 +49,8 @@ function SearchTripForm() {
                 </Row>
             </Container >
             :
-            <Loader />}
+            <Loader />
+        }
         </>
 
     )

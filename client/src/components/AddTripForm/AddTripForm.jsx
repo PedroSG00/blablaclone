@@ -1,19 +1,23 @@
 import "./AddTripForm.css"
-import { useState, useContext } from "react"
+import { useState, useContext, useEffect } from "react"
 import { Form, Button } from "react-bootstrap"
 import Loader from "../Loader/Loader"
 import { useLoadScript } from "@react-google-maps/api"
 import PlacesAutocomplete from "../Autocomplete/Autocomplete"
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import tripService from "../../services/trip.service"
-import routeService from "../../services/route.service"
 import { MessageContext } from "../../context/userMessage.context"
 import { useNavigate } from "react-router-dom"
 import { MapContext } from "../../context/map.context";
+import userService from "../../services/user.service"
+import { AuthContext } from "../../context/auth.context"
 
 
 
 const AddTripForm = ({ handleMarkers }) => {
+
+
+    const [userCars, setUserCars] = useState([])
 
     const { setShowToast, setToastMessage } = useContext(MessageContext)
     const { isLoaded } = useContext(MapContext)
@@ -28,9 +32,15 @@ const AddTripForm = ({ handleMarkers }) => {
         origin_address: '',
         destination_address: '',
         date: '',
-        seats: 0
-
+        seats: 0,
+        car: ''
     })
+
+    const handleUserDetails = () => {
+        userService
+            .getUserDetails()
+            .then(({ data }) => setUserCars(data.cars))
+    }
 
     const { date, seats } = newTripData
 
@@ -38,6 +48,7 @@ const AddTripForm = ({ handleMarkers }) => {
     const handleInput = e => {
 
         const { name, value } = e.target
+        console.log(e.target.value)
         setNewTripData({ ...newTripData, [name]: value })
     }
 
@@ -63,6 +74,11 @@ const AddTripForm = ({ handleMarkers }) => {
             .catch(err => setErrors(err.response.data.errorMessages))
     }
 
+
+    useEffect(() => {
+        handleUserDetails()
+    }, [])
+
     return (
 
         isLoaded ?
@@ -79,6 +95,12 @@ const AddTripForm = ({ handleMarkers }) => {
                     <Form.Label>Date</Form.Label>
                     <Form.Control type="date" name="date" value={date} onChange={handleInput} />
                 </Form.Group>
+
+                {userCars?.length > 0 && <Form.Select aria-label="Default select example" name='car' onChange={handleInput}>
+                    <option>Choose car</option>
+                    {userCars.map(elm => <option key={elm._id} value={elm} >{elm.make} {elm.model}</option>)}
+                </Form.Select>}
+
                 <Form.Group className="mb-3">
                     <Form.Label>Number of available seats</Form.Label>
                     <Form.Control type="number" name="seats" value={seats} onChange={handleInput} />

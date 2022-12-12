@@ -8,7 +8,7 @@ import tripService from "../../services/trip.service"
 import { MessageContext } from "../../context/userMessage.context"
 
 
-const EditTripForm = ({ trip_id, loadTrips, closeModal, loadOwnTrips }) => {
+const EditTripForm = ({ trip_id, searchTrips, closeModal, loadOwnTrips }) => {
 
     const { setShowToast, setToastMessage } = useContext(MessageContext)
 
@@ -84,7 +84,7 @@ const EditTripForm = ({ trip_id, loadTrips, closeModal, loadOwnTrips }) => {
             .then(({ data }) => {
                 setShowToast(true)
                 setToastMessage('Edited new trip')
-                loadTrips()
+                searchTrips()
                 loadOwnTrips()
                 closeModal()
             })

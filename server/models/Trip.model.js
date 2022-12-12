@@ -53,6 +53,11 @@ const tripSchema = new Schema(
             coordinates: [Number],
         }],
 
+        cars: {
+            type: Types.ObjectId,
+            ref: 'User'
+        },
+
         owner: {
             type: Types.ObjectId,
             ref: 'User'
@@ -63,6 +68,8 @@ const tripSchema = new Schema(
         timestamps: true
     }
 );
+tripSchema.index({ from: '2dsphere' })
+tripSchema.index({ to: '2dsphere' })
 
 const Trip = model("Trip", tripSchema);
 
