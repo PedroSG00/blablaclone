@@ -5,7 +5,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnclickOutside from "react-cool-onclickoutside";
 
-const PlacesAutocomplete = ({ placeholder, setOrigin, setDestination, kind, updateAddress }) => {
+const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers }) => {
 
     const {
         ready,
@@ -36,6 +36,7 @@ const PlacesAutocomplete = ({ placeholder, setOrigin, setDestination, kind, upda
 
                     const { lat, lng } = getLatLng(results[0]);
                     updateAddress(kind, description, { lat, lng })
+                    handleMarkers(kind, { lat, lng })
                 });
             };
 

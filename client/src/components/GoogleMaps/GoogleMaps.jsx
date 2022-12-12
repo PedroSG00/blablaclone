@@ -1,9 +1,46 @@
-import { useMemo, useEffect, useState } from "react";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api"
+import { useCallback, useContext, useEffect, useState } from "react";
+import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from "@react-google-maps/api"
 import Loader from "../Loader/Loader";
+import { MapContext } from "../../context/map.context";
 
+const MapComponent = ({ markers }) => {
 
-const MapComponent = ({ originMarker, destinationMarker, center }) => {
+    const [location, setLocation] = useState({})
+    const [route, setRoute] = useState(null)
+    const { isLoaded, map, setMap } = useContext(MapContext)
+    const onLoad = useCallback((map) => setMap(map), [])
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(position => {
+            const { latitude, longitude } = position.coords
+            setLocation({ lat: latitude, lng: longitude })
+        })
+    }, [map])
+
+    useEffect(() => {
+
+        if (markers.origin_address && !markers.destination_address) {
+            setLocation(markers.origin_address)
+        } else {
+            if (map) {
+                const bounds = new window.google.maps.LatLngBounds()
+                bounds.extend(markers.origin_address)
+                bounds.extend(markers.destination_address)
+                map.fitBounds(bounds)
+                calculateRoute(markers)
+            }
+        }
+    }, [markers])
+
+    const calculateRoute = (markers) => {
+        const directionService = new window.google.maps.DirectionsService()
+        directionService.route({
+            origin: markers.origin_address,
+            destination: markers.destination_address,
+            travelMode: window.google.maps.TravelMode.DRIVING
+        })
+            .then(result => setRoute(result))
+    }
 
     const mapStyles = [
         {
@@ -147,18 +184,25 @@ const MapComponent = ({ originMarker, destinationMarker, center }) => {
         styles: mapStyles,
         fullscreenControl: false,
         mapTypeControl: false,
-        streetViewControl: false
+        streetViewControl: false,
     }
-
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "AIzaSyASZVf7r6NNQIoy45ymdwSGtZhSUIqNiI8",
-        libraries: ["places"]
-    })
 
     if (!isLoaded) return <Loader />
 
     return (
-        <GoogleMap zoom={15} options={mapOptions} center={center} mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "10px" }} />
+        <GoogleMap zoom={14} options={mapOptions} onLoad={onLoad} center={location} mapContainerStyle={{ width: "100%", height: "100%", borderRadius: "10px" }} >
+            <>
+                if (markers) {
+                    Object.values(markers).map((position, index) => {
+                        return (
+                            <Marker key={index} position={position}></Marker>
+                        )
+                    })
+                }
+                {route && <DirectionsRenderer directions={route} />}
+
+            </>
+        </GoogleMap>
     )
 
 }
