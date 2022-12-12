@@ -3,7 +3,7 @@ import Select from 'react-select'
 import carsService from '../../services/cars.service'
 import { Form, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
-const CreateCarForm = () => {
+const CreateCarForm = ({ fireFinalActions }) => {
 
     const [cars, setCars] = useState([])
     const [make, setMake] = useState()
@@ -67,8 +67,6 @@ const CreateCarForm = () => {
             .catch(err => console.log(err))
     }
 
-    // console.log({ make, model, year })
-
     const handleInput = e => {
         const { name, value } = e.target
         setNewCarData({ ...newCarData, [name]: value, make: make, model: model, year: year })
@@ -76,11 +74,12 @@ const CreateCarForm = () => {
 
     }
 
-    console.log(newCarData)
-
     const createNewCar = () => {
         carsService
             .createCar(newCarData)
+            .then(() => {
+                fireFinalActions()
+            })
     }
 
     const handleForm = e => {
@@ -102,8 +101,8 @@ const CreateCarForm = () => {
         uniqueCarsMake
 
         &&
+
         <>
-            <h2>Create car</h2>
             <Form onSubmit={handleForm}>
                 <Form.Group className="mb-3" controlId="carMake">
                     <Form.Label>Make</Form.Label>

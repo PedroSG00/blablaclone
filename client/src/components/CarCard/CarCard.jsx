@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 
 
-const CarCard = ({ make, model, color, year, seats, energeticClassification, _id: car_id }) => {
+const CarCard = ({ make, model, color, year, seats, energeticClassification, _id: car_id, loadUserCars }) => {
 
 
 
@@ -30,7 +30,7 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
     const removeCar = () => {
         carsService
             .deleteCar(car_id)
-            .then(data => console.log(data))
+            .then(() => loadUserCars())
     }
 
 
@@ -38,12 +38,11 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
         <>
             <Card className='m-3'>
                 <Card.Body>
-                    <Card.Title><strong>Make: </strong>{make}</Card.Title>
+                    <Card.Title>{`${make} ${model}`}</Card.Title>
                     <Card.Text>
-                        Model: {model}
                     </Card.Text>
                     <Card.Text>
-                        Color: {color}
+                        Color: <Button style={{ backgroundColor: `${color}` }}></Button>
                     </Card.Text>
                     <Card.Text>
                         Seats: {seats}
@@ -54,16 +53,17 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
                     <Card.Text>
                         Energetic Classification: {energeticClassification}
                     </Card.Text>
+                    <Button value='edit' onClick={handleValue} className='me-2'>Edit car</Button>
+                    <Button value='delete' onClick={handleValue} className='me-2'>Delete car</Button>
                 </Card.Body>
             </Card>
 
-            <Button value='edit' onClick={handleValue} className='me-2'>Edit Trip</Button>
-            <Button value='delete' onClick={handleValue} className='me-2'>Delete trip</Button>
+
 
 
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Trip</Modal.Title>
+                    <Modal.Title>Edit car</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <EditCarForm car_id={car_id} />

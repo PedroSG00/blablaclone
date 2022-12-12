@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth.context'
 import userService from '../../services/user.service'
 import CarCard from '../CarCard/CarCard'
+import CreateCarForm from '../CreateCarForm/CreateCarForm'
 
 
 const CarList = () => {
@@ -14,10 +15,8 @@ const CarList = () => {
     const [userCars, setUserCars] = useState([])
 
     const [showModal, setShowModal] = useState(false)
-    const closeModal = () => {
-        console.log('closing modal')
-        setShowModal(false)
-    }
+
+    const closeModal = () => setShowModal(false)
 
     const [value, setValue] = useState('')
 
@@ -31,6 +30,11 @@ const CarList = () => {
         } else {
             setValue('delete')
         }
+    }
+
+    const fireFinalActions = () => {
+        closeModal()
+        loadUserCars()
     }
 
     const loadUserCars = () => {
@@ -52,9 +56,9 @@ const CarList = () => {
 
             {
                 <>
-                    <Button value='create' onClick={handleValue}>Create Car</Button>
+                    <Button value='create' className='createCarButton' onClick={handleValue}>Create Car</Button>
                     {
-                        userCars.map(elm => <CarCard key={elm._id} {...elm} />)
+                        userCars.map(elm => <CarCard key={elm._id} {...elm} loadUserCars={loadUserCars} />)
                     }
                 </>
 
@@ -65,6 +69,7 @@ const CarList = () => {
                     <Modal.Title>{value === 'create' ? 'Create car' : 'Edit car'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <CreateCarForm fireFinalActions={fireFinalActions} />
                 </Modal.Body>
             </Modal>
 
