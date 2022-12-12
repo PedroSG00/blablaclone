@@ -13,7 +13,6 @@ import userService from "../../services/user.service"
 import { AuthContext } from "../../context/auth.context"
 
 
-
 const AddTripForm = ({ handleMarkers }) => {
 
 
@@ -33,13 +32,14 @@ const AddTripForm = ({ handleMarkers }) => {
         destination_address: '',
         date: '',
         seats: 0,
-        cars: null
+        cars: []
     })
 
     const handleUserDetails = () => {
         userService
             .getUserDetails()
             .then(({ data }) => setUserCars(data.cars))
+
     }
 
     const { date, seats } = newTripData
@@ -48,6 +48,7 @@ const AddTripForm = ({ handleMarkers }) => {
     const handleInput = e => {
 
         const { name, value } = e.target
+        console.log(e.target.value)
         setNewTripData({ ...newTripData, [name]: value })
     }
 
@@ -97,8 +98,9 @@ const AddTripForm = ({ handleMarkers }) => {
                 {userCars?.length > 0 && <Form.Select aria-label="Default select example" name='cars' onChange={handleInput}>
                     <option>Choose car</option>
                     {userCars.map(elm => {
-                        console.log(elm)
-                        return <option key={elm._id} value={elm._id} >{elm.make} {elm.model}</option>
+                        const selectedCarCopy = { ...elm }
+                        return (
+                            <option key={elm._id} value={elm} >{elm.make} {elm.model}</option>)
                     })}
                 </Form.Select>}
 

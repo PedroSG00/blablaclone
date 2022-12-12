@@ -171,3 +171,37 @@ module.exports = {
     deleteTrip,
     searchTrip
 }
+
+
+
+// const createTrips = (req, res, next) => {
+
+//     const { from, to, origin_address, destination_address, date, seats, cars } = req.body
+//     const { _id: owner } = req.payload
+
+//     const { lng: origin_lng, lat: origin_lat } = from
+//     const { lng: destination_lng, lat: destination_lat } = to
+
+//     const promises = [Trip
+//         .create({
+//             from: {
+//                 type: 'Point',
+//                 coordinates: [origin_lng, origin_lat]
+//             },
+//             to: {
+//                 type: 'Point',
+//                 coordinates: [destination_lng, destination_lat]
+//             },
+//             origin_address,
+//             destination_address,
+//             seats,
+//             date,
+//             owner,
+//             seats,
+//         }), User.findById(owner)
+//     ]
+//     Promise.all(promises)
+//         .then(response => console.log(response))
+//         .catch(err => next(err))
+
+// }
