@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 import { Form, Button } from "react-bootstrap"
 import authService from "../../services/auth.service"
 import uploadServices from "../../services/upload.service"
-
+import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import { useNavigate } from 'react-router-dom'
 import { MessageContext } from '../../context/userMessage.context'
 
@@ -21,6 +21,7 @@ const SignupForm = ({ fireFinalActions }) => {
     })
 
     const [loadingImage, setLoadingImage] = useState(false)
+    const [errors, setErrors] = useState([])
 
 
     const handleInputChange = e => {
@@ -62,7 +63,8 @@ const SignupForm = ({ fireFinalActions }) => {
                 fireFinalActions()
 
             })
-            .catch(err => console.log(err))
+            .catch(err => setErrors(err.response.data.errorMessages))
+
     }
 
 
@@ -118,6 +120,8 @@ const SignupForm = ({ fireFinalActions }) => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={password} onChange={handleInputChange} name="password" />
             </Form.Group>
+
+            {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
 
             <div className="d-grid">
                 <Button type="submit" disabled={loadingImage}>{loadingImage ? 'Uploading image' : 'Register'}</Button>

@@ -42,7 +42,10 @@ const LoginForm = ({ closeModal }) => {
                 navigate('/')
                 closeModal()
             })
-            .catch(err => setErrors(err))
+            .catch(err => {
+                console.log(err.response.data.errorMessages)
+                setErrors(err.response.data.errorMessages)
+            })
     }
 
     const { password, email } = signupData
@@ -60,6 +63,8 @@ const LoginForm = ({ closeModal }) => {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={password} onChange={handleInputChange} name="password" />
             </Form.Group>
+
+            {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
 
             <div className="d-grid">
                 <Button variant="dark" type="submit">Log In</Button>

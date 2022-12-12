@@ -5,6 +5,8 @@ import HomePage from "../pages/HomePage/HomePage"
 import ProfilePage from "../pages/ProfilePage/ProfilePage"
 import SearchTripPage from "../pages/SearchTripPage/SearchTripPage"
 import TripDetails from "../components/TripDetails/TripDetails"
+import CreateCarForm from "../components/CreateCarForm/CreateCarForm"
+import EditCarForm from "../components/EditCarForm/EditCarForm"
 
 const AppRoutes = () => {
 

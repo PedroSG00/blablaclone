@@ -11,11 +11,7 @@ import PlacesAutocomplete from '../../components/Autocomplete/Autocomplete'
 const SearchTripPage = () => {
 
     const [trips, setTrips] = useState([])
-    const { tripID } = useParams()
 
-    useEffect(() => {
-        loadTrips()
-    }, [])
 
     const loadTrips = () => {
         tripService
@@ -24,6 +20,10 @@ const SearchTripPage = () => {
             .catch(err => console.log(err))
     }
 
+
+    useEffect(() => {
+        loadTrips()
+    }, [])
 
     return (
 
@@ -36,7 +36,7 @@ const SearchTripPage = () => {
                             <PlacesAutocomplete placeholder={'Destination'} searchDestination={true} setTrips={setTrips}></PlacesAutocomplete>
                         </div>
 
-                        {trips ? <TripList trips={trips} /> : <Loader />}
+                        {trips ? <TripList trips={trips} loadTrips={loadTrips} /> : <Loader />}
                     </Col>
                     <Col md={5}>
                         <TripDetails />

@@ -52,6 +52,9 @@ const TripDetails = () => {
 
     const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, seats } = trip
 
+
+    const realDate = (`${new Date(date).getDay()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`)
+
     const handlePassengers = () => {
         setNewPassenger(passengers)
     }
@@ -68,11 +71,12 @@ const TripDetails = () => {
                     trip && owner ?
                         <Card className='m-3'>
                             <Card.Body>
-                                <Card.Title>{`From: ${origin_address} to: ${destination_address}`}</Card.Title>
+                                <Card.Title><strong>From: </strong>{origin_address}</Card.Title>
+                                <Card.Title><strong>To: </strong>{destination_address}</Card.Title>
                                 <ListGroup variant="flush">
-                                    <ListGroup.Item>{`Driver: ${owner.username}`}</ListGroup.Item>
-                                    <ListGroup.Item>{`Date: ${date}`}</ListGroup.Item>
-                                    <ListGroup.Item>{`Passengers: ${passengers.map(elm => ` ${elm.username}`)}.`}</ListGroup.Item>
+                                    <ListGroup.Item><strong>Driver:</strong> {owner.username}</ListGroup.Item>
+                                    <ListGroup.Item><strong>Date:</strong> {realDate}</ListGroup.Item>
+                                    <ListGroup.Item><strong>Passengers:</strong> {passengers.length > 0 ? passengers.map(elm => ` ${elm.username}`) : "There aren't passengers for now"}</ListGroup.Item>
                                     <ListGroup.Item>{<> {!stops.length === 0 ? `Stops: ${stops}` : "There aren't stops on this trip"}</>}</ListGroup.Item>
                                 </ListGroup>
 

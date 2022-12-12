@@ -24,8 +24,8 @@ class UserService {
         this.api.get('/list')
     }
 
-    getUserDetails(user_id) {
-        this.api.get(`/${user_id}`)
+    getUserDetails() {
+        return this.api.get('/user-details')
     }
 
     editUser(user_id, userData) {

@@ -10,7 +10,7 @@ const ProfileCard = () => {
 
 
     return (
-        <Card className='ProfileCard d-flex flex-row justify-content-center align-items-center border-0' >
+        <Card className='ProfileCard d-flex flex-row justify-content-center align-items-center border-0'>
             <div className='me-5'>
                 <Card.Img variant="top" src={imageUrl} />
             </div>

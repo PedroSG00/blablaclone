@@ -2,16 +2,15 @@ import './TripList.css'
 import TripCard from '../../components/TripCard/TripCard'
 
 
-const TripList = ({ trips }) => {
+const TripList = ({ trips, loadTrips, loadOwnTrips }) => {
 
 
     return (
-        <div className='TripList'>
+        <div className='TripList justify-content-center'>
 
             {
                 trips.map(elm => {
-                    console.log(elm)
-                    return (elm.passengers?.length < elm.seats && <TripCard key={elm._id} {...elm} />)
+                    return (elm.passengers?.length < elm.seats && <TripCard key={elm._id} loadTrips={loadTrips} loadOwnTrips={loadOwnTrips} {...elm} />)
                 }
                 )
             }

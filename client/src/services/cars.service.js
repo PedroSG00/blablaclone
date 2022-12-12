@@ -24,8 +24,20 @@ class CarsService {
         return this.api.get('/list')
     }
 
+    getMyCars() {
+        return this.api.get('./my-cars')
+    }
+
     getFilteredCars(make, model, year) {
-        return this.api.get(`/?make=${make}&model=${model}&year=${year}`)
+        if (make) {
+            return this.api.get(`/?make=${make}`)
+        }
+        else if (model) {
+            return this.api.get(`/?make=${make}&model=${model}`)
+        }
+        else {
+            return this.api.get(`/?make=${make}&model=${model}&year=${year}`)
+        }
     }
 
     createCar(carData) {
@@ -33,11 +45,11 @@ class CarsService {
     }
 
     updateCar(car_id) {
-        this.api.put(`/${car_id}/edit`)
+        return this.api.put(`/${car_id}/edit`)
     }
 
     deleteCar(car_id) {
-        this.api.delete(`/${car_id}/delete`)
+        return this.api.delete(`/${car_id}/delete`)
     }
 
 

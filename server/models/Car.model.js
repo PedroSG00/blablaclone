@@ -13,7 +13,6 @@ const carSchema = new Schema(
         year: {
             type: String
         },
-
         seats: {
             type: Number,
             // require: [true, 'You have to specify number of sits'],

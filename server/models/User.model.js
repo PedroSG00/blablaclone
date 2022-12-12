@@ -1,14 +1,14 @@
 const { Schema, model, Types } = require("mongoose");
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const userSchema = new Schema(
 
   {
     email: {
       type: String,
-      required: [true, 'Email is required.'],
       unique: true,
-      lowercase: true,
-      trim: true
+      required: [true, 'Email is required.'],
     },
 
     username: {
@@ -18,23 +18,23 @@ const userSchema = new Schema(
 
     firstname: {
       type: String,
-      required: [true, 'First Name is required.']
+      required: [true, 'First name is required.']
     },
 
     lastname: {
       type: String,
-      required: [true, 'First Name is required.']
+      required: [true, 'Last name is required.']
     },
 
     age: {
       type: Number,
-      required: true,
+      required: [true, 'Age is required.'],
       min: [18, "You can't be less than 18 to register."]
     },
 
     gender: {
       type: String,
-      required: [true, 'You have to specify your gender'],
+      required: [true, 'Gender is required.'],
       enum: ['MALE', 'FEMALE', 'UNDEFINED']
     },
 
@@ -46,10 +46,9 @@ const userSchema = new Schema(
 
     password: {
       type: String,
-      required: [true, 'Password is required.']
+      required: [true, 'Password is required.'],
 
     },
-
     imageUrl: {
       type: String,
     },
@@ -80,7 +79,36 @@ const userSchema = new Schema(
     timestamps: true
   }
 
-);
+)
+
+
+userSchema.pre('save', function (next) {
+
+  const saltRounds = 10
+  const salt = bcrypt.genSaltSync(saltRounds)
+  const hashedPassword = bcrypt.hashSync(this.password, salt)
+  this.password = hashedPassword
+
+  next()
+})
+
+
+userSchema.methods.validatePassword = function (candidatePassword) {
+  return bcrypt.compareSync(candidatePassword, this.password)
+}
+
+userSchema.methods.signToken = function () {
+  const { _id, email, username, firstname, lastname, age, gender, imageUrl, cars, friends } = this
+  const payload = { _id, email, username, firstname, lastname, age, gender, imageUrl, cars, friends }
+
+  const authToken = jwt.sign(
+    payload,
+    process.env.TOKEN_SECRET,
+    { algorithm: 'HS256', expiresIn: "6h" }
+  )
+
+  return authToken
+}
 
 const User = model("User", userSchema);
 
