@@ -36,7 +36,7 @@ const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers })
                 getGeocode({ address: description }).then((results) => {
 
                     const { lat, lng } = getLatLng(results[0]);
-                    updateAddress(kind, description, { lat, lng })
+                    updateAddress && updateAddress(kind, description, { lat, lng })
                     handleMarkers(kind, { lat, lng })
                 });
             };

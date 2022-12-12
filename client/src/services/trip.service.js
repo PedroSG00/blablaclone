@@ -33,7 +33,7 @@ class TripService {
 
     deleteTrip = (tripID) => this.api.delete(`/${tripID}/delete`)
 
-    searchTrip = (lat, lng) => this.api.post(`/search`)
+    searchTrip = (origin_lat, origin_lng, destination_lat, destination_lng) => this.api.post(`/search`, { origin_lat, origin_lng, destination_lat, destination_lng })
 }
 
 

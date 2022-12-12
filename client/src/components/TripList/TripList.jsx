@@ -2,7 +2,7 @@ import './TripList.css'
 import TripCard from '../../components/TripCard/TripCard'
 
 
-const TripList = ({ trips, loadTrips, loadOwnTrips }) => {
+const TripList = ({ trips, loadOwnTrips, searchTrips }) => {
 
 
     return (
@@ -10,7 +10,7 @@ const TripList = ({ trips, loadTrips, loadOwnTrips }) => {
 
             {
                 trips.map(elm => {
-                    return (elm.passengers?.length < elm.seats && <TripCard key={elm._id} loadTrips={loadTrips} loadOwnTrips={loadOwnTrips} {...elm} />)
+                    return (elm.passengers?.length < elm.seats && <TripCard key={elm._id} searchTrips={searchTrips} loadOwnTrips={loadOwnTrips} {...elm} />)
                 }
                 )
             }

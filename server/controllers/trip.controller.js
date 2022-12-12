@@ -111,22 +111,51 @@ const deleteTrip = (req, res, next) => {
 }
 
 const searchTrip = (req, res, next) => {
-    Trip
-        .find({
-            $near: {
-                $maxDistance: 20000,
-                $geometry: {
-                    type: "Point",
-                    coordinates: [lng, lat]
+
+    const { origin_lng, origin_lat, destination_lng, destination_lat } = req.body
+
+    const promises = [
+        Trip.find({
+            from: {
+                $near: {
+                    $maxDistance: 2000,
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [origin_lng, origin_lat]
+                    }
                 }
             }
         })
-        .then(filtered => {
-            console.log(filtered)
-            res.json(filtered)
+            .select({ createdAt: 0, updatedAt: 0, __v: 0 })
+        ,
+        Trip.find({
+            to: {
+                $near: {
+                    $maxDistance: 2000,
+                    $geometry: {
+                        type: "Point",
+                        coordinates: [destination_lng, destination_lat]
+                    }
+                }
+            }
+        })
+            .select({ createdAt: 0, updatedAt: 0, __v: 0 })
+    ]
+
+
+    Promise
+        .all(promises)
+        .then((results) => {
+            const from = results[0]
+            const to = results[1].map(el => el._id.toString())
+
+            const both = from.filter(trip => to.includes(trip._id.toString()))
+
+            res.json(both)
         })
         .catch(err => next(err))
 }
+
 
 module.exports = {
     tripList,

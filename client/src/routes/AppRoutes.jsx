@@ -4,9 +4,8 @@ import PrivateRoute from "./PrivateRoutes"
 import HomePage from "../pages/HomePage/HomePage"
 import ProfilePage from "../pages/ProfilePage/ProfilePage"
 import SearchTripPage from "../pages/SearchTripPage/SearchTripPage"
-import TripDetails from "../components/TripDetails/TripDetails"
-import CreateCarForm from "../components/CreateCarForm/CreateCarForm"
-import EditCarForm from "../components/EditCarForm/EditCarForm"
+import TripDetailsPage from "../pages/TripDetailsPage/TripDetailsPage"
+
 
 const AppRoutes = () => {
 
@@ -14,7 +13,8 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/trip/add" element={<AddTripPage />} />
-            <Route path='/trips/:tripID' element={<SearchTripPage />} />
+            <Route path='/trip/search' element={<SearchTripPage />} />
+            <Route path='/trip/:trip_id' element={<TripDetailsPage />} />
             <Route element={<PrivateRoute />}>
                 <Route path="/user/profile" element={<ProfilePage />} />
             </Route>

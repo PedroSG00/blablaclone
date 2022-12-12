@@ -8,14 +8,11 @@ import EditTripForm from '../EditTripForm/EditTripForm';
 import { useLocation } from 'react-router-dom'
 
 
-const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, loadTrips, loadOwnTrips }) => {
+const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, searchTrips, loadOwnTrips }) => {
 
     const { user } = useContext(AuthContext)
     const location = useLocation()
 
-
-
-    // const [buttonValue, setButtonValue] = useState([])
     const [showModal, setShowModal] = useState(false)
     const closeModal = () => {
         console.log('closing modal')
@@ -30,7 +27,7 @@ const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, lo
         } else {
             setValue('delete')
             deleteTrip()
-            loadTrips()
+            searchTrips()
             loadOwnTrips()
         }
     }
@@ -41,11 +38,10 @@ const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, lo
             .then(data => console.log(data))
     }
 
-
     return (
         <>
             <Card className='m-3'>
-                <Card.Img variant="top" src={owner.imageUrl} />
+                {/* <Card.Img variant="top" src={} /> */}
                 <Card.Body>
                     <Card.Title><strong>From: </strong>{origin_address}</Card.Title>
                     <Card.Title><strong>To: </strong>{destination_address}</Card.Title>
@@ -53,7 +49,7 @@ const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, lo
                     <Card.Text>
                         Driver: {owner.username}
                     </Card.Text>
-                    <Link to={`/trips/${trip_id}`}>
+                    <Link to={`/trip/${trip_id}`}>
                         <Button className='me-2'>Show Details</Button>
                     </Link>
                     {user && ((owner._id === user._id && location.pathname !== '/trips/list' && location.pathname !== `/trips/${trip_id}`) && <>
@@ -68,7 +64,7 @@ const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, lo
                     <Modal.Title>Edit Trip</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditTripForm trip_id={trip_id} loadTrips={loadTrips} loadOwnTrips={loadOwnTrips} closeModal={closeModal} />
+                    <EditTripForm trip_id={trip_id} searchTrips={searchTrips} loadOwnTrips={loadOwnTrips} closeModal={closeModal} />
                 </Modal.Body>
             </Modal>
         </>

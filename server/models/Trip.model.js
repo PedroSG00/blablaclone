@@ -63,6 +63,8 @@ const tripSchema = new Schema(
         timestamps: true
     }
 );
+tripSchema.index({ from: '2dsphere' })
+tripSchema.index({ to: '2dsphere' })
 
 const Trip = model("Trip", tripSchema);
 

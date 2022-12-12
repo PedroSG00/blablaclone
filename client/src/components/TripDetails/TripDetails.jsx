@@ -1,6 +1,6 @@
 import './TripDetails.css'
 import { useState, useEffect, useParams, useContext } from 'react'
-import { Card, Button, ListGroup } from 'react-bootstrap'
+import { Card, Button, ListGroup, Container, Row, Col } from 'react-bootstrap'
 import Loader from '../Loader/Loader'
 import tripService from '../../services/trip.service'
 import { useLocation } from 'react-router-dom'
@@ -21,7 +21,7 @@ const TripDetails = () => {
     useEffect(() => {
         const starts = location.pathname.lastIndexOf('/') + 1
         const currentTrip = location.pathname.substring(starts)
-        currentTrip != 'all' && loadTripDetails(currentTrip)
+        currentTrip != 'all' && currentTrip != 'search' && loadTripDetails(currentTrip)
     }, [location])
 
 
@@ -68,37 +68,32 @@ const TripDetails = () => {
         <div className='TripDetails'>
             <>
                 {
-                    trip && owner ?
-                        <Card className='m-3'>
-                            <Card.Body>
-                                <Card.Title><strong>From: </strong>{origin_address}</Card.Title>
-                                <Card.Title><strong>To: </strong>{destination_address}</Card.Title>
-                                <ListGroup variant="flush">
-                                    <ListGroup.Item><strong>Driver:</strong> {owner.username}</ListGroup.Item>
-                                    <ListGroup.Item><strong>Date:</strong> {realDate}</ListGroup.Item>
-                                    <ListGroup.Item><strong>Passengers:</strong> {passengers.length > 0 ? passengers.map(elm => ` ${elm.username}`) : "There aren't passengers for now"}</ListGroup.Item>
-                                    <ListGroup.Item>{<> {!stops.length === 0 ? `Stops: ${stops}` : "There aren't stops on this trip"}</>}</ListGroup.Item>
-                                </ListGroup>
+                    trip && owner &&
+
+                    <Card className='m-3'>
+                        <Card.Body>
+                            <Card.Title><strong>From: </strong>{origin_address}</Card.Title>
+                            <Card.Title><strong>To: </strong>{destination_address}</Card.Title>
+                            <ListGroup variant="flush">
+                                <ListGroup.Item><strong>Driver:</strong> {owner.username}</ListGroup.Item>
+                                <ListGroup.Item><strong>Date:</strong> {realDate}</ListGroup.Item>
+                                <ListGroup.Item><strong>Passengers:</strong> {passengers.length > 0 ? passengers.map(elm => ` ${elm.username}`) : "There aren't passengers for now"}</ListGroup.Item>
+                                <ListGroup.Item>{<> {!stops.length === 0 ? `Stops: ${stops}` : "There aren't stops on this trip"}</>}</ListGroup.Item>
+                            </ListGroup>
 
 
-                                {user && (owner._id !== user._id &&
-                                    <>
-                                        <Button onClick={joinTrip} className='me-2'>Join Trip</Button>
-                                        <Button onClick={leaveTrip} className='me-2'>Leave Trip</Button>
-                                    </>)
-                                }
+                            {user && (owner._id !== user._id &&
+                                <>
+                                    <Button onClick={joinTrip} className='me-2'>Join Trip</Button>
+                                    <Button onClick={leaveTrip} className='me-2'>Leave Trip</Button>
+                                </>)
+                            }
+
+                        </Card.Body>
+                    </Card>
 
 
 
-
-                            </Card.Body>
-                        </Card>
-
-                        :
-                        <div className='d-flex justify-content-center flex-column align-items-center'>
-                            <h1 className='text-center'>Choose a trip</h1>
-                            <Loader />
-                        </div >
                 }
             </>
         </div >

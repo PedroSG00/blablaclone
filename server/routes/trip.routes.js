@@ -18,7 +18,7 @@ router.put("/:id/edit", isAuthenticated, editTrip)
 
 router.delete("/:id/delete", isAuthenticated, deleteTrip)
 
-router.get('/trip/search', searchTrip)
+router.post('/search', searchTrip)
 
 module.exports = router
 
