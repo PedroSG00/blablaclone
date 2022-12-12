@@ -55,7 +55,8 @@ const tripSchema = new Schema(
 
         cars: {
             type: Types.ObjectId,
-            ref: 'User'
+            ref: 'Car'
+
         },
 
         owner: {
