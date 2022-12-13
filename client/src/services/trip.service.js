@@ -33,7 +33,24 @@ class TripService {
 
     deleteTrip = (tripID) => this.api.delete(`/${tripID}/delete`)
 
-    searchTrip = (origin_lat, origin_lng, destination_lat, destination_lng) => this.api.post(`/search`, { origin_lat, origin_lng, destination_lat, destination_lng })
+    searchTrip(origin_lat,
+        origin_lng,
+        destination_lat,
+        destination_lng,
+        seatsAviable,
+        travelDate,
+        travelHour,
+        emission) {
+
+        let nearQuery = { origin_lat, origin_lng, destination_lat, destination_lng }
+
+        if (travelDate) nearQuery = { ...nearQuery, travelDate }
+        if (seatsAviable) nearQuery = { ...nearQuery, seatsAviable }
+        if (travelHour) nearQuery = { ...nearQuery, travelHour }
+        if (emission) nearQuery = { ...nearQuery, emission }
+
+        return this.api.post(`/search`, nearQuery)
+    }
 }
 
 

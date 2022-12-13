@@ -110,7 +110,6 @@ const AddTripForm = ({ handleMarkers, tripPrice }) => {
                         <Form.Label>Date</Form.Label>
                         <Form.Control type="date" name="date" value={date} onChange={handleInput} />
                     </Form.Group>
-
                     <Form.Group className="mb-3">
                         <Form.Label className="d-block">Hour</Form.Label>
                         <TimePicker className='text-center' name="hour" value={getHour} onChange={setGetHour} disableClock format="HH:mm" amPmAriaLabel="Select AM/PM" clearIcon={null} />

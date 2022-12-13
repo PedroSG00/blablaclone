@@ -50,7 +50,7 @@ const TripDetails = () => {
         setTrip(tripDetails)
     }
 
-    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, car, seats } = trip
+    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, car, seats, hour, price } = trip
 
 
     const realDate = (`${new Date(date).getDay()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`)
@@ -77,8 +77,13 @@ const TripDetails = () => {
                             <Card.Title><strong>To: </strong>{destination_address}</Card.Title>
                             <ListGroup variant="flush">
                                 <ListGroup.Item><strong>Driver:</strong> {owner.username}</ListGroup.Item>
-                                {car && <ListGroup.Item><strong>Car:</strong> {car.make + " " + car.model}</ListGroup.Item>}
+                                <ListGroup.Item><strong>Price:</strong> {price}€</ListGroup.Item>
+                                {car && <ListGroup.Item><strong>Car:</strong> {car.make + " " + car.model}:
+                                    <ListGroup.Item>Color:  <Button as='div' style={{ backgroundColor: `${car.color}` }}></Button></ListGroup.Item>
+                                    <ListGroup.Item>Year: <div>{car.year}</div></ListGroup.Item>
+                                </ListGroup.Item>}
                                 <ListGroup.Item><strong>Date:</strong> {realDate}</ListGroup.Item>
+                                <ListGroup.Item><strong>Hour:</strong> {hour}</ListGroup.Item>
                                 <ListGroup.Item><strong>Passengers:</strong> {passengers.length > 0 ? passengers.map(elm => ` ${elm.username}`) : "There aren't passengers for now"}</ListGroup.Item>
                                 <ListGroup.Item><strong>Aviable seats:</strong> {seats - passengers.length !== 0 ? seats - passengers.length : "No more aviable seats on for this trip"}</ListGroup.Item>
                                 <ListGroup.Item>{<> {!stops.length === 0 ? `Stops: ${stops}` : "There aren't stops on this trip"}</>}</ListGroup.Item>
