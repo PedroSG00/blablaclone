@@ -50,7 +50,7 @@ const TripDetails = () => {
         setTrip(tripDetails)
     }
 
-    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, car } = trip
+    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, car, seats } = trip
 
 
     const realDate = (`${new Date(date).getDay()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`)

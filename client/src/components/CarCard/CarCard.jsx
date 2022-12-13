@@ -1,5 +1,4 @@
 import { Button, Card, Modal } from 'react-bootstrap'
-import EditCarForm from '../EditCarForm/EditCarForm';
 import carsService from '../../services/cars.service';
 import { useState } from 'react';
 
@@ -55,18 +54,6 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
                     <Button value='delete' onClick={handleValue} className='me-2'>Delete car</Button>
                 </Card.Body>
             </Card>
-
-
-
-
-            <Modal show={showModal} onHide={closeModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit car</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <EditCarForm car_id={car_id} />
-                </Modal.Body>
-            </Modal>
         </>
     );
 }

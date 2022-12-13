@@ -9,6 +9,7 @@ import MapComponent from "../../components/GoogleMaps/GoogleMaps"
 const AddTrip = () => {
 
     const [markers, setMarkers] = useState({})
+    const [tripPrice, setTripPrice] = useState(0)
     const handleMarkers = (kind, { lat, lng }) => {
 
         if (kind === "origin_address") {
@@ -18,11 +19,13 @@ const AddTrip = () => {
         }
     }
 
+
+
     return (
         <Container className="AddTrip ">
             <Row className="justify-content-around h-100">
-                <Col md={5}><AddTripForm handleMarkers={handleMarkers} /></Col>
-                <Col md={5}><MapComponent markers={markers} /></Col>
+                <Col md={5}><AddTripForm tripPrice={tripPrice} setTripPrice={setTripPrice} handleMarkers={handleMarkers} /></Col>
+                <Col md={5}><MapComponent markers={markers} setTripPrice={setTripPrice} /></Col>
             </Row>
         </Container>
     )

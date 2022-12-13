@@ -1,17 +1,19 @@
 import "./AddTripForm.css"
 import { useState, useContext, useEffect } from "react"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, ModalTitle } from "react-bootstrap"
 import Loader from "../Loader/Loader"
 import PlacesAutocomplete from "../Autocomplete/Autocomplete"
 import ErrorMessage from '../ErrorMessage/ErrorMessage'
 import tripService from "../../services/trip.service"
 import { MessageContext } from "../../context/userMessage.context"
 import { useNavigate } from "react-router-dom"
-import { MapContext } from "../../context/map.context";
+import { MapContext } from "../../context/map.context"
 import userService from "../../services/user.service"
 import { Modal } from "react-bootstrap"
+import Slider from "@mui/material/Slider"
 
-const AddTripForm = ({ handleMarkers }) => {
+
+const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
 
     const [showModal, setShowModal] = useState(false)
     const [userCars, setUserCars] = useState([])
@@ -27,14 +29,21 @@ const AddTripForm = ({ handleMarkers }) => {
         destination_address: '',
         date: '',
         seats: 0,
+        price: 0,
+        car: ''
     })
-
+    const minSlider = tripPrice * 0.85
+    const maxSlider = tripPrice * 1.15
 
     useEffect(() => {
-        if (destination_address !== '' && origin_address !== '') {
+        if (destination_address !== '' && origin_address !== '' && seats != 0) {
             setShowModal(true)
         }
     }, [newTripData])
+
+    useEffect(() => {
+        handleUserDetails()
+    }, [])
 
     const closeModal = () => setShowModal(false)
 
@@ -42,7 +51,6 @@ const AddTripForm = ({ handleMarkers }) => {
         userService
             .getUserDetails()
             .then(({ data }) => setUserCars(data.cars))
-
     }
 
     const { date, seats, origin_address, destination_address } = newTripData
@@ -62,6 +70,7 @@ const AddTripForm = ({ handleMarkers }) => {
             setNewTripData({ ...newTripData, destination_address: value, to: { lat, lng } })
         }
     }
+
     const handleForm = e => {
 
         e.preventDefault()
@@ -74,11 +83,6 @@ const AddTripForm = ({ handleMarkers }) => {
             })
             .catch(err => setErrors(err.response.data.errorMessages))
     }
-
-
-    useEffect(() => {
-        handleUserDetails()
-    }, [])
 
     return (
 
@@ -116,8 +120,24 @@ const AddTripForm = ({ handleMarkers }) => {
 
                 </Form>
 
-                <Modal show={showModal} onHide={closeModal}>
+                <Modal show={showModal} onHide={closeModal} centered>
+                    <Modal.Header className="text-center" closeButton>
+                        <Modal.Title>Set the trip price</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
 
+                        <Slider
+                            aria-label="Price"
+                            defaultValue={tripPrice}
+                            valueLabelDisplay="EUROS PUTA"
+                            step={0.50}
+
+                            min={minSlider}
+                            max={maxSlider}
+                        >
+
+                        </Slider>
+                    </Modal.Body>
                 </Modal>
             </>
 

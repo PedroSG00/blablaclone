@@ -2,8 +2,9 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from "@react-google-maps/api"
 import Loader from "../Loader/Loader";
 import { MapContext } from "../../context/map.context";
+import calculateTripPrice from "../../utils/calculatePrice"
 
-const MapComponent = ({ markers }) => {
+const MapComponent = ({ markers, setTripPrice }) => {
 
 
     const [route, setRoute] = useState(null)
@@ -43,6 +44,8 @@ const MapComponent = ({ markers }) => {
         })
             .then(result => {
                 setRoute(result)
+                setTripPrice(calculateTripPrice(result.routes[0].legs[0].distance.value))
+                console.log(result)
             })
     }
 
