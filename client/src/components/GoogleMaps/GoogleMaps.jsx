@@ -14,15 +14,11 @@ const MapComponent = ({ markers }) => {
     }, [])
 
     useEffect(() => {
-        console.log(location)
         navigator.geolocation.getCurrentPosition(position => {
             const { latitude, longitude } = position.coords
             if (!markers.origin_address && !markers.destination_address && map) {
                 setLocation({ lat: latitude, lng: longitude })
-                console.log("markers", markers)
-                console.log(location)
             } else {
-                console.log("Estoy entrando en esta puta")
                 setLocation(markers.origin_address)
             }
         })
@@ -45,7 +41,9 @@ const MapComponent = ({ markers }) => {
             destination: markers.destination_address,
             travelMode: window.google.maps.TravelMode.DRIVING
         })
-            .then(result => setRoute(result))
+            .then(result => {
+                setRoute(result)
+            })
     }
 
     const mapStyles = [

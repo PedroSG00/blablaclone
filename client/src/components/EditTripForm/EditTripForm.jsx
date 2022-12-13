@@ -62,7 +62,6 @@ const EditTripForm = ({ trip_id, searchTrips, closeModal, loadOwnTrips }) => {
     const handleInput = e => {
         const { name, value } = e.target
         setNewTripData({ ...newTripData, [name]: value })
-        console.log("edit", newTripData)
 
     }
 

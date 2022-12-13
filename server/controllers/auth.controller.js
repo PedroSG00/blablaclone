@@ -28,7 +28,6 @@ const logIn = (req, res, next) => {
     User
         .findOne({ email })
         .then(foundUser => {
-            console.log(foundUser)
             if (!foundUser || foundUser.validatePassword(password)) {
                 res.status(200).json({ authToken: foundUser.signToken() })
             }

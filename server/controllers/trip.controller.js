@@ -27,20 +27,15 @@ const tripDetails = (req, res, next) => {
 
     Trip
         .findById(id)
-        .populate({
-            path: 'owner',
-            populate: {
-                path: 'cars'
-            }
-        })
-        .populate('passengers')
+        .populate("owner")
+        .populate("car")
         .then(trip => res.json(trip))
         .catch(err => next(err))
 }
 
 const createTrips = (req, res, next) => {
 
-    const { from, to, origin_address, destination_address, date, seats } = req.body
+    const { from, to, origin_address, destination_address, date, seats, car } = req.body
     const { _id: owner } = req.payload
 
     const { lng: origin_lng, lat: origin_lat } = from
@@ -62,7 +57,7 @@ const createTrips = (req, res, next) => {
             date,
             owner,
             seats,
-            cars
+            car
         })
         .then(response => res.json(response))
         .catch(err => next(err))

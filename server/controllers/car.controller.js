@@ -27,7 +27,6 @@ const carsQuery = (req, res, next) => {
     if (model) query.model = model
     if (year) query.year = year
 
-    console.log(query)
 
     Car
         .find(query)

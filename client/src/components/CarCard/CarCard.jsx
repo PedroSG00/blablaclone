@@ -11,7 +11,6 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
 
     const [showModal, setShowModal] = useState(false)
     const closeModal = () => {
-        console.log('closing modal')
         setShowModal(false)
     }
     const [value, setValue] = useState('')

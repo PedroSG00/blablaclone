@@ -7,7 +7,6 @@ const addComment = (req, res, next) => {
     const { text } = req.body
     const { _id: owner } = req.payload
 
-    console.log(req.payload)
 
     Comment
         .create({ owner, text })
@@ -21,7 +20,6 @@ const addComment = (req, res, next) => {
 const deleteComment = (req, res, next) => {
 
     const { user_id, comment_id } = req.params
-    console.log(comment_id)
 
     Comment
         .findByIdAndDelete(comment_id)

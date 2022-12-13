@@ -50,7 +50,7 @@ const TripDetails = () => {
         setTrip(tripDetails)
     }
 
-    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, seats } = trip
+    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, car } = trip
 
 
     const realDate = (`${new Date(date).getDay()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`)
@@ -76,6 +76,7 @@ const TripDetails = () => {
                             <Card.Title><strong>To: </strong>{destination_address}</Card.Title>
                             <ListGroup variant="flush">
                                 <ListGroup.Item><strong>Driver:</strong> {owner.username}</ListGroup.Item>
+                                <ListGroup.Item><strong>Car:</strong> {car.make + " " + car.model}</ListGroup.Item>
                                 <ListGroup.Item><strong>Date:</strong> {realDate}</ListGroup.Item>
                                 <ListGroup.Item><strong>Passengers:</strong> {passengers.length > 0 ? passengers.map(elm => ` ${elm.username}`) : "There aren't passengers for now"}</ListGroup.Item>
                                 <ListGroup.Item>{<> {!stops.length === 0 ? `Stops: ${stops}` : "There aren't stops on this trip"}</>}</ListGroup.Item>

@@ -44,7 +44,6 @@ const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers })
                     handleMarkers(kind, { lat, lng })
                     if (kind === "origin_address" && map) {
                         setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) })
-                        console.log("Ubicacion seteada en autocomplete", location)
                     }
 
                 });

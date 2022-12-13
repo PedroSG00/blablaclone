@@ -5,7 +5,6 @@ import { Form, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 const EditCarForm = ({ car_id }) => {
 
-    console.log(car_id)
 
     const [cars, setCars] = useState([])
     const [make, setMake] = useState()
@@ -69,27 +68,11 @@ const EditCarForm = ({ car_id }) => {
             .catch(err => console.log(err))
     }
 
-    // console.log({ make, model, year })
 
     const handleInput = e => {
         const { name, value } = e.target
         setNewCarData({ ...newCarData, [name]: value, make: make, model: model, year: year })
-        // console.log("create", newCarData)
 
-    }
-
-    // console.log(newCarData)
-
-    const editCar = () => {
-
-    }
-
-    const handleForm = e => {
-        e.preventDefault()
-
-        carsService
-            .updateCar(car_id, newCarData)
-            .then(({ data }) => console.log('--------------', data.cars))
     }
 
     useEffect(() => {

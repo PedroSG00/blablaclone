@@ -24,7 +24,6 @@ const PlacesAutocomplete = ({ placeholder, setOrigin, setDestination, kind, upda
 
     const handleInput = (e) => {
         setValue(e.target.value);
-        console.log(e.target.value)
     };
 
     const handleSelect =

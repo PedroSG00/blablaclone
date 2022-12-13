@@ -15,7 +15,6 @@ const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, se
 
     const [showModal, setShowModal] = useState(false)
     const closeModal = () => {
-        console.log('closing modal')
         setShowModal(false)
     }
     const [value, setValue] = useState('')

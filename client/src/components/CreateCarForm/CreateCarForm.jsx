@@ -70,7 +70,6 @@ const CreateCarForm = ({ fireFinalActions }) => {
     const handleInput = e => {
         const { name, value } = e.target
         setNewCarData({ ...newCarData, [name]: value, make: make, model: model, year: year })
-        console.log("create", newCarData)
 
     }
 
