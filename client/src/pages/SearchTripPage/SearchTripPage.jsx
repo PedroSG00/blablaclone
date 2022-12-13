@@ -43,6 +43,7 @@ const SearchTripPage = () => {
             tripService
                 .searchTrip(origin_lat, origin_lng, destination_lat, destination_lng)
                 .then(({ data }) => {
+                    console.log(data)
                     setTrips(data)
                 })
         }
@@ -53,7 +54,7 @@ const SearchTripPage = () => {
             tripService
                 .searchTrip(origin_address.lat, origin_address.lng, destination_address.lat, destination_address.lng)
                 .then(({ data }) => {
-                    console.log('ESTAMOS EN LA SEGUNDA')
+                    console.log(data)
                     setTrips(data)
                 })
         }

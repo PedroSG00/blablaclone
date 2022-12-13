@@ -32,7 +32,6 @@ const AddTripForm = ({ handleMarkers }) => {
         destination_address: '',
         date: '',
         seats: 0,
-        cars: []
     })
 
     const handleUserDetails = () => {
@@ -48,7 +47,6 @@ const AddTripForm = ({ handleMarkers }) => {
     const handleInput = e => {
 
         const { name, value } = e.target
-        console.log(e.target.value)
         setNewTripData({ ...newTripData, [name]: value })
     }
 
@@ -94,7 +92,7 @@ const AddTripForm = ({ handleMarkers }) => {
                     <Form.Label>Date</Form.Label>
                     <Form.Control type="date" name="date" value={date} onChange={handleInput} />
                 </Form.Group>
-
+                {/* 
                 {userCars?.length > 0 && <Form.Select aria-label="Default select example" name='cars' onChange={handleInput}>
                     <option>Choose car</option>
                     {userCars.map(elm => {
@@ -102,7 +100,7 @@ const AddTripForm = ({ handleMarkers }) => {
                         return (
                             <option key={elm._id} value={elm} >{elm.make} {elm.model}</option>)
                     })}
-                </Form.Select>}
+                </Form.Select>} */}
 
                 <Form.Group className="mb-3">
                     <Form.Label>Number of available seats</Form.Label>

@@ -64,6 +64,8 @@ const TripDetails = () => {
         handlePassengers()
     }, [tripDetails])
 
+    console.log(passengers)
+
     return (
         <div className='TripDetails'>
             <>
@@ -78,6 +80,7 @@ const TripDetails = () => {
                                 <ListGroup.Item><strong>Driver:</strong> {owner.username}</ListGroup.Item>
                                 <ListGroup.Item><strong>Date:</strong> {realDate}</ListGroup.Item>
                                 <ListGroup.Item><strong>Passengers:</strong> {passengers.length > 0 ? passengers.map(elm => ` ${elm.username}`) : "There aren't passengers for now"}</ListGroup.Item>
+                                <ListGroup.Item><strong>Aviable seats:</strong> {seats - passengers.length !== 0 ? seats - passengers.length : "No more aviable seats on for this trip"}</ListGroup.Item>
                                 <ListGroup.Item>{<> {!stops.length === 0 ? `Stops: ${stops}` : "There aren't stops on this trip"}</>}</ListGroup.Item>
                             </ListGroup>
 
