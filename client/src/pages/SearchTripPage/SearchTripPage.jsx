@@ -92,7 +92,7 @@ const SearchTripPage = () => {
         <div className='SearchTripPage'>
             <Container>
                 <Row className='justify-content-center h-100'>
-                    <Col md={5}>
+                    <Col md={{ span: 6, offset: 2 }}>
                         <div className='d-flex m-3'>
                             <InputGroup>
                                 <PlacesAutocomplete placeholder={'Origin'} kind='origin_address' handleMarkers={handleMarkers}></PlacesAutocomplete>

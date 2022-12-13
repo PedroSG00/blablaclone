@@ -13,8 +13,6 @@ router.get("/", carsQuery)
 
 router.post("/create", isAuthenticated, createCar)
 
-router.put('/:car_id/edit', isAuthenticated, editCar)
-
 router.delete('/:car_id/delete', isAuthenticated, deleteCar)
 
 

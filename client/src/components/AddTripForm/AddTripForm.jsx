@@ -87,7 +87,6 @@ const AddTripForm = ({ handleMarkers, tripPrice }) => {
                 setShowToast(true)
                 setToastMessage('New trip created')
                 navigate(`/user/profile`)
-                console.log(newTripData)
             })
             .catch(err => setErrors(err.response.data.errorMessages))
     }
