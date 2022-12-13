@@ -40,7 +40,7 @@ const CarCard = ({ make, model, color, year, seats, energeticClassification, _id
                     <Card.Title>{`${make} ${model}`}</Card.Title>
                     <Card.Text>
                     </Card.Text>
-                    <Card.Text>
+                    <Card.Text as='div'>
                         Color: <Button as='div' style={{ backgroundColor: `${color}` }}></Button>
                     </Card.Text>
                     <Card.Text>

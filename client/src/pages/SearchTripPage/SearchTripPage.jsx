@@ -43,6 +43,7 @@ const SearchTripPage = () => {
             tripService
                 .searchTrip(origin_lat, origin_lng, destination_lat, destination_lng)
                 .then(({ data }) => {
+                    console.log(data)
                     setTrips(data)
                 })
         }

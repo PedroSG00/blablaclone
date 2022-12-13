@@ -11,7 +11,6 @@ import { MapContext } from "../../context/map.context";
 import userService from "../../services/user.service"
 import { Modal } from "react-bootstrap"
 
-
 const AddTripForm = ({ handleMarkers }) => {
 
     const [showModal, setShowModal] = useState(false)
@@ -28,7 +27,6 @@ const AddTripForm = ({ handleMarkers }) => {
         destination_address: '',
         date: '',
         seats: 0,
-        car: ''
     })
 
 
@@ -44,6 +42,7 @@ const AddTripForm = ({ handleMarkers }) => {
         userService
             .getUserDetails()
             .then(({ data }) => setUserCars(data.cars))
+
     }
 
     const { date, seats, origin_address, destination_address } = newTripData
@@ -63,10 +62,6 @@ const AddTripForm = ({ handleMarkers }) => {
             setNewTripData({ ...newTripData, destination_address: value, to: { lat, lng } })
         }
     }
-
-
-
-
     const handleForm = e => {
 
         e.preventDefault()
