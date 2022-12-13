@@ -81,6 +81,9 @@ const SearchTripPage = () => {
                 <hr />
                 <Row className='justify-content-center h-100'>
                     <Col md={5}>
+
+                    </Col>
+                    <Col md={5}>
                         {trips ? <TripList trips={trips} searchTrips={searchTrips} /> : <Loader />}
                     </Col>
                 </Row>

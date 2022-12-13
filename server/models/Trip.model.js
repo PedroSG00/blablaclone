@@ -30,6 +30,10 @@ const tripSchema = new Schema(
             type: Number
         },
 
+        hour: {
+            type: String
+        },
+
         passengers: [{
             type: Types.ObjectId,
             ref: 'User'
