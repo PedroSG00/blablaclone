@@ -16,8 +16,7 @@ const userDetails = (req, res, next) => {
 
     User
         .findById(user_id)
-        .populate('comments')
-        .populate('cars')
+        .populate('comments cars')
         .then(userDetails => res.status(200).json(userDetails))
         .catch(error => next(error))
 

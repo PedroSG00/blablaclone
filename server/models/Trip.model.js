@@ -41,10 +41,10 @@ const tripSchema = new Schema(
             required: [true, 'You have to specify how many seats are available.']
         },
 
-        date: [{
+        date: {
             type: Date,
             required: [true, 'You have to specify date for the trip']
-        }],
+        },
 
         stops: [{
             type: {
