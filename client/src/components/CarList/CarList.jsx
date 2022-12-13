@@ -38,12 +38,11 @@ const CarList = () => {
     }
 
     const loadUserCars = () => {
-
         userService
             .getUserDetails()
             .then(({ data }) => setUserCars(data.cars))
-
     }
+
 
     useEffect(() => {
         loadUserCars()

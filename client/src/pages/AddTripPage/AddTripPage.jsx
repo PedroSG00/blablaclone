@@ -10,7 +10,6 @@ const AddTrip = () => {
 
     const [markers, setMarkers] = useState({})
     const handleMarkers = (kind, { lat, lng }) => {
-
         if (kind === "origin_address") {
             setMarkers({ ...markers, origin_address: { lat, lng } })
         } else {

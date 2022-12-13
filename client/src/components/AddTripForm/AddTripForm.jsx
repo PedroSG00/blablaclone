@@ -20,7 +20,6 @@ const AddTripForm = ({ handleMarkers }) => {
     const navigate = useNavigate()
     const [errors, setErrors] = useState([])
     const [newTripData, setNewTripData] = useState({
-
         from: {},
         to: {},
         origin_address: '',
@@ -62,12 +61,12 @@ const AddTripForm = ({ handleMarkers }) => {
             setNewTripData({ ...newTripData, destination_address: value, to: { lat, lng } })
         }
     }
-    const handleForm = e => {
 
+    const handleForm = e => {
         e.preventDefault()
         tripService
             .createTrip(newTripData)
-            .then(({ data }) => {
+            .then(() => {
                 setShowToast(true)
                 setToastMessage('Created new trip')
                 navigate(`/user/profile`)
