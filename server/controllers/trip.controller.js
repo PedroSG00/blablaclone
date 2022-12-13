@@ -5,8 +5,7 @@ const tripList = (req, res, next) => {
 
     Trip
         .find()
-        .populate('owner')
-        .populate('passengers')
+        .populate('owner passengers')
         .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1, passengers: 1, seats: 1 })
         .then(foundTrip => res.json(foundTrip))
         .catch(err => next(err))
@@ -16,8 +15,7 @@ const myTrips = (req, res, next) => {
 
     Trip
         .find({ owner: req.payload._id })
-        .populate('owner')
-        .populate('passengers')
+        .populate('owner passengers')
         .select({ origin_address: 1, destination_address: 1, price: 1, date: 1, stops: 1, owner: 1, seats: 1, passengers: 1 })
         .then(ownTripList => res.json(ownTripList))
         .catch(err => next(err))
@@ -29,9 +27,7 @@ const tripDetails = (req, res, next) => {
 
     Trip
         .findById(id)
-        .populate("owner")
-        .populate("car")
-        .populate('passengers')
+        .populate("owner car passengers")
         .then(trip => {
             res.json(trip)
         })
@@ -118,64 +114,72 @@ const deleteTrip = (req, res, next) => {
 
 const searchTrip = (req, res, next) => {
 
-    const { origin_lng, origin_lat, destination_lng, destination_lat, seatsAviable, gender, travelDate } = req.body
+    // const { seatsAviable: seatsQuery, travelDate: dateQuery } = req.query
+    const { origin_lng, origin_lat, destination_lng, destination_lat, seatsAviable, travelDate, hour, emission } = req.body
 
-    let both
-    const promises = [
-        Trip.find({
-            from: {
-                $near: {
-                    $maxDistance: 2000,
-                    $geometry: {
-                        type: "Point",
-                        coordinates: [origin_lng, origin_lat]
-                    }
+
+
+
+    let fromQuery = {
+        from: {
+            $near: {
+                $maxDistance: 2000,
+                $geometry: {
+                    type: "Point",
+                    coordinates: [origin_lng, origin_lat]
                 }
-            },
-            seats: seatsAviable,
-            date: []
-        })
+            }
+        }
+    }
+
+    let toQuery = {
+        to: {
+            $near: {
+                $maxDistance: 2000,
+                $geometry: {
+                    type: "Point",
+                    coordinates: [destination_lng, destination_lat]
+                }
+            }
+        }
+    }
+
+    if (seatsAviable) fromQuery = { ...fromQuery, seats: seatsAviable }
+    if (travelDate) fromQuery = { ...fromQuery, date: travelDate }
+
+
+
+    if (seatsAviable) toQuery = { ...toQuery, seats: seatsAviable }
+    if (travelDate) toQuery = { ...toQuery, date: travelDate }
+
+
+    const promises = [
+        Trip.find(fromQuery)
             .select({ createdAt: 0, updatedAt: 0, __v: 0 })
-            .populate('passengers')
-            .populate('owner')
+            .populate('passengers owner')
+            .populate('car', 'energeticClassification')
         ,
 
-        Trip.find({
-            to: {
-                $near: {
-                    $maxDistance: 2000,
-                    $geometry: {
-                        type: "Point",
-                        coordinates: [destination_lng, destination_lat]
-                    }
-                }
-            },
-            seats: seatsAviable
-        })
+        Trip.find(toQuery)
+
             .select({ createdAt: 0, updatedAt: 0, __v: 0 })
-            .populate('passengers')
-            .populate('owner')
+            .populate('passengers owner')
+            .populate('car', 'energeticClassification')
+
     ]
+
     Promise
         .all(promises)
         .then((results) => {
             const from = results[0]
             const to = results[1].map(el => el._id.toString())
-            both = from.filter(trip => to.includes(trip._id.toString()))
+            const both = from.filter(trip => {
+
+                return emission ? to.includes(trip._id.toString()) && trip.car.energeticClassification === emission : to.includes(trip._id.toString())
+            })
             return res.json(both)
         })
-        .then(({ data }) => console.log(data))
         .catch(err => next(err))
-}
-
-
-const filterTrips = (req, res, next) => {
-
-    const { seats, owner, price, emissions } = req.body
-
-    Trip
-        .find({})
-
 }
 
 

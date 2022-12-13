@@ -64,7 +64,6 @@ const TripDetails = () => {
         handlePassengers()
     }, [tripDetails])
 
-    console.log(passengers)
 
     return (
         <div className='TripDetails'>
@@ -78,7 +77,7 @@ const TripDetails = () => {
                             <Card.Title><strong>To: </strong>{destination_address}</Card.Title>
                             <ListGroup variant="flush">
                                 <ListGroup.Item><strong>Driver:</strong> {owner.username}</ListGroup.Item>
-                                <ListGroup.Item><strong>Car:</strong> {car.make + " " + car.model}</ListGroup.Item>
+                                {car && <ListGroup.Item><strong>Car:</strong> {car.make + " " + car.model}</ListGroup.Item>}
                                 <ListGroup.Item><strong>Date:</strong> {realDate}</ListGroup.Item>
                                 <ListGroup.Item><strong>Passengers:</strong> {passengers.length > 0 ? passengers.map(elm => ` ${elm.username}`) : "There aren't passengers for now"}</ListGroup.Item>
                                 <ListGroup.Item><strong>Aviable seats:</strong> {seats - passengers.length !== 0 ? seats - passengers.length : "No more aviable seats on for this trip"}</ListGroup.Item>

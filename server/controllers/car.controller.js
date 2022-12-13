@@ -3,6 +3,7 @@ const Car = require('../models/Car.model')
 const User = require('../models/User.model')
 
 const getCars = (req, res, next) => {
+
     Car
         .find()
         .then(cars => res.json(cars))
@@ -10,6 +11,7 @@ const getCars = (req, res, next) => {
 }
 
 const myCars = (req, res, next) => {
+
     Car
         .find({ owner: req.payload._id })
         .select({ model: 1, make: 1, year: 1, seats: 1, color: 1, energeticClassification: 1 })

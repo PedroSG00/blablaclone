@@ -22,6 +22,9 @@ function SearchTripForm() {
         } else {
             setMarkers({ ...markers, lng_destination: { lat, lng } })
         }
+
+        //  setMarkers({ ...markers, [kind]: { lat, lng } })
+
     }
 
 
