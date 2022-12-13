@@ -36,7 +36,7 @@ const tripDetails = (req, res, next) => {
 
 const createTrips = (req, res, next) => {
 
-    const { from, to, origin_address, destination_address, date, seats, car } = req.body
+    const { from, to, origin_address, destination_address, date, seats, price, car } = req.body
     const { _id: owner } = req.payload
 
     const { lng: origin_lng, lat: origin_lat } = from
@@ -55,6 +55,7 @@ const createTrips = (req, res, next) => {
             origin_address,
             destination_address,
             seats,
+            price,
             date,
             owner,
             seats,

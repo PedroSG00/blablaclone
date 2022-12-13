@@ -13,7 +13,7 @@ import { Modal } from "react-bootstrap"
 import Slider from "@mui/material/Slider"
 
 
-const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
+const AddTripForm = ({ handleMarkers, tripPrice }) => {
 
     const [showModal, setShowModal] = useState(false)
     const [userCars, setUserCars] = useState([])
@@ -34,11 +34,17 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
     const minSlider = tripPrice * 0.85
     const maxSlider = tripPrice * 1.15
 
-    useEffect(() => {
-        if (destination_address !== '' && origin_address !== '' && seats != 0) {
-            setShowModal(true)
-        }
-    }, [newTripData])
+    const handleSubmit = e => {
+        e.preventDefault()
+        setShowModal(true)
+        setNewTripData({ ...newTripData, price: tripPrice })
+    }
+
+    const handleClose = e => {
+        e.preventDefault()
+        handleForm(e)
+        setShowModal(false)
+    }
 
     useEffect(() => {
         handleUserDetails()
@@ -52,7 +58,7 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
             .then(({ data }) => setUserCars(data.cars))
     }
 
-    const { date, seats, origin_address, destination_address } = newTripData
+    const { date, seats, price, origin_address, destination_address } = newTripData
 
 
     const handleInput = e => {
@@ -76,17 +82,18 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
             .createTrip(newTripData)
             .then(() => {
                 setShowToast(true)
-                setToastMessage('Created new trip')
+                setToastMessage('New trip created')
                 navigate(`/user/profile`)
             })
             .catch(err => setErrors(err.response.data.errorMessages))
     }
 
+
     return (
 
         isLoaded ?
             <>
-                <Form className="form-wrapper" onSubmit={handleForm}>
+                <Form className="form-wrapper" onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <Form.Label>Origin</Form.Label>
                         <PlacesAutocomplete placeholder={"Where is your departure at?"} kind={"origin_address"} updateAddress={updateAddress} handleMarkers={handleMarkers} />
@@ -113,7 +120,7 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
                     {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
 
                     <div className="d-grid">
-                        <Button type="submit">Add Trip</Button>
+                        <Button type="submit">Set Price</Button>
                     </div>
 
                 </Form>
@@ -123,19 +130,26 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
                         <Modal.Title>Set the trip price</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-
+                        <div className="text-center">
+                            <h3 className="dialog-4" id="triPrice"> {`${price} €`} </h3>
+                            <p><small><i>Remember users may choose other trips if you set the price too high</i></small></p>
+                        </div>
                         <Slider
-                            aria-label="Price"
-                            defaultValue={tripPrice}
-                            valueLabelDisplay="EUROS PUTA"
+                            value={price}
                             step={0.50}
-
+                            name="price"
                             min={minSlider}
                             max={maxSlider}
+                            onChange={handleInput}
                         >
 
                         </Slider>
                     </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={handleClose}>
+                            Submit Trip
+                        </Button>
+                    </Modal.Footer>
                 </Modal>
             </>
 

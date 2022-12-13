@@ -45,7 +45,6 @@ const MapComponent = ({ markers, setTripPrice }) => {
             .then(result => {
                 setRoute(result)
                 setTripPrice(calculateTripPrice(result.routes[0].legs[0].distance.value))
-                console.log(result)
             })
     }
 

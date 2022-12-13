@@ -17,13 +17,13 @@ const AddTrip = () => {
             setMarkers({ ...markers, destination_address: { lat, lng } })
         }
     }
-
+    console.log(tripPrice)
 
 
     return (
         <Container className="AddTrip ">
             <Row className="justify-content-around h-100">
-                <Col md={5}><AddTripForm tripPrice={tripPrice} setTripPrice={setTripPrice} handleMarkers={handleMarkers} /></Col>
+                <Col md={5}><AddTripForm tripPrice={tripPrice} handleMarkers={handleMarkers} /></Col>
                 <Col md={5}><MapComponent markers={markers} setTripPrice={setTripPrice} /></Col>
             </Row>
         </Container>
