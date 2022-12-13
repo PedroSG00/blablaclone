@@ -11,6 +11,7 @@ import { MapContext } from "../../context/map.context"
 import userService from "../../services/user.service"
 import { Modal } from "react-bootstrap"
 import Slider from "@mui/material/Slider"
+import TimePicker from 'react-time-picker'
 
 
 const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
@@ -21,6 +22,7 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
     const { isLoaded } = useContext(MapContext)
     const navigate = useNavigate()
     const [errors, setErrors] = useState([])
+    const [getHour, setGetHour] = useState('10:00');
     const [newTripData, setNewTripData] = useState({
         from: {},
         to: {},
@@ -29,7 +31,8 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
         date: '',
         seats: 0,
         price: 0,
-        car: ''
+        car: '',
+        hour: ''
     })
     const minSlider = tripPrice * 0.85
     const maxSlider = tripPrice * 1.15
@@ -38,6 +41,7 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
         if (destination_address !== '' && origin_address !== '' && seats != 0) {
             setShowModal(true)
         }
+        setGetHour()
     }, [newTripData])
 
     useEffect(() => {
@@ -50,15 +54,15 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
         userService
             .getUserDetails()
             .then(({ data }) => setUserCars(data.cars))
+            .catch(err => console.log(err))
     }
 
     const { date, seats, origin_address, destination_address } = newTripData
 
 
     const handleInput = e => {
-
         const { name, value } = e.target
-        setNewTripData({ ...newTripData, [name]: value })
+        setNewTripData({ ...newTripData, hour: getHour, [name]: value })
     }
 
     const updateAddress = (kind, value, { lat, lng }) => {
@@ -74,10 +78,11 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
         e.preventDefault()
         tripService
             .createTrip(newTripData)
-            .then(() => {
+            .then(({ data }) => {
                 setShowToast(true)
                 setToastMessage('Created new trip')
                 navigate(`/user/profile`)
+                console.log(newTripData)
             })
             .catch(err => setErrors(err.response.data.errorMessages))
     }
@@ -98,6 +103,11 @@ const AddTripForm = ({ handleMarkers, setTripPrice, tripPrice }) => {
                     <Form.Group className="mb-3">
                         <Form.Label>Date</Form.Label>
                         <Form.Control type="date" name="date" value={date} onChange={handleInput} />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3">
+                        <Form.Label className="d-block">Hour</Form.Label>
+                        <TimePicker className='text-center' name="hour" value={getHour} onChange={setGetHour} disableClock format="HH:mm" amPmAriaLabel="Select AM/PM" clearIcon={null} />
                     </Form.Group>
 
                     {userCars?.length > 0 && <Form.Select aria-label="Default select example" name='car' onChange={handleInput}>

@@ -36,7 +36,7 @@ const tripDetails = (req, res, next) => {
 
 const createTrips = (req, res, next) => {
 
-    const { from, to, origin_address, destination_address, date, seats, car } = req.body
+    const { from, to, origin_address, destination_address, date, seats, car, hour } = req.body
     const { _id: owner } = req.payload
 
     const { lng: origin_lng, lat: origin_lat } = from
@@ -58,7 +58,8 @@ const createTrips = (req, res, next) => {
             date,
             owner,
             seats,
-            car
+            car,
+            hour
         })
         .then(response => res.json(response))
         .catch(err => next(err))
@@ -115,10 +116,7 @@ const deleteTrip = (req, res, next) => {
 const searchTrip = (req, res, next) => {
 
     // const { seatsAviable: seatsQuery, travelDate: dateQuery } = req.query
-    const { origin_lng, origin_lat, destination_lng, destination_lat, seatsAviable, travelDate, hour, emission } = req.body
-
-
-
+    const { origin_lng, origin_lat, destination_lng, destination_lat, seatsAviable, travelDate, travelHour, emission } = req.body
 
     let fromQuery = {
         from: {
@@ -146,11 +144,15 @@ const searchTrip = (req, res, next) => {
 
     if (seatsAviable) fromQuery = { ...fromQuery, seats: seatsAviable }
     if (travelDate) fromQuery = { ...fromQuery, date: travelDate }
+    if (travelHour) fromQuery = { ...fromQuery, hour: travelHour }
+
 
 
 
     if (seatsAviable) toQuery = { ...toQuery, seats: seatsAviable }
     if (travelDate) toQuery = { ...toQuery, date: travelDate }
+    if (travelHour) toQuery = { ...toQuery, hour: travelHour }
+
 
 
     const promises = [

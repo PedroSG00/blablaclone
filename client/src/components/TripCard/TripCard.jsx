@@ -27,7 +27,7 @@ const TripCard = ({ origin_address, destination_address, owner, _id: trip_id, se
             setValue('delete')
             deleteTrip()
             loadOwnTrips()
-            searchTrips()
+            searchTrips && searchTrips()
         }
     }
 
