@@ -1,18 +1,17 @@
 import socket from "../../config/socket.config"
-import { useEffect, useState } from "react"
 import chatService from "../../services/chat.service"
+
+import { useEffect, useState } from "react"
+
 const Chat = ({ chatId }) => {
 
-    // const [chatDetails, setChatDetails] = useState({
+    const [chatDetails, setChatDetails] = useState({})
 
-    // })
-    // const handleChatDetails = () => {
-    //     chatService
-    //         .getChatDetais(chatId)
-    // }
 
 
     useEffect(() => {
+        socket.disconnect()
+        socket.connect()
         socket.emit('ConnectRequest', { room: chatId })
         socket.on('ConnectResponse', (payload) => { console.log('--------------', payload) })
     }, [chatId])
@@ -26,6 +25,13 @@ const Chat = ({ chatId }) => {
         }
     }, [])
 
+
+    console.log(chatDetails)
+
+    return (
+        <>
+        </>
+    )
 
 }
 

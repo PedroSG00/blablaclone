@@ -16,7 +16,7 @@ const chatSchema = new Schema(
                 ref: 'User'
             },
             text: { type: String },
-            time: { type: Date }
+            time: { type: String }
         }],
         trip: {
             type: Types.ObjectId,

@@ -5,7 +5,7 @@ class ChatService {
     constructor() {
 
         this.api = axios.create({
-            baseURL: `${process.env.REACT_APP_API_URL}/chats`
+            baseURL: `${process.env.REACT_APP_API_URL}/chat`
         })
 
         this.api.interceptors.request.use((config) => {
@@ -22,7 +22,7 @@ class ChatService {
 
     getChatDetails = chat_id => this.api.get(`/${chat_id}`)
 
-
+    sendMessage = chat_id => this.api.put(`/${chat_id}/send`)
 
 
 }
