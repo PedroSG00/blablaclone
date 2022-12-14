@@ -62,7 +62,7 @@ const AddTripForm = ({ handleMarkers, tripPrice }) => {
             .catch(err => console.log(err))
     }
 
-    const { date, seats, price, origin_address, destination_address } = newTripData
+    const { date, seats, price } = newTripData
 
 
     const handleInput = e => {
