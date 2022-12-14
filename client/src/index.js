@@ -22,5 +22,5 @@ root.render(
       </MapProvider>
     </AuthProviderWrapper>
   </React.StrictMode >
-);
+)
 

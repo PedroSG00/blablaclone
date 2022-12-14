@@ -28,6 +28,10 @@ class UserService {
         return this.api.get('/user-details')
     }
 
+    getChats() {
+        return this.api.get('/chats')
+    }
+
     editUser(user_id, userData) {
         this.api.put(`/${user_id}/edit`, userData)
     }

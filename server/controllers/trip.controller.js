@@ -1,5 +1,7 @@
 const Trip = require('../models/Trip.model')
 const User = require('../models/User.model')
+const Chat = require('../models/Chat.model')
+const async = require('hbs/lib/async')
 
 const tripList = (req, res, next) => {
 
@@ -34,7 +36,7 @@ const tripDetails = (req, res, next) => {
         .catch(err => next(err))
 }
 
-const createTrips = (req, res, next) => {
+const createTrips = async (req, res, next) => {
 
     const { from, to, origin_address, destination_address, date, seats, car, price, hour } = req.body
     const { _id: owner } = req.payload
@@ -42,54 +44,82 @@ const createTrips = (req, res, next) => {
     const { lng: origin_lng, lat: origin_lat } = from
     const { lng: destination_lng, lat: destination_lat } = to
 
-    Trip
-        .create({
-            from: {
-                type: 'Point',
-                coordinates: [origin_lng, origin_lat]
-            },
-            to: {
-                type: 'Point',
-                coordinates: [destination_lng, destination_lat]
-            },
-            origin_address,
-            destination_address,
-            seats,
-            price,
-            date,
-            owner,
-            seats,
-            car,
-            hour
-        })
-        .then(response => res.json(response))
-        .catch(err => next(err))
+    try {
+        const createdTrip = await Trip.create
+            ({
+                from: {
+                    type: 'Point',
+                    coordinates: [origin_lng, origin_lat]
+                },
+                to: {
+                    type: 'Point',
+                    coordinates: [destination_lng, destination_lat]
+                },
+                origin_address,
+                destination_address,
+                seats,
+                price,
+                date,
+                owner,
+                seats,
+                car,
+                hour
+            })
+
+        const createdChat = await Chat.create({ driver: owner, trip: createdTrip._id })
+
+        const updateTripWithChat = await createdTrip.updateOne({ chat: createdChat._id })
+
+        return res.json(updateTripWithChat)
+    } catch (error) {
+        next(error)
+    }
+
 
 }
 
-const joinTrip = (req, res, next) => {
+const joinTrip = async (req, res, next) => {
 
     const { tripID } = req.params
 
     const { _id: passenger } = req.payload
 
-    Trip
-        .findByIdAndUpdate(tripID, { $addToSet: { passengers: passenger } })
-        .then(trip => res.status(200).json(trip))
-        .catch(err => next(err))
+    try {
+        const tripUpdated = await Trip.findByIdAndUpdate(tripID, { $addToSet: { passengers: passenger } })
+        const { chat: chat_id } = tripUpdated
+        const chatUpdated = await Chat.findByIdAndUpdate(chat_id, { $addToSet: { users: passenger } })
+        const userUpdated = await User.findByIdAndUpdate(passenger, { $addToSet: { chats: chat_id } })
+        return res.status(200).json(tripUpdated)
+    } catch (error) {
+        next(error)
+    }
+
+
+
+    // .then(trip => trip.chat.updateOne({ $addToSet: { users: passenger } }))
+    // .then(result => res.status(200).json(result))
+    // .catch(err => next(err))
 
 }
 
-const leaveTrip = (req, res, next) => {
+const leaveTrip = async (req, res, next) => {
 
     const { tripID } = req.params
 
     const { _id: passenger } = req.payload
 
-    Trip
-        .findByIdAndUpdate(tripID, { $pull: { passengers: passenger } })
-        .then(trip => res.status(202).json(trip))
-        .catch(err => next(err))
+    try {
+
+        const tripUpdated = await Trip.findByIdAndUpdate(tripID, { $pull: { passengers: passenger } })
+        const { chat: chat_id } = tripUpdated
+        const chatUpdated = await Chat.findByIdAndUpdate(chat_id, { $pull: { users: passenger } })
+        const userUpdated = await User.findByIdAndUpdate(passenger, { $pull: { chats: chat_id } })
+
+        return res.status(202).json(tripUpdated)
+
+    } catch (error) {
+        next(error)
+    }
 
 }
 
