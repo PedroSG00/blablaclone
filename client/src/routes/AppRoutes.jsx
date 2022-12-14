@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage/HomePage"
 import ProfilePage from "../pages/ProfilePage/ProfilePage"
 import SearchTripPage from "../pages/SearchTripPage/SearchTripPage"
 import TripDetailsPage from "../pages/TripDetailsPage/TripDetailsPage"
+import ChatPage from "../pages/ChatPages/ChatPages"
 
 
 const AppRoutes = () => {
@@ -16,6 +17,7 @@ const AppRoutes = () => {
             <Route path='/trip/search' element={<SearchTripPage />} />
             <Route path='/trip/:trip_id' element={<TripDetailsPage />} />
             <Route element={<PrivateRoute />}>
+                <Route path="/chats" element={<ChatPage />}></Route>
                 <Route path="/user/profile" element={<ProfilePage />} />
             </Route>
             <Route path="/*" element={<h1>404</h1>} />

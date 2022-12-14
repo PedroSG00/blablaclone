@@ -65,7 +65,14 @@ const tripSchema = new Schema(
         owner: {
             type: Types.ObjectId,
             ref: 'User'
+        },
+
+        chat: {
+            type: Types.ObjectId,
+            ref: 'Chat'
         }
+
+
 
     },
     {

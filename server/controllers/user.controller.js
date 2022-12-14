@@ -16,8 +16,27 @@ const userDetails = (req, res, next) => {
 
     User
         .findById(user_id)
-        .populate('comments cars')
+        .populate('cars')
         .then(userDetails => res.status(200).json(userDetails))
+        .catch(error => next(error))
+
+}
+
+const userChats = (req, res, next) => {
+
+    const { _id: user_id } = req.payload
+
+    User
+        .findById(user_id)
+        .select({ chats: 1 })
+        .populate({
+            path: 'chats',
+            populate: {
+                path: 'trip',
+                model: 'Trip'
+            }
+        })
+        .then(chats => res.status(200).json(chats))
         .catch(error => next(error))
 
 }
@@ -49,5 +68,6 @@ module.exports = {
     userList,
     userDetails,
     editUser,
-    deleteUser
+    deleteUser,
+    userChats
 }

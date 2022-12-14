@@ -5,7 +5,6 @@ import Loader from '../../components/Loader/Loader'
 import tripService from '../../services/trip.service'
 import { Container, Row, Col, InputGroup, Form, Button } from 'react-bootstrap'
 import TripList from '../../components/TripList/TripList'
-import TripDetails from '../../components/TripDetails/TripDetails'
 import PlacesAutocomplete from '../../components/Autocomplete/Autocomplete'
 import { MapContext } from '../../context/map.context';
 import TimePicker from 'react-time-picker'

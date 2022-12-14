@@ -3,19 +3,19 @@ import { useState, useEffect, useParams, useContext } from 'react'
 import { Card, Button, ListGroup, Container, Row, Col } from 'react-bootstrap'
 import Loader from '../Loader/Loader'
 import tripService from '../../services/trip.service'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context'
-
 
 
 const TripDetails = () => {
 
-    const { user } = useContext(AuthContext)
 
+    const { user } = useContext(AuthContext)
     const [trip, setTrip] = useState([])
     const [newPassenger, setNewPassenger] = useState([])
     const [tripDetails, setTripDetails] = useState([])
 
+    const navigate = useNavigate()
     const location = useLocation()
 
     useEffect(() => {
@@ -28,8 +28,10 @@ const TripDetails = () => {
     const loadTripDetails = (tripIdToLoad) => {
         tripService
             .getTripDetails(tripIdToLoad)
-            .then(({ data }) => setTripDetails(data))
+            .then(({ data }) => setTrip(data))
             .catch(err => console.log(err))
+
+
     }
 
     const joinTrip = () => {
@@ -50,8 +52,9 @@ const TripDetails = () => {
         setTrip(tripDetails)
     }
 
-    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, car, seats, hour, price } = trip
+    const { origin_address, destination_address, owner, passengers, stops, date, _id: trip_id, car, seats, hour, price, chat } = trip
 
+    const passengersId = passengers?.map(elm => elm._id)
 
     const realDate = (`${new Date(date).getDay()}/${new Date(date).getMonth()}/${new Date(date).getFullYear()}`)
 
@@ -63,6 +66,11 @@ const TripDetails = () => {
         handleTrip()
         handlePassengers()
     }, [tripDetails])
+
+    const navigateTo = e => {
+        // e.preventDefault()
+        navigate(`/chat/${chat}`)
+    }
 
 
     return (
@@ -94,8 +102,14 @@ const TripDetails = () => {
                                 <>
                                     <Button onClick={joinTrip} className='me-2'>Join Trip</Button>
                                     <Button onClick={leaveTrip} className='me-2'>Leave Trip</Button>
+
                                 </>)
+
                             }
+
+                            {user && (owner._id === user._id || passengersId?.includes(user._id) && <>
+                                <Button onClick={navigateTo}>Chat</Button>
+                            </>)}
 
                         </Card.Body>
                     </Card>
