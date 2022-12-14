@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { GoogleMap, useLoadScript, Marker, DirectionsRenderer } from "@react-google-maps/api"
+import { GoogleMap, Marker, DirectionsRenderer } from "@react-google-maps/api"
 import Loader from "../Loader/Loader";
 import { MapContext } from "../../context/map.context";
 import calculateTripPrice from "../../utils/calculatePrice"
