@@ -1,7 +1,8 @@
 const Chat = require("../models/Chat.model")
 
 const getChatDetails = (req, res, next) => {
-    const { chat_id } = req.params
+
+    const { chat_id } = req.body
     Chat.findById(chat_id)
         .then(chat => res.json(chat))
         .catch(err => next(err))

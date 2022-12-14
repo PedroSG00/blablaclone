@@ -1,4 +1,6 @@
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState, useContext } from 'react'
+import { SocketContext } from './socket.context'
+import socket from '../config/socket.config'
 import authService from '../services/auth.service'
 
 const AuthContext = createContext()
@@ -7,6 +9,7 @@ function AuthProviderWrapper(props) {
 
     const [user, setUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
+    const { connection, setConnection } = useContext(SocketContext)
 
     const storeToken = (token) => {
         localStorage.setItem("authToken", token)
@@ -37,6 +40,16 @@ function AuthProviderWrapper(props) {
     useEffect(() => {
         authenticateUser()
     }, [])
+
+    useEffect(() => {
+
+        if (user) {
+            setConnection(socket.connect())
+        } else {
+            setConnection(socket.disconnect())
+        }
+
+    }, [user])
 
 
     return (

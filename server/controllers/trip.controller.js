@@ -1,7 +1,6 @@
 const Trip = require('../models/Trip.model')
 const User = require('../models/User.model')
 const Chat = require('../models/Chat.model')
-const async = require('hbs/lib/async')
 
 const tripList = (req, res, next) => {
 

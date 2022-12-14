@@ -20,10 +20,7 @@ class ChatService {
         })
     }
 
-    getChatDetails = chat_id => this.api.get(`/${chat_id}`)
-
-
-
+    getChatDetails = chat_id => this.api.post("/", chat_id)
 
 }
 

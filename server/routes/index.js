@@ -16,7 +16,7 @@ module.exports = app => {
     app.use('/api/car', carRouter)
 
     const chatRouter = require('./chat.routes')
-    app.use('/api/chat', chatRouter)
+    app.use('/api/chats', chatRouter)
 
     const uploadRouter = require('./upload.routes')
     app.use('/api/upload', uploadRouter)

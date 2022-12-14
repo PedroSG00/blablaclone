@@ -1,16 +1,14 @@
 import './ChatPages.css'
-import socket from '../../config/socket.config'
 import userService from '../../services/user.service'
 import Chat from '../../components/Chat/Chat'
 import ChatList from '../../components/ChatList/ChatList'
-import { Row, Col, Container, Button } from 'react-bootstrap'
+import { Row, Col, Container } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
 
 const ChatPage = () => {
 
     const [chatList, setChatList] = useState(null)
     const [chatId, setChatId] = useState('')
-
 
     const handleList = () => {
         userService.getChats()

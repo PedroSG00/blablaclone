@@ -1,30 +1,20 @@
-import socket from "../../config/socket.config"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import chatService from "../../services/chat.service"
+import { SocketContext } from "../../context/socket.context"
+
 const Chat = ({ chatId }) => {
 
-    // const [chatDetails, setChatDetails] = useState({
-
-    // })
-    // const handleChatDetails = () => {
-    //     chatService
-    //         .getChatDetais(chatId)
-    // }
-
+    const { connection } = useContext(SocketContext)
+    const [chatDetails, setChatDetails] = useState({})
 
     useEffect(() => {
-        socket.emit('ConnectRequest', { room: chatId })
-        socket.on('ConnectResponse', (payload) => { console.log('--------------', payload) })
-    }, [chatId])
-
-
-    useEffect(() => {
-        return () => {
-            socket.emit('Disconnect', { message: 'User disconnected' })
-            console.log('Disconnect')
-            socket.disconnect()
-        }
+        chatId !== '' && chatService.getChatDetails(chatId).then(({ data }) => setChatDetails(data))
     }, [])
+
+    useEffect(() => {
+        connection.on('ConnectResponse', (payload) => { console.log('--------------', payload) })
+        console.log(connection)
+    }, [connection])
 
 
 }
