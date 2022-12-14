@@ -20,9 +20,9 @@ class ChatService {
         })
     }
 
-    getChatDetails = chat_id => this.api.get(`/${chat_id}`)
+    getChatDetails(chat_id) { this.api.get(`/${chat_id}`) }
 
-    sendMessage = chat_id => this.api.put(`/${chat_id}/send`)
+    sendMessage(chat_id) { this.api.put(`/${chat_id}/send`) }
 
 
 }

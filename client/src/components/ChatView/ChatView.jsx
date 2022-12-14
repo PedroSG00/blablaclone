@@ -8,6 +8,14 @@ const Chat = ({ chatId }) => {
     const [chatDetails, setChatDetails] = useState({})
 
 
+    const handleChatDetails = () => {
+
+        chatService
+            .getChatDetais(chatId)
+            .then(({ data }) => setChatDetails(data))
+            .catch(err => console.log(err))
+    }
+
 
     useEffect(() => {
         socket.disconnect()
@@ -26,7 +34,10 @@ const Chat = ({ chatId }) => {
     }, [])
 
 
-    console.log(chatDetails)
+    useEffect(() => {
+        chatId && handleChatDetails()
+    }, [chatId])
+
 
     return (
         <>
