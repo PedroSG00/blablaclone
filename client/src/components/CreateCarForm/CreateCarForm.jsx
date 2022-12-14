@@ -3,12 +3,15 @@ import Select from 'react-select'
 import carsService from '../../services/cars.service'
 import { Form, Button } from 'react-bootstrap'
 import { useEffect, useState } from 'react'
+import ErrorMessage from '../ErrorMessage/ErrorMessage'
 const CreateCarForm = ({ fireFinalActions }) => {
 
     const [cars, setCars] = useState([])
     const [make, setMake] = useState()
     const [model, setModel] = useState()
     const [year, setYear] = useState()
+
+    const [errors, setErrors] = useState([])
 
 
     const [filteredModel, setFilteredModel] = useState([])
@@ -32,24 +35,18 @@ const CreateCarForm = ({ fireFinalActions }) => {
     }
 
     const carsMake = cars?.map(elm => (elm.make))
-
     const carsModel = filteredModel?.map(elm => (elm.model))
-
     const carsYear = filteredYear?.map(elm => (elm.year))
 
 
     const uniqueCarsMake = [... new Set(carsMake)]
-
     const uniqueCarsModel = [... new Set(carsModel)]
-
     const uniqueCarsYear = [... new Set(carsYear)]
 
 
     const handleMakeValue = e => setMake(e.value)
     const handleModelValue = e => setModel(e.value)
     const handleYearValue = e => setYear(e.value)
-
-
 
 
     const filterCarsMake = () => {
@@ -79,6 +76,7 @@ const CreateCarForm = ({ fireFinalActions }) => {
             .then(() => {
                 fireFinalActions()
             })
+            .catch(err => setErrors(err.response.data.errorMessages))
     }
 
     const handleForm = e => {
@@ -144,7 +142,6 @@ const CreateCarForm = ({ fireFinalActions }) => {
                     <option value="0">0</option>
                 </Form.Select>
 
-
                 <>
                     <Form.Label htmlFor="color">Color</Form.Label>
                     <Form.Control
@@ -156,6 +153,8 @@ const CreateCarForm = ({ fireFinalActions }) => {
                         title="Choose your color"
                     />
                 </>
+
+                {errors.length ? <ErrorMessage>{errors.map(elm => <p key={elm}>{elm}</p>)}</ErrorMessage> : undefined}
 
                 <div className="d-grid">
                     <Button type="submit">Add Car</Button>

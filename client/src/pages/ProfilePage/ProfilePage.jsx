@@ -23,6 +23,8 @@ const ProfilePage = () => {
         loadOwnTrips()
     }, [])
 
+
+
     return (
         <div className='ProfilePage'>
             <Container className='mt-5'>
@@ -36,12 +38,17 @@ const ProfilePage = () => {
                     <Col md={6}>
                         <h2 className='text-center'>My trips</h2>
                         <hr />
-                        {<TripList trips={trips} loadTrips={() => { }} loadOwnTrips={loadOwnTrips} />}
+                        <div style={{ "maxHeight": "85vh", "overflow": "scroll" }}>
+                            {<TripList trips={trips} loadTrips={() => { }} loadOwnTrips={loadOwnTrips} />}
+                        </div>
                     </Col>
                     <Col md={6}>
                         <h2 className='text-center'>My cars</h2>
                         <hr />
-                        <CarList />
+                        <div style={{ "maxHeight": "85vh", "overflow": "scroll" }} >
+                            <CarList />
+
+                        </div>
                     </Col>
                 </Row>
             </Container>
