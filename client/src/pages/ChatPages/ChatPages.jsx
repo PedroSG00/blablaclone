@@ -1,6 +1,6 @@
 import './ChatPages.css'
 import userService from '../../services/user.service'
-import Chat from '../../components/Chat/Chat'
+import Chat from '../../components/ChatView/ChatView'
 import ChatList from '../../components/ChatList/ChatList'
 import { Row, Col, Container } from 'react-bootstrap'
 import { useEffect, useState } from 'react'

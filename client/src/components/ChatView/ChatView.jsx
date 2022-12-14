@@ -17,6 +17,13 @@ const Chat = ({ chatId }) => {
     }, [connection])
 
 
+
+
+    return (
+        <>
+        </>
+    )
+
 }
 
 export default Chat
