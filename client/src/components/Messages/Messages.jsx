@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import socket from "../../config/socket.config";
 import chatService from "../../services/chat.service"
 
-const Messages = ({ chatId }) => {
+const Messages = ({ chatId, setMessages }) => {
 
 
     const [currentMessageList, setCurrentMessageList] = useState([])
@@ -12,48 +12,50 @@ const Messages = ({ chatId }) => {
 
     useEffect(() => {
         socket.on("receiveMessage", (data) => {
-            setCurrentMessageList((list) => [...list, data])
+            console.log(data)
+            setMessages((list) => [...list, data])
         })
     }, [socket])
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        chatService
-            .getChatDetails(chatId)
-            .then(({ data }) => {
-                setMessageList(data)
-            })
-            .catch(error => console.log(error))
+    //     chatService
+    //         .getChatDetails(chatId)
+    //         .then(({ data }) => {
+    //             setMessageList(data)
+    //         })
+    //         .catch(error => console.log(error))
 
-    }, [])
+    // }, [])
 
-    console.log(messageList.messages)
+    // console.log(messageList.messages)
 
     return (
+        <p>JUST CHATTING</p>
 
-        <div>
-            {
-                messageList?.messages?.map((elm) => {
-                    return (
-                        <div key={elm._id}>
-                            <h1>{elm.author._username}</h1>
-                        </div>
-                    )
+        // <div>
+        //     {
+        //         messageList?.messages?.map((elm) => {
+        //             return (
+        //                 <div key={elm._id}>
+        //                     <h1>{elm?.author?.username}</h1>
+        //                 </div>
+        //             )
 
-                })
-            }
-            {
-                currentMessageList.map(({ author, message, time }, i) => {
-                    return (<div key={i}>
-                        <h1>{author}</h1>
-                        <p>{message}</p>
-                        <p>{time}</p>
-                    </div>)
+        //         })
+        //     }
+        //     {
+        //         currentMessageList.map(({ author, message, time }, i) => {
+        //             return (<div key={i}>
+        //                 <h1>{author}</h1>
+        //                 <p>{message}</p>
+        //                 <p>{time}</p>
+        //             </div>)
 
 
-                })
-            }
-        </div>
+        //         })
+        //     }
+        // </div>
     )
 
 }

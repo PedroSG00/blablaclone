@@ -12,8 +12,8 @@ const ioRoutes = (io) => {
         })
 
         socket.on("sendMessage", (data) => {
-            socket.to(data.room).emit("receiveMessage", data)
-            console.log(data)
+            socket.to(data.room).emit("receiveMessage", { author: data.author, text: data.text, time: data.time })
+            console.log('datita-----------------------', data)
         })
 
         socket.on('Disconnect', ({ message }) => {
