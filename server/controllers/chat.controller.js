@@ -2,7 +2,7 @@ const Chat = require("../models/Chat.model")
 
 const getChatDetails = (req, res, next) => {
 
-    const { chat_id } = req.body
+    const { chat_id } = req.params
     Chat.findById(chat_id)
         .populate({
             path: 'messages',

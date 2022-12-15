@@ -1,11 +1,10 @@
 import { useState, useContext } from "react"
 import { Form, Button } from "react-bootstrap"
-import authService from "../../services/auth.service"
 import uploadServices from "../../services/upload.service"
 import ErrorMessage from "../ErrorMessage/ErrorMessage"
 import { useNavigate } from 'react-router-dom'
 import { MessageContext } from '../../context/userMessage.context'
-
+import authService from "../../services/auth.service"
 
 const SignupForm = ({ fireFinalActions }) => {
 
