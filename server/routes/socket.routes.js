@@ -11,6 +11,11 @@ const ioRoutes = (io) => {
             console.log('General Connection')
         })
 
+        socket.on("sendMessage", (data) => {
+            socket.to(data.room).emit("receiveMessage", { author: data.author, text: data.text, time: data.time })
+            console.log('datita-----------------------', data)
+        })
+
         socket.on('Disconnect', ({ message }) => {
             console.log(message)
         })
