@@ -9,12 +9,7 @@ const TripDetailsPage = () => {
         <div className='ProfilePage'>
             <Container className='mt-5'>
                 <Row className='justify-content-around'>
-                    <Col md={5} className='m-2'>
-                        <TripDetails />
-                    </Col>
-                    <Col md={5}>
-                        Aqui va un mapa
-                    </Col>
+                    <TripDetails />
                 </Row>
             </Container>
 

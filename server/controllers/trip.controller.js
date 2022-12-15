@@ -35,6 +35,29 @@ const tripDetails = (req, res, next) => {
         .catch(err => next(err))
 }
 
+const requestWaypoint = async (req, res, next) => {
+
+    const { id } = req.params
+    const { waypoint, waypoint_address } = req.body
+    const { _id: owner } = req.payload
+    const { lng: waypoint_lng, lat: waypoint_lat } = waypoint
+
+    try {
+        Trip.findByIdAndUpdate(id, {
+            $addToSet: {
+                requests: {
+                    owner: owner,
+                    type: 'Point',
+                    coordinates: [waypoint_lng, waypoint_lat]
+                }
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
+
+}
+
 const createTrips = async (req, res, next) => {
 
     const { from, to, origin_address, destination_address, date, seats, car, price, hour } = req.body
@@ -224,7 +247,8 @@ module.exports = {
     leaveTrip,
     editTrip,
     deleteTrip,
-    searchTrip
+    searchTrip,
+    requestWaypoint
 }
 
 

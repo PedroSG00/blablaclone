@@ -50,11 +50,19 @@ const tripSchema = new Schema(
             required: [true, 'You have to specify date for the trip']
         },
 
-        stops: [{
+        waypoints: [{
             type: {
                 type: String,
             },
             coordinates: [Number],
+        }],
+
+        requests: [{
+            owner: { type: Types.ObjectId, ref: "User" },
+            type: {
+                type: String
+            },
+            coordinates: [Number]
         }],
 
         car: {

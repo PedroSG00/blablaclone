@@ -7,7 +7,7 @@ import useOnclickOutside from "react-cool-onclickoutside";
 import { MapContext } from "../../context/map.context";
 import { useContext } from "react";
 
-const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers }) => {
+const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers, handleRequest }) => {
 
     const {
         ready,
@@ -45,6 +45,7 @@ const PlacesAutocomplete = ({ placeholder, kind, updateAddress, handleMarkers })
                     if (kind === "origin_address" && map) {
                         setLocation({ lat: parseFloat(lat), lng: parseFloat(lng) })
                     }
+                    if (kind === "waypoint_address") handleRequest(description, { lat, lng })
 
                 });
             };
